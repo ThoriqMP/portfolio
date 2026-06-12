@@ -37,9 +37,22 @@
                     </p>
 
                     @if ($education->description)
-                        <p class="text-sm font-bold text-slate-700 leading-relaxed mb-6">
-                            {{ $education->description }}
-                        </p>
+                        @php
+                            $points = json_decode($education->description, true);
+                        @endphp
+                        @if (is_array($points))
+                            <ul class="list-disc pl-5 mb-6 text-sm font-bold text-slate-700 leading-relaxed space-y-1">
+                                @foreach ($points as $point)
+                                    @if (trim($point) !== '')
+                                        <li>{{ $point }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm font-bold text-slate-700 leading-relaxed mb-6">
+                                {{ $education->description }}
+                            </p>
+                        @endif
                     @endif
                 </div>
 

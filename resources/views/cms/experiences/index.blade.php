@@ -37,9 +37,24 @@
                         {{ $experience->company_name }}
                     </p>
 
-                    <p class="text-sm font-bold text-slate-700 leading-relaxed mb-6">
-                        {{ $experience->description }}
-                    </p>
+                    @if ($experience->description)
+                        @php
+                            $points = json_decode($experience->description, true);
+                        @endphp
+                        @if (is_array($points))
+                            <ul class="list-disc pl-5 mb-6 text-sm font-bold text-slate-700 leading-relaxed space-y-1">
+                                @foreach ($points as $point)
+                                    @if (trim($point) !== '')
+                                        <li>{{ $point }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm font-bold text-slate-700 leading-relaxed mb-6">
+                                {{ $experience->description }}
+                            </p>
+                        @endif
+                    @endif
                 </div>
 
                 <!-- Action Buttons inside card -->

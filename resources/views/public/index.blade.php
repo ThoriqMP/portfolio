@@ -215,9 +215,24 @@
                                 <span class="text-sm font-extrabold uppercase text-[#ff5722] tracking-wider">{{ $experience->company_name }}</span>
                                 
                                 <!-- Description -->
-                                <p class="text-sm font-bold text-slate-700 leading-relaxed mt-4">
-                                    {{ $experience->description }}
-                                </p>
+                                @if ($experience->description)
+                                    @php
+                                        $expPoints = json_decode($experience->description, true);
+                                    @endphp
+                                    @if (is_array($expPoints))
+                                        <ul class="list-disc pl-5 mt-4 space-y-1.5 text-sm font-bold text-slate-700 leading-relaxed">
+                                            @foreach ($expPoints as $point)
+                                                @if (trim($point) !== '')
+                                                    <li>{{ $point }}</li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="text-sm font-bold text-slate-700 leading-relaxed mt-4">
+                                            {!! nl2br(e($experience->description)) !!}
+                                        </p>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     @empty
@@ -257,9 +272,22 @@
                                 
                                 <!-- Description -->
                                 @if ($education->description)
-                                    <p class="text-sm font-bold text-slate-700 leading-relaxed mt-4">
-                                        {{ $education->description }}
-                                    </p>
+                                    @php
+                                        $eduPoints = json_decode($education->description, true);
+                                    @endphp
+                                    @if (is_array($eduPoints))
+                                        <ul class="list-disc pl-5 mt-4 space-y-1.5 text-sm font-bold text-slate-700 leading-relaxed">
+                                            @foreach ($eduPoints as $point)
+                                                @if (trim($point) !== '')
+                                                    <li>{{ $point }}</li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p class="text-sm font-bold text-slate-700 leading-relaxed mt-4">
+                                            {!! nl2br(e($education->description)) !!}
+                                        </p>
+                                    @endif
                                 @endif
                             </div>
                         </div>
