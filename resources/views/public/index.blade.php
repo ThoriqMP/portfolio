@@ -46,7 +46,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
                     </a>
-                    <a href="#timeline" class="inline-flex items-center justify-center px-8 py-4 text-base font-extrabold uppercase tracking-wider text-black bg-white hover:bg-black hover:text-white border-3 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
+                    <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 text-base font-extrabold uppercase tracking-wider text-black bg-white hover:bg-black hover:text-white border-3 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
                         Hubungi Saya
                     </a>
                 </div>
@@ -293,6 +293,118 @@
                     @empty
                         <p class="text-slate-500 font-extrabold uppercase tracking-wide pl-6">// Belum ada data riwayat akademik.</p>
                     @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section (High-Contrast Brutalist Box) -->
+<section id="contact" class="py-24 bg-white border-b-8 border-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Title (Brutalist Panel) -->
+        <div class="border-4 border-black p-8 bg-black text-white shadow-[6px_6px_0px_#ff5722] max-w-3xl mx-auto mb-16 text-center">
+            <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter">
+                Hubungi Saya
+            </h2>
+            <p class="text-slate-350 text-sm uppercase tracking-widest mt-3 font-semibold">
+                // Mari terhubung melalui kontak atau sosial media di bawah ini
+            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left: Direct Contacts -->
+                <div class="bg-[#f5f5f5] border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#000000] flex flex-col justify-between">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-black text-[#ff5722] border-2 border-black font-extrabold text-xs uppercase shadow-[2px_2px_0px_#ff5722] mb-6">
+                            // DIRECT CHAT & EMAIL
+                        </span>
+                        <h3 class="text-2xl font-black uppercase tracking-tight text-black mb-4">Kontak Langsung</h3>
+                        <p class="text-sm font-bold text-slate-700 leading-relaxed mb-8">
+                            Silakan hubungi saya kapan saja untuk mendiskusikan peluang kerja sama proyek baru atau sekadar menyapa.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        @if ($user->email_contact)
+                            <a href="mailto:{{ $user->email_contact }}" class="flex items-center gap-3 p-4 bg-white border-3 border-black shadow-[3px_3px_0px_#000000] hover:shadow-[5px_5px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
+                                <div class="p-2 bg-black text-white border-2 border-black">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0l-7.5-4.615a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <span class="block text-xxs font-black text-slate-500 uppercase tracking-widest">KIRIM EMAIL</span>
+                                    <span class="block text-sm font-black text-black truncate">{{ $user->email_contact }}</span>
+                                </div>
+                            </a>
+                        @endif
+
+                        @if ($user->phone)
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $user->phone) }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-white border-3 border-black shadow-[3px_3px_0px_#000000] hover:shadow-[5px_5px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
+                                <div class="p-2 bg-emerald-500 text-black border-2 border-black">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.458L0 24zm6.26-4.526c1.661.987 3.291 1.488 4.966 1.489 5.517 0 10.005-4.48 10.008-9.998.001-2.673-1.037-5.185-2.923-7.072C16.483 2.006 13.977.969 11.3.969 5.787.969 1.3 5.449 1.297 10.969c-.001 1.761.464 3.424 1.348 4.96L1.67 21.5l5.59-1.463c-.347-.206-.693-.412-1.04-.619-.103-.062-.206-.124-.309-.187-.001-.001-.001-.001-.001-.001v.001zm11.517-7.834c-.27-.135-1.597-.788-1.846-.878-.248-.09-.429-.135-.61.135-.181.271-.7 1.035-.858 1.216-.158.18-.316.203-.586.068-.27-.136-1.14-.42-2.171-1.339-.802-.716-1.343-1.6-1.501-1.871-.158-.271-.017-.417.118-.552.122-.122.27-.316.406-.474.135-.158.18-.271.27-.451.09-.18.045-.339-.022-.475-.068-.135-.61-1.467-.836-2.009-.22-.53-.442-.458-.61-.466-.158-.008-.339-.008-.52-.008-.18 0-.474.068-.722.339-.248.271-.948.927-.948 2.26 0 1.332.97 2.617 1.106 2.798.135.18 1.907 2.911 4.62 4.082.645.278 1.149.444 1.542.569.648.206 1.237.177 1.703.107.519-.078 1.597-.653 1.822-1.284.226-.632.226-1.173.158-1.285-.068-.113-.248-.18-.519-.315z" />
+                                    </svg>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <span class="block text-xxs font-black text-slate-500 uppercase tracking-widest">WHATSAPP CHAT</span>
+                                    <span class="block text-sm font-black text-black truncate">+{{ $user->phone }}</span>
+                                </div>
+                            </a>
+                        @endif
+
+                        @if (!$user->email_contact && !$user->phone)
+                            <div class="text-xs font-bold text-slate-400 uppercase italic p-4 border-2 border-dashed border-slate-350">// Kontak belum diatur</div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Right: Social Media Buttons -->
+                <div class="bg-black border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#ff5722] flex flex-col justify-between text-white">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-[#ff5722] text-black border-2 border-black font-extrabold text-xs uppercase shadow-[2px_2px_0px_#ffffff] mb-6">
+                            // SOCIAL PROFILES
+                        </span>
+                        <h3 class="text-2xl font-black uppercase tracking-tight text-white mb-4">Media Sosial</h3>
+                        <p class="text-sm font-bold text-slate-300 leading-relaxed mb-8">
+                            Ikuti atau hubungi saya melalui media sosial saya untuk melihat proyek lain atau koneksi profesional.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        @if ($user->github_link)
+                            <a href="{{ $user->github_link }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-white border-3 border-black text-black shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
+                                <span class="text-sm font-black uppercase tracking-wider">GitHub Profil</span>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                                </svg>
+                            </a>
+                        @endif
+
+                        @if ($user->linkedin_link)
+                            <a href="{{ $user->linkedin_link }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-[#0077b5] border-3 border-black text-white shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
+                                <span class="text-sm font-black uppercase tracking-wider text-white">LinkedIn Profil</span>
+                                <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                </svg>
+                            </a>
+                        @endif
+
+                        @if ($user->instagram_link)
+                            <a href="{{ $user->instagram_link }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-[#e1306c] border-3 border-black text-white shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
+                                <span class="text-sm font-black uppercase tracking-wider text-white">Instagram</span>
+                                <svg class="w-5 h-5 fill-currentColor text-white" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                                </svg>
+                            </a>
+                        @endif
+
+                        @if (!$user->github_link && !$user->linkedin_link && !$user->instagram_link)
+                            <div class="text-xs font-bold text-slate-400 uppercase italic p-4 border-2 border-dashed border-slate-700">// Sosial media belum diatur</div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

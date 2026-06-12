@@ -177,7 +177,8 @@
                 'hero': 'BERANDA',
                 'about': 'TENTANG',
                 'projects': 'PROYEK',
-                'timeline': 'RIWAYAT'
+                'timeline': 'RIWAYAT',
+                'contact': 'KONTAK'
             };
 
             let currentActiveSection = 'hero';
