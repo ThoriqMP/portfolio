@@ -81,7 +81,6 @@
                         <p class="text-sm font-extrabold uppercase text-[#ff5722] tracking-wider">{{ $user->title ?? 'Web Developer' }}</p>
                         
                         <div class="flex flex-wrap gap-2 pt-2 text-xxs font-black uppercase">
-                            <span class="px-2 py-1 bg-black text-white border border-black">@admin</span>
                             @forelse ($user->badges as $badge)
                                 <span class="px-2.5 py-1 border border-black shadow-[1px_1px_0px_#000000] font-black uppercase tracking-wider inline-block"
                                       style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
