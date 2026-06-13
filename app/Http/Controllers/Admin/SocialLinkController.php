@@ -28,7 +28,6 @@ class SocialLinkController extends Controller
             'link' => ['required', 'string', 'max:255'],
             'icon' => ['required', 'string', 'in:github,linkedin,instagram,whatsapp,email,link,facebook,youtube,twitter'],
             'bg_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
-            'text_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
         ], [
             'name.required' => 'Nama sosial media wajib diisi.',
             'name.max' => 'Nama tidak boleh lebih dari 50 karakter.',
@@ -38,9 +37,21 @@ class SocialLinkController extends Controller
             'icon.in' => 'Pilihan ikon sosial media tidak valid.',
             'bg_color.required' => 'Warna latar wajib ditentukan.',
             'bg_color.regex' => 'Warna latar harus berupa format HEX yang valid (contoh: #ff5722).',
-            'text_color.required' => 'Warna teks wajib ditentukan.',
-            'text_color.regex' => 'Warna teks harus berupa format HEX yang valid (contoh: #000000).',
         ]);
+
+        // Calculate text_color dynamically based on bg_color brightness
+        $hex = str_replace('#', '', $validated['bg_color']);
+        if (strlen($hex) == 3) {
+            $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+            $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+            $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+        } else {
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
+        }
+        $brightness = ($r * 299 + $g * 587 + $b * 114) / 1000;
+        $validated['text_color'] = ($brightness >= 150) ? '#000000' : '#ffffff';
 
         Auth::user()->socialLinks()->create($validated);
 
@@ -63,7 +74,6 @@ class SocialLinkController extends Controller
             'link' => ['required', 'string', 'max:255'],
             'icon' => ['required', 'string', 'in:github,linkedin,instagram,whatsapp,email,link,facebook,youtube,twitter'],
             'bg_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
-            'text_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
         ], [
             'name.required' => 'Nama sosial media wajib diisi.',
             'name.max' => 'Nama tidak boleh lebih dari 50 karakter.',
@@ -73,9 +83,21 @@ class SocialLinkController extends Controller
             'icon.in' => 'Pilihan ikon sosial media tidak valid.',
             'bg_color.required' => 'Warna latar wajib ditentukan.',
             'bg_color.regex' => 'Warna latar harus berupa format HEX yang valid (contoh: #ff5722).',
-            'text_color.required' => 'Warna teks wajib ditentukan.',
-            'text_color.regex' => 'Warna teks harus berupa format HEX yang valid (contoh: #000000).',
         ]);
+
+        // Calculate text_color dynamically based on bg_color brightness
+        $hex = str_replace('#', '', $validated['bg_color']);
+        if (strlen($hex) == 3) {
+            $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+            $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+            $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+        } else {
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
+        }
+        $brightness = ($r * 299 + $g * 587 + $b * 114) / 1000;
+        $validated['text_color'] = ($brightness >= 150) ? '#000000' : '#ffffff';
 
         $social->update($validated);
 

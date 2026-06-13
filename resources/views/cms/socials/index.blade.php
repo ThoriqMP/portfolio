@@ -218,33 +218,8 @@
                         @enderror
                     </div>
 
-                    <!-- Text Color Selectors -->
-                    <div class="space-y-2.5">
-                        <label class="block text-xs font-black uppercase tracking-widest text-black">Warna Teks (Text Color)</label>
-                        
-                        <!-- Curated Contrast toggles -->
-                        <div class="flex gap-3">
-                            <button type="button" onclick="selectColorPreset('text', '#ffffff')" class="brutal-btn-secondary px-3 py-1 text-xxs font-black flex items-center gap-1 bg-white">
-                                <span class="w-3 h-3 bg-white border border-black inline-block"></span> Teks Putih
-                            </button>
-                            <button type="button" onclick="selectColorPreset('text', '#000000')" class="brutal-btn-secondary px-3 py-1 text-xxs font-black flex items-center gap-1 bg-white">
-                                <span class="w-3 h-3 bg-black border border-black inline-block"></span> Teks Hitam
-                            </button>
-                        </div>
-
-                        <!-- HEX Input and Picker -->
-                        <div class="flex items-center gap-3">
-                            <div class="relative flex-grow">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 font-mono font-black text-black">HEX:</span>
-                                <input type="text" name="text_color" id="text_color" value="#ffffff" required
-                                       class="w-full bg-white border-3 border-black rounded-none pl-12 pr-4 py-2.5 text-black font-mono font-bold focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
-                            </div>
-                            <input type="color" id="text_color_picker" value="#ffffff" class="w-12 h-12 border-3 border-black cursor-pointer bg-white">
-                        </div>
-                        @error('text_color')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
-                        @enderror
-                    </div>
+                    <!-- Hidden Text Color input (automatically calculated from background color) -->
+                    <input type="hidden" name="text_color" id="text_color" value="#ffffff">
 
                     <!-- Submit Buttons -->
                     <div class="pt-4 border-t-2 border-black flex items-center justify-end gap-3" id="form-actions">
@@ -280,7 +255,6 @@
         const bgColorInput = document.getElementById('bg_color');
         const bgPicker = document.getElementById('bg_color_picker');
         const textColorInput = document.getElementById('text_color');
-        const textPicker = document.getElementById('text_color_picker');
         
         const previewElement = document.getElementById('preview-social-element');
         const previewNameLabel = document.getElementById('preview-name-label');
@@ -311,6 +285,20 @@
             link: "// Masukkan URL lengkap situs web atau tautan umum lainnya."
         };
 
+        // Calculate contrast color (white or black) from hex background
+        function getContrastColor(hexColor) {
+            let hex = hexColor.replace('#', '');
+            if (hex.length === 3) {
+                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            if (hex.length !== 6) return '#FFFFFF';
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            return (brightness >= 150) ? '#000000' : '#FFFFFF';
+        }
+
         // Update real-time preview
         function updateLivePreview() {
             const nameValue = nameInput.value.trim();
@@ -319,8 +307,14 @@
             const selectedIcon = iconSelect.value;
             previewIconWrapper.innerHTML = ICON_SVGS[selectedIcon] || ICON_SVGS['link'];
             
-            previewElement.style.backgroundColor = bgColorInput.value;
-            previewElement.style.color = textColorInput.value;
+            const bgColor = bgColorInput.value;
+            const contrastColor = getContrastColor(bgColor);
+            
+            previewElement.style.backgroundColor = bgColor;
+            previewElement.style.color = contrastColor;
+            if (textColorInput) {
+                textColorInput.value = contrastColor;
+            }
 
             // Update placeholder & helper text dynamically
             if (PLACEHOLDERS[selectedIcon]) {
@@ -349,19 +343,6 @@
             updateLivePreview();
         });
 
-        textColorInput.addEventListener('input', (e) => {
-            let val = e.target.value;
-            if (val.startsWith('#') && (val.length === 4 || val.length === 7)) {
-                textPicker.value = val;
-            }
-            updateLivePreview();
-        });
-
-        textPicker.addEventListener('input', (e) => {
-            textColorInput.value = e.target.value.toUpperCase();
-            updateLivePreview();
-        });
-
         // Initialize preview
         updateLivePreview();
 
@@ -370,9 +351,6 @@
             if (type === 'bg') {
                 bgColorInput.value = hex.toUpperCase();
                 bgPicker.value = hex;
-            } else if (type === 'text') {
-                textColorInput.value = hex.toUpperCase();
-                textPicker.value = hex;
             }
             updateLivePreview();
         };
@@ -390,7 +368,6 @@
         const bgColorInput = document.getElementById('bg_color');
         const bgPicker = document.getElementById('bg_color_picker');
         const textColorInput = document.getElementById('text_color');
-        const textPicker = document.getElementById('text_color_picker');
         const methodContainer = document.getElementById('method-spoofing-container');
         const submitBtn = document.getElementById('submit-form-btn');
         const actionsDiv = document.getElementById('form-actions');
@@ -404,8 +381,9 @@
         iconSelect.value = icon;
         bgColorInput.value = bgColor.toUpperCase();
         bgPicker.value = bgColor;
-        textColorInput.value = textColor.toUpperCase();
-        textPicker.value = textColor;
+        if (textColorInput) {
+            textColorInput.value = textColor.toUpperCase();
+        }
 
         form.action = `/cms/socials/${id}`;
         methodContainer.innerHTML = '@method("PUT")';
@@ -440,7 +418,6 @@
         const bgColorInput = document.getElementById('bg_color');
         const bgPicker = document.getElementById('bg_color_picker');
         const textColorInput = document.getElementById('text_color');
-        const textPicker = document.getElementById('text_color_picker');
         const methodContainer = document.getElementById('method-spoofing-container');
         const submitBtn = document.getElementById('submit-form-btn');
         const cancelBtn = document.getElementById('cancel-edit-btn');
@@ -454,8 +431,9 @@
         iconSelect.value = 'github';
         bgColorInput.value = '#000000';
         bgPicker.value = '#000000';
-        textColorInput.value = '#FFFFFF';
-        textPicker.value = '#FFFFFF';
+        if (textColorInput) {
+            textColorInput.value = '#FFFFFF';
+        }
 
         form.action = "{{ route('admin.socials.store') }}";
         methodContainer.innerHTML = '';
