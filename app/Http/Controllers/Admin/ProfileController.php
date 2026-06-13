@@ -44,11 +44,6 @@ class ProfileController extends Controller
             'bio' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:10240'],
             'password' => ['nullable', 'string', 'min:6'],
-            'email_contact' => ['nullable', 'email', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:50'],
-            'github_link' => ['nullable', 'url', 'max:255'],
-            'linkedin_link' => ['nullable', 'url', 'max:255'],
-            'instagram_link' => ['nullable', 'url', 'max:255'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'username.required' => 'Username wajib diisi.',
@@ -57,10 +52,6 @@ class ProfileController extends Controller
             'image.mimes' => 'Format gambar harus jpeg, jpg, atau png.',
             'image.max' => 'Ukuran gambar maksimal adalah 10MB.',
             'password.min' => 'Password minimal harus 6 karakter.',
-            'email_contact.email' => 'Format email kontak tidak valid.',
-            'github_link.url' => 'Format link GitHub tidak valid.',
-            'linkedin_link.url' => 'Format link LinkedIn tidak valid.',
-            'instagram_link.url' => 'Format link Instagram tidak valid.',
         ]);
 
         // Keep all fields except password
@@ -69,11 +60,6 @@ class ProfileController extends Controller
             'username' => $validated['username'],
             'title' => $validated['title'],
             'bio' => $validated['bio'],
-            'email_contact' => $validated['email_contact'] ?? null,
-            'phone' => $validated['phone'] ?? null,
-            'github_link' => $validated['github_link'] ?? null,
-            'linkedin_link' => $validated['linkedin_link'] ?? null,
-            'instagram_link' => $validated['instagram_link'] ?? null,
         ];
 
         // Handle image upload with auto-compression

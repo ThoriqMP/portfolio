@@ -37,6 +37,9 @@ class ProjectRequest extends FormRequest
             'thumbnail_composition' => ['required', 'string', 'in:single,split,mosaic,carousel'],
             'additional_images' => ['nullable', 'array'],
             'additional_images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
+            'badges' => ['nullable', 'array'],
+            'badges.*' => ['integer', 'exists:badges,id'],
+            'new_badges' => ['nullable', 'string'],
         ];
     }
 

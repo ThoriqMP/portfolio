@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\ProjectImage;
+use App\Models\Badge;
 use App\Http\Requests\ProjectRequest;
 use App\Traits\HandlesImageCompression;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('cms.projects.create');
+        $badges = Auth::user()->badges()->get();
+        return view('cms.projects.create', compact('badges'));
     }
 
     /**
@@ -50,6 +52,33 @@ class ProjectController extends Controller
         // Create project
         $project = Project::create($validated);
 
+        // Sync badges
+        $badgeIds = $request->input('badges', []);
+        
+        // Handle new badges inputted instantly
+        $newBadgesInput = $request->input('new_badges');
+        if (!empty($newBadgesInput)) {
+            $newBadgeNames = explode(',', $newBadgesInput);
+            foreach ($newBadgeNames as $name) {
+                $name = trim($name);
+                if ($name !== '') {
+                    // Check if badge with the same name already exists for this user
+                    $existingBadge = Auth::user()->badges()->where('name', $name)->first();
+                    if ($existingBadge) {
+                        $badgeIds[] = $existingBadge->id;
+                    } else {
+                        $newBadge = Auth::user()->badges()->create([
+                            'name' => $name,
+                            'bg_color' => '#ff5722',
+                            'text_color' => '#000000',
+                        ]);
+                        $badgeIds[] = $newBadge->id;
+                    }
+                }
+            }
+        }
+        $project->badges()->sync($badgeIds);
+
         // Handle multiple additional mockup images with auto-compression
         if ($request->hasFile('additional_images')) {
             foreach ($request->file('additional_images') as $index => $file) {
@@ -70,7 +99,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $project->load('images');
+        $project->load(['images', 'badges']);
+        $badges = Auth::user()->badges()->get();
 
         // Check if there is a cached text draft in the session
         $draftKey = 'project_draft_' . $project->id;
@@ -80,7 +110,7 @@ class ProjectController extends Controller
             session()->flash('draft_restored', 'Data draf Anda dari sesi sebelumnya telah dipulihkan secara otomatis.');
         }
 
-        return view('cms.projects.edit', compact('project'));
+        return view('cms.projects.edit', compact('project', 'badges'));
     }
 
     /**
@@ -103,6 +133,33 @@ class ProjectController extends Controller
         }
 
         $project->update($validated);
+
+        // Sync badges
+        $badgeIds = $request->input('badges', []);
+        
+        // Handle new badges inputted instantly
+        $newBadgesInput = $request->input('new_badges');
+        if (!empty($newBadgesInput)) {
+            $newBadgeNames = explode(',', $newBadgesInput);
+            foreach ($newBadgeNames as $name) {
+                $name = trim($name);
+                if ($name !== '') {
+                    // Check if badge with the same name already exists for this user
+                    $existingBadge = Auth::user()->badges()->where('name', $name)->first();
+                    if ($existingBadge) {
+                        $badgeIds[] = $existingBadge->id;
+                    } else {
+                        $newBadge = Auth::user()->badges()->create([
+                            'name' => $name,
+                            'bg_color' => '#ff5722',
+                            'text_color' => '#000000',
+                        ]);
+                        $badgeIds[] = $newBadge->id;
+                    }
+                }
+            }
+        }
+        $project->badges()->sync($badgeIds);
 
         // Clean up the session draft as it is now finalized and saved in database
         session()->forget('project_draft_' . $project->id);

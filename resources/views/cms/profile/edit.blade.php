@@ -88,64 +88,7 @@
                 @enderror
             </div>
 
-            <!-- Contact & Social Media Info -->
-            <div class="border-t-2 border-black pt-6 space-y-6">
-                <h3 class="text-sm font-black uppercase text-[#ff5722] tracking-wider">// Informasi Kontak & Sosial Media</h3>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <!-- Email Contact -->
-                    <div>
-                        <label for="email_contact" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Email Kontak</label>
-                        <input type="email" name="email_contact" id="email_contact" value="{{ old('email_contact', $user->email_contact) }}" placeholder="Contoh: thoriq@example.com"
-                            class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
-                        @error('email_contact')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
-                        @enderror
-                    </div>
 
-                    <!-- Phone Number / WhatsApp -->
-                    <div>
-                        <label for="phone" class="block text-xs font-black uppercase tracking-widest text-black mb-2">No. HP / WhatsApp (Format: 628...)</label>
-                        <input type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" placeholder="Contoh: 6281234567890"
-                            class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
-                        @error('phone')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <!-- GitHub Link -->
-                    <div>
-                        <label for="github_link" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Link GitHub</label>
-                        <input type="url" name="github_link" id="github_link" value="{{ old('github_link', $user->github_link) }}" placeholder="https://github.com/username"
-                            class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
-                        @error('github_link')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <!-- LinkedIn Link -->
-                    <div>
-                        <label for="linkedin_link" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Link LinkedIn</label>
-                        <input type="url" name="linkedin_link" id="linkedin_link" value="{{ old('linkedin_link', $user->linkedin_link) }}" placeholder="https://linkedin.com/in/username"
-                            class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
-                        @error('linkedin_link')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <!-- Instagram Link -->
-                    <div>
-                        <label for="instagram_link" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Link Instagram</label>
-                        <input type="url" name="instagram_link" id="instagram_link" value="{{ old('instagram_link', $user->instagram_link) }}" placeholder="https://instagram.com/username"
-                            class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
-                        @error('instagram_link')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-            </div>
 
             <div class="border-t-2 border-black pt-6 space-y-6">
                 <h3 class="text-sm font-black uppercase text-[#ff5722] tracking-wider">// Kredensial Masuk Akun</h3>

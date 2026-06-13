@@ -156,26 +156,60 @@ class DatabaseSeeder extends Seeder
         }
 
         // 5. Create Dummy Badges for Profile Skills
-        $badges = [
-            [
-                'name' => 'Laravel 11',
-                'bg_color' => '#ff5722',
-                'text_color' => '#000000',
-            ],
-            [
-                'name' => 'Tailwind CSS',
-                'bg_color' => '#000000',
-                'text_color' => '#ffffff',
-            ],
-            [
-                'name' => 'MySQL',
-                'bg_color' => '#ffffff',
-                'text_color' => '#000000',
-            ],
-        ];
+        $laravelBadge = $admin->badges()->create([
+            'name' => 'Laravel 11',
+            'bg_color' => '#ff5722',
+            'text_color' => '#000000',
+        ]);
+        $tailwindBadge = $admin->badges()->create([
+            'name' => 'Tailwind CSS',
+            'bg_color' => '#000000',
+            'text_color' => '#ffffff',
+        ]);
+        $mysqlBadge = $admin->badges()->create([
+            'name' => 'MySQL',
+            'bg_color' => '#ffffff',
+            'text_color' => '#000000',
+        ]);
+        $vueBadge = $admin->badges()->create([
+            'name' => 'VueJS',
+            'bg_color' => '#ccff00',
+            'text_color' => '#000000',
+        ]);
 
-        foreach ($badges as $badge) {
-            $admin->badges()->create($badge);
-        }
+        // Link project and badges
+        $financeTracker->badges()->sync([$laravelBadge->id, $tailwindBadge->id]);
+        $ecommerceApi->badges()->sync([$laravelBadge->id, $mysqlBadge->id]);
+        $cityInfoHub->badges()->sync([$vueBadge->id, $tailwindBadge->id]);
+
+        // 6. Create Dummy Social Links
+        $admin->socialLinks()->create([
+            'name' => 'GitHub Profil',
+            'link' => 'https://github.com/admin',
+            'icon' => 'github',
+            'bg_color' => '#ffffff',
+            'text_color' => '#000000',
+        ]);
+        $admin->socialLinks()->create([
+            'name' => 'LinkedIn Profil',
+            'link' => 'https://linkedin.com/in/admin',
+            'icon' => 'linkedin',
+            'bg_color' => '#0077b5',
+            'text_color' => '#ffffff',
+        ]);
+        $admin->socialLinks()->create([
+            'name' => 'Kirim Email',
+            'link' => 'mailto:thoriq@example.com',
+            'icon' => 'email',
+            'bg_color' => '#000000',
+            'text_color' => '#ffffff',
+        ]);
+        $admin->socialLinks()->create([
+            'name' => 'WhatsApp Chat',
+            'link' => 'https://wa.me/6281234567890',
+            'icon' => 'whatsapp',
+            'bg_color' => '#25d366',
+            'text_color' => '#ffffff',
+        ]);
     }
 }

@@ -35,4 +35,12 @@ class Project extends Model
     {
         return $this->hasMany(ProjectImage::class)->orderBy('sort_order', 'asc')->orderBy('id', 'asc');
     }
+
+    /**
+     * Get the technology badges for the project.
+     */
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class, 'project_badge');
+    }
 }

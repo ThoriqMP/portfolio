@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\BadgeController;
+use App\Http\Controllers\Admin\SocialLinkController;
 
 // Public Home
 Route::get('/', [PublicController::class, 'index'])->name('home');
@@ -34,6 +35,7 @@ Route::middleware('auth')->prefix('cms')->name('admin.')->group(function () {
     Route::resource('educations', EducationController::class);
     Route::resource('experiences', ExperienceController::class);
     Route::resource('badges', BadgeController::class)->except(['create', 'show', 'edit']);
+    Route::resource('socials', SocialLinkController::class)->except(['create', 'show', 'edit']);
     
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

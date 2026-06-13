@@ -16,7 +16,9 @@ class PublicController extends Controller
         // Fetch the first user (the administrator) along with sorted relationships
         $user = User::with([
             'projects.images', // Eager load project mockups to avoid N+1 queries
+            'projects.badges', // Eager load project badges
             'badges',
+            'socialLinks',
             'educations' => function ($query) {
                 $query->orderBy('start_year', 'desc');
             },

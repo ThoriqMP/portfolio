@@ -87,6 +87,39 @@
                 </div>
             </div>
 
+            <!-- Project Badges (Technology Tags) -->
+            <div class="border-3 border-black p-5 bg-slate-50">
+                <span class="block text-xs font-black uppercase tracking-widest text-black mb-3">// TEKNOLOGI / SOFTWARE YANG DIGUNAKAN</span>
+                
+                <!-- Checkbox List of Existing Badges -->
+                <div class="mb-4">
+                    <label class="block text-xxs font-black uppercase tracking-wider text-slate-500 mb-2">Pilih Teknologi/Software yang Sudah Ada:</label>
+                    <div class="flex flex-wrap gap-3">
+                        @forelse ($badges as $badge)
+                            <label class="inline-flex items-center gap-2 cursor-pointer bg-white border-2 border-black px-3 py-1.5 shadow-[2px_2px_0px_#000000] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all">
+                                <input type="checkbox" name="badges[]" value="{{ $badge->id }}"
+                                    {{ is_array(old('badges')) && in_array($badge->id, old('badges')) ? 'checked' : '' }}
+                                    class="w-4 h-4 border-2 border-black rounded-none accent-[#ff5722] cursor-pointer">
+                                <span class="px-2 py-0.5 font-sans font-bold text-xs uppercase shadow-[1px_1px_0px_#000000]"
+                                       style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
+                                    {{ $badge->name }}
+                                </span>
+                            </label>
+                        @empty
+                            <p class="text-xs font-bold text-slate-500 uppercase italic">// Belum ada teknologi/software. Silakan input langsung di bawah.</p>
+                        @endforelse
+                    </div>
+                </div>
+
+                <!-- Instant input for new badges -->
+                <div>
+                    <label for="new_badges" class="block text-xxs font-black uppercase tracking-wider text-slate-500 mb-1">Ketik Teknologi/Software Baru Instan (Pisahkan dengan koma jika lebih dari satu):</label>
+                    <input type="text" name="new_badges" id="new_badges" value="{{ old('new_badges') }}" placeholder="Contoh: Laravel 11, Tailwind CSS, Docker"
+                        class="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[3px_3px_0px_#000000] transition-all duration-150">
+                    <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Teknologi/software baru akan dibuat dengan warna default dan bisa dikustomisasi nanti di menu Lencana Keahlian.</p>
+                </div>
+            </div>
+
             <!-- Grid Composition Span -->
             <div>
                 <label for="grid_span" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Komposisi Layout Kartu (Grid Span)</label>

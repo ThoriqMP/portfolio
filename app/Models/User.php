@@ -23,11 +23,6 @@ class User extends Authenticatable
         'bio',
         'avatar_path',
         'password',
-        'email_contact',
-        'phone',
-        'github_link',
-        'linkedin_link',
-        'instagram_link',
     ];
 
     /**
@@ -82,5 +77,13 @@ class User extends Authenticatable
     public function badges(): HasMany
     {
         return $this->hasMany(Badge::class);
+    }
+
+    /**
+     * Get the social links for the user.
+     */
+    public function socialLinks(): HasMany
+    {
+        return $this->hasMany(SocialLink::class);
     }
 }

@@ -33,12 +33,16 @@
                 <div class="border-l-4 border-black pl-6 space-y-2">
                     <span class="block text-xxs font-black text-slate-500 uppercase tracking-widest">// CORE STACK:</span>
                     <div class="flex flex-wrap gap-1.5">
-                        <span class="px-2.5 py-1 bg-black text-[#ff5722] border-2 border-black text-[9px] font-black tracking-widest uppercase">
-                            LARAVEL 11
-                        </span>
-                        <span class="px-2.5 py-1 bg-white text-black border-2 border-black text-[9px] font-black tracking-widest uppercase shadow-[1.5px_1.5px_0px_#000000]">
-                            TAILWIND
-                        </span>
+                        @forelse ($project->badges as $badge)
+                            <span class="px-2.5 py-1 border-2 border-black text-[9px] font-black tracking-widest uppercase shadow-[1.5px_1.5px_0px_#000000] inline-block"
+                                  style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
+                                {{ $badge->name }}
+                            </span>
+                        @empty
+                            <span class="px-2.5 py-1 bg-black text-[#ff5722] border-2 border-black text-[9px] font-black tracking-widest uppercase">
+                                // UMUM
+                            </span>
+                        @endforelse
                     </div>
                 </div>
             </div>
