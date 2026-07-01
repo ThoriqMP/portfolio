@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Create default admin user
-        $admin = User::create([
-            'name' => 'Thoriq',
-            'username' => 'admin',
-            'title' => 'Fullstack Web Developer',
-            'bio' => 'Seorang Fullstack Web Developer yang bersemangat dalam membangun aplikasi web modern yang responsif, berkinerja tinggi, dan berestetika premium menggunakan ekosistem Laravel dan Tailwind CSS.',
-            'password' => Hash::make('password'),
-        ]);
+        $admin = User::updateOrCreate(
+            ['username' => 'admin'],
+            [
+                'name' => 'Thoriq',
+                'title' => 'Fullstack Web Developer',
+                'bio' => 'Seorang Fullstack Web Developer yang bersemangat dalam membangun aplikasi web modern yang responsif, berkinerja tinggi, dan berestetika premium menggunakan ekosistem Laravel dan Tailwind CSS.',
+                'password' => Hash::make('password'),
+            ]
+        );
 
         // 2. Create Dummy Projects with Layout Compositions
         $financeTracker = $admin->projects()->create([

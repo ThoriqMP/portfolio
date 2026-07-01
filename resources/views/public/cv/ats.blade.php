@@ -9,123 +9,217 @@
         }
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 11pt;
-            line-height: 1.4;
-            color: #333;
+            font-size: 10.5pt;
+            line-height: 1.5;
+            color: #333333;
             margin: 0;
             padding: 0;
         }
         h1, h2, h3, h4 {
-            margin: 0 0 10px 0;
-            color: #000;
+            margin: 0;
+            color: #000000;
         }
         h1 {
-            font-size: 24pt;
+            font-size: 22pt;
             text-transform: uppercase;
-            text-align: center;
+            letter-spacing: 1px;
             margin-bottom: 5px;
         }
-        .contact-info {
-            text-align: center;
+        .subtitle {
+            font-size: 12pt;
+            color: #555555;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
-            font-size: 10pt;
+        }
+        .header-cell-left {
+            width: 110px;
+            vertical-align: top;
+            padding-right: 15px;
+        }
+        .header-cell-right {
+            vertical-align: middle;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-cover: cover;
+            border: 2px solid #000000;
+        }
+        .contact-info {
+            font-size: 9.5pt;
+            color: #444444;
+            line-height: 1.6;
         }
         .contact-info a {
-            color: #333;
+            color: #0056b3;
             text-decoration: none;
         }
         .section {
             margin-bottom: 20px;
         }
         .section-title {
-            font-size: 14pt;
+            font-size: 13pt;
             text-transform: uppercase;
-            border-bottom: 1px solid #000;
-            padding-bottom: 3px;
+            font-weight: bold;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 2px;
             margin-bottom: 10px;
+            color: #000000;
+            letter-spacing: 0.5px;
         }
         .item {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        .item-header {
-            display: table;
+        .item-header-table {
             width: 100%;
+            border-collapse: collapse;
             margin-bottom: 3px;
         }
         .item-title {
-            display: table-cell;
             font-weight: bold;
-            font-size: 12pt;
+            font-size: 11pt;
+            color: #111111;
+            text-align: left;
         }
         .item-date {
-            display: table-cell;
             text-align: right;
             font-style: italic;
-            font-size: 10pt;
-            width: 30%;
+            font-size: 9.5pt;
+            color: #555555;
+            width: 150px;
+        }
+        .item-subtitle-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 4px;
         }
         .item-subtitle {
             font-style: italic;
-            font-size: 11pt;
-            margin-bottom: 5px;
+            font-size: 10pt;
+            color: #444444;
+            text-align: left;
         }
         .item-desc {
             margin: 0;
             text-align: justify;
+            font-size: 10pt;
+            color: #333333;
         }
-        .skills-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
+        .skills-container {
+            font-size: 10pt;
         }
-        .skills-list li {
-            display: inline-block;
-            margin-right: 15px;
+        .skills-group {
             margin-bottom: 5px;
         }
+        .skills-label {
+            font-weight: bold;
+            display: inline-block;
+        }
         p {
-            margin: 0 0 5px 0;
+            margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <h1>{{ $user->name }}</h1>
-    <div class="contact-info">
-        @if($user->email)
-            <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-        @endif
-        
-        @foreach($user->socialLinks as $social)
-            | <a href="{{ $social->url }}">{{ $social->platform }}</a>
-        @endforeach
-    </div>
+    <!-- HEADER SECTION -->
+    <table class="header-table">
+        <tr>
+            @if($user->avatar_path && file_exists(storage_path('app/public/' . $user->avatar_path)))
+                <td class="header-cell-left">
+                    <img class="avatar" src="{{ storage_path('app/public/' . $user->avatar_path) }}" alt="Profile Picture">
+                </td>
+            @endif
+            <td class="header-cell-right">
+                <h1>{{ $user->name }}</h1>
+                @if($user->title)
+                    <div class="subtitle">{{ $user->title }}</div>
+                @endif
+                <div class="contact-info">
+                    @php
+                        $emailLink = $user->socialLinks->where('icon', 'email')->first();
+                        $whatsappLink = $user->socialLinks->where('icon', 'whatsapp')->first();
+                        $githubLink = $user->socialLinks->where('icon', 'github')->first();
+                        $linkedinLink = $user->socialLinks->where('icon', 'linkedin')->first();
+                        
+                        $contactDetails = [];
+                        
+                        if ($emailLink) {
+                            $email = str_replace('mailto:', '', $emailLink->link);
+                            $contactDetails[] = '<a href="' . $emailLink->link . '">' . $email . '</a>';
+                        }
+                        
+                        if ($whatsappLink) {
+                            $phone = $whatsappLink->name;
+                            $contactDetails[] = '<a href="' . $whatsappLink->link . '">' . $phone . '</a>';
+                        }
+                        
+                        if ($linkedinLink) {
+                            $contactDetails[] = '<a href="' . $linkedinLink->link . '">LinkedIn</a>';
+                        }
+                        
+                        if ($githubLink) {
+                            $contactDetails[] = '<a href="' . $githubLink->link . '">GitHub</a>';
+                        }
+                    @endphp
+                    {!! implode(' &bull; ', $contactDetails) !!}
+                </div>
+            </td>
+        </tr>
+    </table>
 
-    <!-- SUMMARY / ABOUT -->
-    @if($user->about)
+    <!-- PROFESSIONAL SUMMARY -->
+    @if($user->bio)
     <div class="section">
         <h2 class="section-title">Professional Summary</h2>
-        <p class="item-desc">{!! nl2br(e($user->about)) !!}</p>
+        <p class="item-desc">{!! nl2br(e($user->bio)) !!}</p>
     </div>
     @endif
 
-    <!-- EXPERIENCE -->
+    <!-- WORK EXPERIENCE -->
     @if($user->experiences && $user->experiences->count() > 0)
     <div class="section">
-        <h2 class="section-title">Experience</h2>
+        <h2 class="section-title">Professional Experience</h2>
         @foreach($user->experiences as $exp)
             <div class="item">
-                <div class="item-header">
-                    <div class="item-title">{{ $exp->title }}</div>
-                    <div class="item-date">
-                        {{ \Carbon\Carbon::parse($exp->start_date)->format('M Y') }} - 
-                        {{ $exp->is_current ? 'Present' : \Carbon\Carbon::parse($exp->end_date)->format('M Y') }}
-                    </div>
-                </div>
-                <div class="item-subtitle">{{ $exp->company }}</div>
+                <table class="item-header-table">
+                    <tr>
+                        <td class="item-title">{{ $exp->position }}</td>
+                        <td class="item-date">
+                            {{ $exp->start_date ? \Carbon\Carbon::parse($exp->start_date)->format('M Y') : '' }} &ndash; 
+                            {{ $exp->end_date ? \Carbon\Carbon::parse($exp->end_date)->format('M Y') : 'Present' }}
+                        </td>
+                    </tr>
+                </table>
+                <table class="item-subtitle-table">
+                    <tr>
+                        <td class="item-subtitle">{{ $exp->company_name }}</td>
+                    </tr>
+                </table>
                 @if($exp->description)
-                    <div class="item-desc">{!! nl2br(e($exp->description)) !!}</div>
+                    <div class="item-desc">
+                        @php
+                            $points = json_decode($exp->description, true);
+                        @endphp
+                        @if(is_array($points))
+                            <ul style="margin: 0; padding-left: 20px;">
+                                @foreach($points as $point)
+                                    @if(trim($point) !== '')
+                                        <li>{{ $point }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            {!! nl2br(e($exp->description)) !!}
+                        @endif
+                    </div>
                 @endif
             </div>
         @endforeach
@@ -138,15 +232,36 @@
         <h2 class="section-title">Education</h2>
         @foreach($user->educations as $edu)
             <div class="item">
-                <div class="item-header">
-                    <div class="item-title">{{ $edu->degree }}</div>
-                    <div class="item-date">
-                        {{ $edu->start_year }} - {{ $edu->end_year ?? 'Present' }}
-                    </div>
-                </div>
-                <div class="item-subtitle">{{ $edu->institution }}</div>
+                <table class="item-header-table">
+                    <tr>
+                        <td class="item-title">{{ $edu->degree }}</td>
+                        <td class="item-date">
+                            {{ $edu->start_year }} &ndash; {{ $edu->end_year ?? 'Present' }}
+                        </td>
+                    </tr>
+                </table>
+                <table class="item-subtitle-table">
+                    <tr>
+                        <td class="item-subtitle">{{ $edu->institution_name }}</td>
+                    </tr>
+                </table>
                 @if($edu->description)
-                    <div class="item-desc">{!! nl2br(e($edu->description)) !!}</div>
+                    <div class="item-desc">
+                        @php
+                            $eduPoints = json_decode($edu->description, true);
+                        @endphp
+                        @if(is_array($eduPoints))
+                            <ul style="margin: 0; padding-left: 20px;">
+                                @foreach($eduPoints as $point)
+                                    @if(trim($point) !== '')
+                                        <li>{{ $point }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            {!! nl2br(e($edu->description)) !!}
+                        @endif
+                    </div>
                 @endif
             </div>
         @endforeach
@@ -159,29 +274,35 @@
         <h2 class="section-title">Projects</h2>
         @foreach($user->projects as $proj)
             <div class="item">
-                <div class="item-header">
-                    <div class="item-title">{{ $proj->title }}</div>
-                    @if($proj->link)
-                        <div class="item-date"><a href="{{ $proj->link }}">{{ parse_url($proj->link, PHP_URL_HOST) }}</a></div>
-                    @endif
-                </div>
+                <table class="item-header-table">
+                    <tr>
+                        <td class="item-title">{{ $proj->title }}</td>
+                        @if($proj->project_link)
+                            <td class="item-date">
+                                <a href="{{ $proj->project_link }}">{{ parse_url($proj->project_link, PHP_URL_HOST) }}</a>
+                            </td>
+                        @endif
+                    </tr>
+                </table>
                 @if($proj->description)
-                    <div class="item-desc">{!! nl2br(e($proj->description)) !!}</div>
+                    <p class="item-desc">{{ $proj->description }}</p>
                 @endif
             </div>
         @endforeach
     </div>
     @endif
 
-    <!-- SKILLS / BADGES -->
+    <!-- SKILLS & TECHNOLOGIES -->
     @if($user->badges && $user->badges->count() > 0)
     <div class="section">
         <h2 class="section-title">Skills & Technologies</h2>
-        <ul class="skills-list">
-            @foreach($user->badges as $badge)
-                <li>• {{ $badge->name }}</li>
-            @endforeach
-        </ul>
+        <div class="skills-container">
+            <span class="skills-label">Skills:</span>
+            @php
+                $skillNames = $user->badges->pluck('name')->toArray();
+            @endphp
+            {{ implode(', ', $skillNames) }}
+        </div>
     </div>
     @endif
 
