@@ -49,12 +49,6 @@
                     <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 text-base font-extrabold uppercase tracking-wider text-black bg-white hover:bg-black hover:text-white border-3 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
                         Hubungi Saya
                     </a>
-                    <a href="{{ route('cv.download') }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 text-base font-extrabold uppercase tracking-wider text-white bg-[#ff5722] hover:bg-black border-3 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
-                        Download CV
-                        <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </a>
                 </div>
             </div>
 
