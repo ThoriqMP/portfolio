@@ -90,7 +90,7 @@ class ProfileController extends Controller
      */
     public function downloadCv()
     {
-        $user = Auth::user()->load([
+        $user = \App\Models\User::with([
             'projects',
             'badges',
             'socialLinks',
@@ -100,7 +100,7 @@ class ProfileController extends Controller
             'experiences' => function ($query) {
                 $query->orderBy('start_date', 'desc');
             }
-        ]);
+        ])->first();
 
         if (!$user) {
             abort(404, 'Portfolio owner not found.');
