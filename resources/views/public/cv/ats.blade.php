@@ -5,12 +5,12 @@
     <title>CV - {{ $user->name }}</title>
     <style>
         @page {
-            margin: 40px;
+            margin: 25px 30px;
         }
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 10.5pt;
-            line-height: 1.5;
+            font-size: 9pt;
+            line-height: 1.35;
             color: #333333;
             margin: 0;
             padding: 0;
@@ -20,107 +20,138 @@
             color: #000000;
         }
         h1 {
-            font-size: 22pt;
+            font-size: 18pt;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
         }
         .subtitle {
-            font-size: 12pt;
+            font-size: 10pt;
             color: #555555;
             font-weight: bold;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         .header-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         .header-cell-left {
-            width: 110px;
+            width: 85px;
             vertical-align: top;
-            padding-right: 15px;
+            padding-right: 12px;
         }
         .header-cell-right {
             vertical-align: middle;
         }
         .avatar {
-            width: 100px;
-            height: 100px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
-            object-cover: cover;
-            border: 2px solid #000000;
+            object-fit: cover;
+            border: 1.5px solid #000000;
         }
         .contact-info {
-            font-size: 9.5pt;
+            font-size: 8.5pt;
             color: #444444;
-            line-height: 1.6;
+            line-height: 1.4;
         }
         .contact-info a {
             color: #0056b3;
             text-decoration: none;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         .section-title {
-            font-size: 13pt;
+            font-size: 11pt;
             text-transform: uppercase;
             font-weight: bold;
-            border-bottom: 2px solid #000000;
-            padding-bottom: 2px;
-            margin-bottom: 10px;
+            border-bottom: 1.5px solid #000000;
+            padding-bottom: 1px;
+            margin-bottom: 8px;
             color: #000000;
             letter-spacing: 0.5px;
         }
+        
+        /* Layout Two Columns */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .col-left {
+            width: 58%;
+            vertical-align: top;
+            padding-right: 15px;
+            border-right: 1px solid #dddddd;
+        }
+        .col-right {
+            width: 42%;
+            vertical-align: top;
+            padding-left: 15px;
+        }
+
         .item {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         .item-header-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         .item-title {
             font-weight: bold;
-            font-size: 11pt;
+            font-size: 9.5pt;
             color: #111111;
             text-align: left;
         }
         .item-date {
             text-align: right;
             font-style: italic;
-            font-size: 9.5pt;
+            font-size: 8.5pt;
             color: #555555;
-            width: 150px;
+            width: 110px;
         }
         .item-subtitle-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
         .item-subtitle {
             font-style: italic;
-            font-size: 10pt;
+            font-size: 9pt;
             color: #444444;
             text-align: left;
+            font-weight: bold;
         }
         .item-desc {
             margin: 0;
             text-align: justify;
-            font-size: 10pt;
+            font-size: 8.5pt;
             color: #333333;
         }
+        .item-desc ul {
+            margin: 0;
+            padding-left: 14px;
+        }
+        .item-desc li {
+            margin-bottom: 2px;
+        }
         .skills-container {
-            font-size: 10pt;
+            font-size: 8.5pt;
+            line-height: 1.4;
         }
-        .skills-group {
-            margin-bottom: 5px;
-        }
-        .skills-label {
-            font-weight: bold;
+        .skills-badge {
             display: inline-block;
+            background-color: #f0f0f0;
+            border: 1px solid #cccccc;
+            padding: 1px 5px;
+            margin-right: 3px;
+            margin-bottom: 4px;
+            font-size: 8pt;
+            border-radius: 3px;
+            color: #333333;
         }
         p {
             margin: 0;
@@ -129,12 +160,27 @@
 </head>
 <body>
 
+    @php
+        // Base64 encoding for the avatar to guarantee loading in DOMPDF
+        $avatarBase64 = null;
+        if ($user->avatar_path && file_exists(storage_path('app/public/' . $user->avatar_path))) {
+            try {
+                $path = storage_path('app/public/' . $user->avatar_path);
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $avatarBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            } catch (\Exception $e) {
+                // Fail silently
+            }
+        }
+    @endphp
+
     <!-- HEADER SECTION -->
     <table class="header-table">
         <tr>
-            @if($user->avatar_path && file_exists(storage_path('app/public/' . $user->avatar_path)))
+            @if($avatarBase64)
                 <td class="header-cell-left">
-                    <img class="avatar" src="{{ storage_path('app/public/' . $user->avatar_path) }}" alt="Profile Picture">
+                    <img class="avatar" src="{{ $avatarBase64 }}" alt="Profile Picture">
                 </td>
             @endif
             <td class="header-cell-right">
@@ -183,128 +229,136 @@
     </div>
     @endif
 
-    <!-- WORK EXPERIENCE -->
-    @if($user->experiences && $user->experiences->count() > 0)
-    <div class="section">
-        <h2 class="section-title">Professional Experience</h2>
-        @foreach($user->experiences as $exp)
-            <div class="item">
-                <table class="item-header-table">
-                    <tr>
-                        <td class="item-title">{{ $exp->position }}</td>
-                        <td class="item-date">
-                            {{ $exp->start_date ? \Carbon\Carbon::parse($exp->start_date)->format('M Y') : '' }} &ndash; 
-                            {{ $exp->end_date ? \Carbon\Carbon::parse($exp->end_date)->format('M Y') : 'Present' }}
-                        </td>
-                    </tr>
-                </table>
-                <table class="item-subtitle-table">
-                    <tr>
-                        <td class="item-subtitle">{{ $exp->company_name }}</td>
-                    </tr>
-                </table>
-                @if($exp->description)
-                    <div class="item-desc">
-                        @php
-                            $points = json_decode($exp->description, true);
-                        @endphp
-                        @if(is_array($points))
-                            <ul style="margin: 0; padding-left: 20px;">
-                                @foreach($points as $point)
-                                    @if(trim($point) !== '')
-                                        <li>{{ $point }}</li>
+    <!-- TWO COLUMNS LAYOUT -->
+    <table class="content-table">
+        <tr>
+            <!-- LEFT COLUMN: WORK EXPERIENCE -->
+            <td class="col-left">
+                @if($user->experiences && $user->experiences->count() > 0)
+                <div class="section">
+                    <h2 class="section-title">Professional Experience</h2>
+                    @foreach($user->experiences as $exp)
+                        <div class="item">
+                            <table class="item-header-table">
+                                <tr>
+                                    <td class="item-title">{{ $exp->position }}</td>
+                                    <td class="item-date">
+                                        {{ $exp->start_date ? \Carbon\Carbon::parse($exp->start_date)->format('M Y') : '' }} &ndash; 
+                                        {{ $exp->end_date ? \Carbon\Carbon::parse($exp->end_date)->format('M Y') : 'Present' }}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="item-subtitle-table">
+                                <tr>
+                                    <td class="item-subtitle">{{ $exp->company_name }}</td>
+                                </tr>
+                            </table>
+                            @if($exp->description)
+                                <div class="item-desc">
+                                    @php
+                                        $points = json_decode($exp->description, true);
+                                    @endphp
+                                    @if(is_array($points))
+                                        <ul>
+                                            @foreach($points as $point)
+                                                @if(trim($point) !== '')
+                                                    <li>{{ $point }}</li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {!! nl2br(e($exp->description)) !!}
                                     @endif
-                                @endforeach
-                            </ul>
-                        @else
-                            {!! nl2br(e($exp->description)) !!}
-                        @endif
-                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
                 @endif
-            </div>
-        @endforeach
-    </div>
-    @endif
+            </td>
 
-    <!-- EDUCATION -->
-    @if($user->educations && $user->educations->count() > 0)
-    <div class="section">
-        <h2 class="section-title">Education</h2>
-        @foreach($user->educations as $edu)
-            <div class="item">
-                <table class="item-header-table">
-                    <tr>
-                        <td class="item-title">{{ $edu->degree }}</td>
-                        <td class="item-date">
-                            {{ $edu->start_year }} &ndash; {{ $edu->end_year ?? 'Present' }}
-                        </td>
-                    </tr>
-                </table>
-                <table class="item-subtitle-table">
-                    <tr>
-                        <td class="item-subtitle">{{ $edu->institution_name }}</td>
-                    </tr>
-                </table>
-                @if($edu->description)
-                    <div class="item-desc">
-                        @php
-                            $eduPoints = json_decode($edu->description, true);
-                        @endphp
-                        @if(is_array($eduPoints))
-                            <ul style="margin: 0; padding-left: 20px;">
-                                @foreach($eduPoints as $point)
-                                    @if(trim($point) !== '')
-                                        <li>{{ $point }}</li>
+            <!-- RIGHT COLUMN: EDUCATION, PROJECTS & SKILLS -->
+            <td class="col-right">
+                <!-- EDUCATION -->
+                @if($user->educations && $user->educations->count() > 0)
+                <div class="section">
+                    <h2 class="section-title">Education</h2>
+                    @foreach($user->educations as $edu)
+                        <div class="item">
+                            <table class="item-header-table">
+                                <tr>
+                                    <td class="item-title">{{ $edu->degree }}</td>
+                                    <td class="item-date">
+                                        {{ $edu->start_year }} &ndash; {{ $edu->end_year ?? 'Pres' }}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="item-subtitle-table">
+                                <tr>
+                                    <td class="item-subtitle">{{ $edu->institution_name }}</td>
+                                </tr>
+                            </table>
+                            @if($edu->description)
+                                <div class="item-desc">
+                                    @php
+                                        $eduPoints = json_decode($edu->description, true);
+                                    @endphp
+                                    @if(is_array($eduPoints))
+                                        <ul>
+                                            @foreach($eduPoints as $point)
+                                                @if(trim($point) !== '')
+                                                    <li>{{ $point }}</li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {!! nl2br(e($edu->description)) !!}
                                     @endif
-                                @endforeach
-                            </ul>
-                        @else
-                            {!! nl2br(e($edu->description)) !!}
-                        @endif
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+                @endif
+
+                <!-- PROJECTS -->
+                @if($user->projects && $user->projects->count() > 0)
+                <div class="section">
+                    <h2 class="section-title">Projects</h2>
+                    @foreach($user->projects as $proj)
+                        <div class="item">
+                            <table class="item-header-table">
+                                <tr>
+                                    <td class="item-title">{{ $proj->title }}</td>
+                                    @if($proj->project_link)
+                                        <td class="item-date">
+                                            <a href="{{ $proj->project_link }}">Link</a>
+                                        </td>
+                                    @endif
+                                </tr>
+                            </table>
+                            @if($proj->description)
+                                <p class="item-desc">{{ \Illuminate\Support\Str::limit($proj->description, 120) }}</p>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+                @endif
+
+                <!-- SKILLS & TECHNOLOGIES -->
+                @if($user->badges && $user->badges->count() > 0)
+                <div class="section">
+                    <h2 class="section-title">Skills & Technologies</h2>
+                    <div class="skills-container">
+                        @foreach($user->badges as $badge)
+                            <span class="skills-badge">{{ $badge->name }}</span>
+                        @endforeach
                     </div>
+                </div>
                 @endif
-            </div>
-        @endforeach
-    </div>
-    @endif
-
-    <!-- PROJECTS -->
-    @if($user->projects && $user->projects->count() > 0)
-    <div class="section">
-        <h2 class="section-title">Projects</h2>
-        @foreach($user->projects as $proj)
-            <div class="item">
-                <table class="item-header-table">
-                    <tr>
-                        <td class="item-title">{{ $proj->title }}</td>
-                        @if($proj->project_link)
-                            <td class="item-date">
-                                <a href="{{ $proj->project_link }}">{{ parse_url($proj->project_link, PHP_URL_HOST) }}</a>
-                            </td>
-                        @endif
-                    </tr>
-                </table>
-                @if($proj->description)
-                    <p class="item-desc">{{ $proj->description }}</p>
-                @endif
-            </div>
-        @endforeach
-    </div>
-    @endif
-
-    <!-- SKILLS & TECHNOLOGIES -->
-    @if($user->badges && $user->badges->count() > 0)
-    <div class="section">
-        <h2 class="section-title">Skills & Technologies</h2>
-        <div class="skills-container">
-            <span class="skills-label">Skills:</span>
-            @php
-                $skillNames = $user->badges->pluck('name')->toArray();
-            @endphp
-            {{ implode(', ', $skillNames) }}
-        </div>
-    </div>
-    @endif
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
