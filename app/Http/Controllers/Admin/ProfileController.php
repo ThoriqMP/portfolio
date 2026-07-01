@@ -84,4 +84,42 @@ class ProfileController extends Controller
         return redirect()->route('admin.profile.edit')
             ->with('success', 'Profil Anda berhasil diperbarui secara dinamis!');
     }
+
+    /**
+     * Download the admin's ATS CV as PDF.
+     */
+    public function downloadCv()
+    {
+        $user = Auth::user()->load([
+            'projects',
+            'badges',
+            'socialLinks',
+            'educations' => function ($query) {
+                $query->orderBy('start_year', 'desc');
+            },
+            'experiences' => function ($query) {
+                $query->orderBy('start_date', 'desc');
+            }
+        ]);
+
+        if (!$user) {
+            abort(404, 'Portfolio owner not found.');
+        }
+
+        // Generate HTML
+        $html = view('public.cv.ats', compact('user'))->render();
+
+        // Initialize DOMPDF
+        $options = new \Dompdf\Options();
+        $options->set('defaultFont', 'Helvetica');
+        $options->set('isRemoteEnabled', true); // allow remote images if any
+        $dompdf = new \Dompdf\Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return response($dompdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="CV_' . preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name) . '.pdf"');
+    }
 }

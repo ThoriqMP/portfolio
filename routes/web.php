@@ -40,4 +40,5 @@ Route::middleware('auth')->prefix('cms')->name('admin.')->group(function () {
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/cv/download', [ProfileController::class, 'downloadCv'])->name('cv.download');
 });

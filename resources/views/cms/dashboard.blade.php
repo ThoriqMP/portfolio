@@ -8,7 +8,13 @@
             <h1 class="text-4xl font-black uppercase tracking-tighter text-black">Ringkasan Panel Kontrol</h1>
             <p class="text-slate-650 font-bold uppercase tracking-wider text-xs mt-1">// Kelola data portofolio publik Anda secara instan.</p>
         </div>
-        <div>
+        <div class="flex gap-2">
+            <a href="{{ route('admin.cv.download') }}" target="_blank" class="brutal-btn-admin inline-flex items-center gap-2 px-5 py-3 text-sm bg-black text-white hover:bg-white hover:text-black">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download CV
+            </a>
             <a href="/" target="_blank" class="brutal-btn-admin inline-flex items-center gap-2 px-5 py-3 text-sm">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
