@@ -371,11 +371,14 @@
                 <!-- SKILLS & TECHNOLOGIES -->
                 @if($user->badges && $user->badges->count() > 0)
                 <div class="section">
-                    <h2 class="section-title">Skills & Technologies</h2>
+                    <h2 class="section-title">Skills &amp; Technologies</h2>
                     <div class="skills-container">
-                        @foreach($user->badges as $badge)
-                            <span class="skills-badge">{{ $badge->name }}</span>
-                        @endforeach
+                        <ul style="margin:0; padding-left:14px;">
+                            <li>
+                                <span style="font-weight:bold;">Skills</span>:
+                                {{ $user->badges->pluck('name')->implode(', ') }}
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 @endif
