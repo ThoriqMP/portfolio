@@ -48,18 +48,26 @@
         .avatar {
             width: 75px;
             height: 75px;
-            border-radius: 50%;
+            border-radius: 6px; /* rounded rectangle, not circle */
             object-fit: cover;
-            border: 1.5px solid #000000;
+            border: 1.5px solid #cccccc;
         }
         .contact-info {
             font-size: 8.5pt;
             color: #444444;
-            line-height: 1.4;
+            line-height: 1.6;
+            margin-bottom: 4px;
         }
         .contact-info a {
-            color: #0056b3;
+            color: #444444;
             text-decoration: none;
+        }
+        /* Bio text inline below contact — no section heading */
+        .bio-text {
+            font-size: 8.5pt;
+            color: #444444;
+            margin: 0;
+            text-align: justify;
         }
         .section {
             margin-bottom: 12px;
@@ -100,7 +108,15 @@
             border-collapse: collapse;
             margin-bottom: 2px;
         }
+        /* Company / Institution name: bold with teal accent */
         .item-title {
+            font-weight: bold;
+            font-size: 9.5pt;
+            color: #1a7a6b;
+            text-align: left;
+        }
+        /* Project title: stays dark */
+        .item-title-project {
             font-weight: bold;
             font-size: 9.5pt;
             color: #111111;
@@ -118,12 +134,12 @@
             border-collapse: collapse;
             margin-bottom: 3px;
         }
+        /* Role / Degree: italic only (not bold), below company/institution */
         .item-subtitle {
             font-style: italic;
             font-size: 9pt;
-            color: #444444;
+            color: #333333;
             text-align: left;
-            font-weight: bold;
         }
         .item-desc {
             margin: 0;
@@ -190,44 +206,47 @@
                 @endif
                 <div class="contact-info">
                     @php
-                        $emailLink = $user->socialLinks->where('icon', 'email')->first();
+                        $emailLink    = $user->socialLinks->where('icon', 'email')->first();
                         $whatsappLink = $user->socialLinks->where('icon', 'whatsapp')->first();
-                        $githubLink = $user->socialLinks->where('icon', 'github')->first();
                         $linkedinLink = $user->socialLinks->where('icon', 'linkedin')->first();
-                        
+                        $githubLink   = $user->socialLinks->where('icon', 'github')->first();
+
                         $contactDetails = [];
-                        
+
+                        if ($whatsappLink) {
+                            // Extract phone number from wa.me URL
+                            $rawPhone = str_replace('https://wa.me/', '', $whatsappLink->link);
+                            $phone    = '+' . ltrim($rawPhone, '+');
+                            $contactDetails[] = '<a href="' . $whatsappLink->link . '">' . $phone . '</a>';
+                        }
+
                         if ($emailLink) {
                             $email = str_replace('mailto:', '', $emailLink->link);
                             $contactDetails[] = '<a href="' . $emailLink->link . '">' . $email . '</a>';
                         }
-                        
-                        if ($whatsappLink) {
-                            $phone = $whatsappLink->name;
-                            $contactDetails[] = '<a href="' . $whatsappLink->link . '">' . $phone . '</a>';
-                        }
-                        
+
                         if ($linkedinLink) {
-                            $contactDetails[] = '<a href="' . $linkedinLink->link . '">LinkedIn</a>';
+                            $linkedinUrl = preg_replace('#^https?://#', '', $linkedinLink->link);
+                            $contactDetails[] = '<a href="' . $linkedinLink->link . '">' . $linkedinUrl . '</a>';
                         }
-                        
+
                         if ($githubLink) {
-                            $contactDetails[] = '<a href="' . $githubLink->link . '">GitHub</a>';
+                            $githubUrl = preg_replace('#^https?://#', '', $githubLink->link);
+                            $contactDetails[] = '<a href="' . $githubLink->link . '">' . $githubUrl . '</a>';
                         }
                     @endphp
-                    {!! implode(' &bull; ', $contactDetails) !!}
+                    {!! implode(' | ', $contactDetails) !!}
                 </div>
+
+                {{-- Bio shown inline below contact — no section heading --}}
+                @if($user->bio)
+                    <p class="bio-text">{!! nl2br(e($user->bio)) !!}</p>
+                @endif
             </td>
         </tr>
     </table>
 
-    <!-- PROFESSIONAL SUMMARY -->
-    @if($user->bio)
-    <div class="section">
-        <h2 class="section-title">Professional Summary</h2>
-        <p class="item-desc">{!! nl2br(e($user->bio)) !!}</p>
-    </div>
-    @endif
+    {{-- Professional Summary removed as heading; bio is now inline in the header above --}}
 
     <!-- TWO COLUMNS LAYOUT -->
     <table class="content-table">
@@ -236,21 +255,23 @@
             <td class="col-left">
                 @if($user->experiences && $user->experiences->count() > 0)
                 <div class="section">
-                    <h2 class="section-title">Professional Experience</h2>
+                    <h2 class="section-title">Pengalaman Bekerja</h2>
                     @foreach($user->experiences as $exp)
                         <div class="item">
+                            {{-- Company name (bold + teal) on left, date on right --}}
                             <table class="item-header-table">
                                 <tr>
-                                    <td class="item-title">{{ $exp->position }}</td>
+                                    <td class="item-title">{{ $exp->company_name }}</td>
                                     <td class="item-date">
-                                        {{ $exp->start_date ? \Carbon\Carbon::parse($exp->start_date)->format('M Y') : '' }} &ndash; 
+                                        {{ $exp->start_date ? \Carbon\Carbon::parse($exp->start_date)->format('M Y') : '' }} &ndash;
                                         {{ $exp->end_date ? \Carbon\Carbon::parse($exp->end_date)->format('M Y') : 'Present' }}
                                     </td>
                                 </tr>
                             </table>
+                            {{-- Role / Position (italic) below company --}}
                             <table class="item-subtitle-table">
                                 <tr>
-                                    <td class="item-subtitle">{{ $exp->company_name }}</td>
+                                    <td class="item-subtitle">{{ $exp->position }}</td>
                                 </tr>
                             </table>
                             @if($exp->description)
@@ -282,20 +303,22 @@
                 <!-- EDUCATION -->
                 @if($user->educations && $user->educations->count() > 0)
                 <div class="section">
-                    <h2 class="section-title">Education</h2>
+                    <h2 class="section-title">Riwayat Pendidikan</h2>
                     @foreach($user->educations as $edu)
                         <div class="item">
+                            {{-- Institution name (bold + teal) on left, year range on right --}}
                             <table class="item-header-table">
                                 <tr>
-                                    <td class="item-title">{{ $edu->degree }}</td>
+                                    <td class="item-title">{{ $edu->institution_name }}</td>
                                     <td class="item-date">
                                         {{ $edu->start_year }} &ndash; {{ $edu->end_year ?? 'Pres' }}
                                     </td>
                                 </tr>
                             </table>
+                            {{-- Degree (italic) below institution --}}
                             <table class="item-subtitle-table">
                                 <tr>
-                                    <td class="item-subtitle">{{ $edu->institution_name }}</td>
+                                    <td class="item-subtitle">{{ $edu->degree }}</td>
                                 </tr>
                             </table>
                             @if($edu->description)
@@ -329,10 +352,10 @@
                         <div class="item">
                             <table class="item-header-table">
                                 <tr>
-                                    <td class="item-title">{{ $proj->title }}</td>
+                                    <td class="item-title-project">{{ $proj->title }}</td>
                                     @if($proj->project_link)
                                         <td class="item-date">
-                                            <a href="{{ $proj->project_link }}">Link</a>
+                                            <a href="{{ $proj->project_link }}" style="color:#1a7a6b;">Link</a>
                                         </td>
                                     @endif
                                 </tr>
