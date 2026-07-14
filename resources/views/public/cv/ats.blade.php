@@ -38,19 +38,19 @@
             margin-bottom: 12px;
         }
         .header-cell-left {
-            width: 85px;
+            width: 4.2cm; /* slightly wider than photo to add spacing */
             vertical-align: top;
-            padding-right: 12px;
+            padding-right: 10px;
         }
         .header-cell-right {
             vertical-align: middle;
         }
         .avatar {
-            width: 75px;
-            height: 75px;
-            border-radius: 6px; /* rounded rectangle, not circle */
+            width: 3cm;  /* landscape: lebar 3cm */
+            height: 4cm; /* tinggi 4cm */
+            border-radius: 4px;
             object-fit: cover;
-            border: 1.5px solid #cccccc;
+            border: 1px solid #cccccc;
         }
         .contact-info {
             font-size: 8.5pt;
