@@ -38,19 +38,26 @@
             margin-bottom: 12px;
         }
         .header-cell-left {
-            width: 4.2cm; /* slightly wider than photo to add spacing */
-            vertical-align: top;
+            width: 4.2cm;
+            vertical-align: middle; /* center photo vertically with text */
             padding-right: 10px;
         }
         .header-cell-right {
             vertical-align: middle;
         }
-        .avatar {
-            width: 3cm;  /* landscape: lebar 3cm */
-            height: 4cm; /* tinggi 4cm */
+        /* Wrapper crops the image like object-fit:cover for DOMPDF */
+        .avatar-wrapper {
+            width: 3cm;
+            height: 4cm;
+            overflow: hidden;
             border-radius: 4px;
-            object-fit: cover;
             border: 1px solid #cccccc;
+            text-align: center;  /* centers image horizontally inside wrapper */
+            line-height: 0;
+        }
+        .avatar {
+            height: 4cm;   /* scale to fill full height */
+            width: auto;   /* width auto = keeps ratio, excess gets clipped by overflow:hidden */
         }
         .contact-info {
             font-size: 8.5pt;
@@ -196,7 +203,10 @@
         <tr>
             @if($avatarBase64)
                 <td class="header-cell-left">
-                    <img class="avatar" src="{{ $avatarBase64 }}" alt="Profile Picture">
+                    {{-- Wrapper div crops image (DOMPDF doesn't support object-fit) --}}
+                    <div class="avatar-wrapper">
+                        <img class="avatar" src="{{ $avatarBase64 }}" alt="Profile Picture">
+                    </div>
                 </td>
             @endif
             <td class="header-cell-right">
