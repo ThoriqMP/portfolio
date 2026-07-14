@@ -355,7 +355,7 @@
                                     <td class="item-title-project">{{ $proj->title }}</td>
                                     @if($proj->project_link)
                                         <td class="item-date">
-                                            <a href="{{ $proj->project_link }}" style="color:#1a7a6b;">Link</a>
+                                            <a href="{{ $proj->project_link }}" style="color:#1a7a6b;">{{ preg_replace('#^https?://#', '', $proj->project_link) }}</a>
                                         </td>
                                     @endif
                                 </tr>
