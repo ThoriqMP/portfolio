@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\SocialLinkController;
 // Public Home
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/projects/{project}', [PublicController::class, 'showProject'])->name('projects.show');
+Route::post('/testimonials', [PublicController::class, 'storeTestimonial'])->name('testimonials.store');
 
 // CMS Authentication
 Route::get('/cms', [AuthController::class, 'showLogin'])->name('login');
@@ -40,5 +41,6 @@ Route::middleware('auth')->prefix('cms')->name('admin.')->group(function () {
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/remove-background', [ProfileController::class, 'removeBackground'])->name('profile.removeBackground');
     Route::get('/profile/cv/download', [ProfileController::class, 'downloadCv'])->name('cv.download');
 });
