@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user->name }} &mdash; {{ $user->title ?? 'Digital Product Designer' }}</title>
+    <title>{{ $user->name }} &mdash; {{ $user->title ?? 'Fullstack Web Developer' }}</title>
     
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="Portofolio profesional {{ $user->name }}. Menampilkan karya desain produk digital, UI/UX, web design, dan studi kasus desain.">
-    <meta name="keywords" content="Portfolio, UI/UX Designer, Digital Product Designer, Web Developer, Web Design">
+    <meta name="description" content="Portofolio resmi {{ $user->name }}. Berfokus pada perancangan dan pengembangan aplikasi web modern, performa tinggi, dan solusi digital terstruktur.">
+    <meta name="keywords" content="Portfolio, Fullstack Web Developer, Laravel, PHP, Tailwind CSS, MySQL, Web Developer Indonesia">
     <meta name="author" content="{{ $user->name }}">
 
     <!-- Google Fonts: Plus Jakarta Sans -->
@@ -26,21 +26,28 @@
                     },
                     colors: {
                         accent: {
-                            50: '#FFF5F2',
-                            100: '#FFEAE3',
-                            200: '#FFD4C7',
-                            300: '#FFAE99',
-                            400: '#FF7E60',
+                            50: '#FFF5F0',
+                            100: '#FFE8DF',
+                            200: '#FFD2C2',
+                            300: '#FFAC93',
+                            400: '#FF7B58',
                             500: '#FF4D2D', // Primary vibrant reddish-orange
-                            600: '#E63E1F',
+                            600: '#E63D1F',
                             700: '#C42F13',
                             800: '#9E2711',
                             900: '#7F2413',
                         },
+                        paper: {
+                            50: '#FDFBF8',
+                            100: '#FAF8F5', // Base paper
+                            200: '#F4EFEB', // Warm paper
+                            300: '#EBE4DB', // Border line
+                            400: '#D5CCBF',
+                        },
                         dark: {
-                            800: '#141824',
-                            900: '#0C101B',
-                            950: '#070A12',
+                            800: '#15171C',
+                            900: '#0E1015',
+                            950: '#080A0E',
                         }
                     }
                 }
@@ -49,10 +56,12 @@
     </script>
     
     <style>
+        /* Base Paper Texture using SVG Fractal Noise */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #FAFAFC;
-            color: #0F172A;
+            background-color: #FAF8F5;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
+            color: #1A1F2C;
             overflow-x: hidden;
         }
 
@@ -61,41 +70,32 @@
             color: #ffffff;
         }
 
-        /* Glassmorphism header */
+        /* Glassmorphism header with soft paper tint */
         .glass-header {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(250, 248, 245, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
-        /* Coordinate grid background for hero */
-        .bg-hero-grid {
-            background-image: 
-                linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
-            background-size: 36px 36px;
+        /* Warm tinted paper for contrast sections */
+        .bg-paper-warm {
+            background-color: #F4EFEB;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
         }
 
-        /* Warm reddish-orange tinted grid for Experience & CTA sections */
-        .bg-warm-grid {
-            background-color: #FFF6F3;
-            background-image: 
-                linear-gradient(to right, rgba(255, 77, 45, 0.08) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 77, 45, 0.08) 1px, transparent 1px);
-            background-size: 36px 36px;
-        }
-
-        /* Subtle smooth card hover lift */
-        .modern-card {
-            background-color: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.8);
+        /* Organic paper card with subtle fiber texture */
+        .paper-card {
+            background-color: #FFFFFF;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+            border: 1px solid #E8E3D8;
             border-radius: 1.5rem;
+            box-shadow: 0 4px 18px -2px rgba(45, 35, 25, 0.04);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .modern-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
-            border-color: rgba(255, 77, 45, 0.25);
+        .paper-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px -4px rgba(45, 35, 25, 0.08);
+            border-color: rgba(255, 77, 45, 0.35);
         }
 
         /* Section scroll offset for fixed pill navbar */
@@ -108,10 +108,10 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #FAFAFC;
+            background: #FAF8F5;
         }
         ::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
+            background: #D8D2C5;
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -129,34 +129,29 @@
         @yield('content')
     </main>
 
-    <!-- Footer (Deep Dark Luxury Section with Giant Faded Watermark) -->
-    <footer id="contact" class="bg-dark-950 text-white pt-24 pb-12 relative overflow-hidden">
-        <!-- Giant Watermark Background Text at bottom of footer -->
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 select-none text-[12rem] sm:text-[18rem] md:text-[24rem] font-black text-white/[0.035] leading-none tracking-tighter uppercase pointer-events-none z-0 whitespace-nowrap">
-            {{ strtoupper(explode(' ', $user->name ?? 'ETHAN')[0]) }}
-        </div>
-
+    <!-- Footer (Clean, Editorial & Grounded) -->
+    <footer id="contact" class="bg-dark-950 text-white pt-20 pb-12 relative overflow-hidden border-t border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Top Footer Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-20 border-b border-slate-800/80">
-                <!-- Left: Big CTA & Direct Contact -->
-                <div class="lg:col-span-6 space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-slate-800/80">
+                <!-- Left: Direct Contact -->
+                <div class="lg:col-span-6 space-y-5">
                     <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent-400">
                         <span class="w-2 h-2 rounded-full bg-accent-500"></span>
-                        Let's Talk
+                        Kontak & Kolaborasi
                     </span>
                     
                     <div>
-                        <a href="mailto:{{ $user->email_contact ?? 'hi@getincontact.com' }}" class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white hover:text-accent-400 transition-colors tracking-tight block">
+                        <a href="mailto:{{ $user->email_contact ?? 'hi@getincontact.com' }}" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white hover:text-accent-400 transition-colors tracking-tight block">
                             {{ $user->email_contact ?? 'hi@getincontact.com' }}
                         </a>
-                        <p class="text-slate-400 text-sm mt-3 max-w-md leading-relaxed">
-                            Have an idea, a project inquiry, or just want to chat? Send me an email and let's craft something remarkable together.
+                        <p class="text-slate-400 text-sm mt-3 max-w-md leading-relaxed font-normal">
+                            Tertarik berdiskusi seputar peluang kerja, proyek web, atau konsultasi teknis? Jangan ragu untuk mengirimkan pesan.
                         </p>
                     </div>
 
-                    <!-- Social Media Links (Modern Circular Pills) -->
-                    <div class="flex items-center gap-3 pt-4">
+                    <!-- Social Media Links (Clean Circular Buttons) -->
+                    <div class="flex items-center gap-2.5 pt-2">
                         @if ($user->socialLinks && $user->socialLinks->count() > 0)
                             @foreach ($user->socialLinks as $social)
                                 <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" title="{{ $social->name }}" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200">
@@ -164,7 +159,6 @@
                                 </a>
                             @endforeach
                         @else
-                            <!-- Default Curated Socials -->
                             @if ($user->linkedin_link ?? true)
                                 <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="LinkedIn">
                                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
@@ -180,61 +174,53 @@
                             <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="Instagram">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
                             </a>
-
-                            @if ($user->phone)
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $user->phone) }}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="WhatsApp">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.458L0 24zm6.26-4.526c1.661.987 3.291 1.488 4.966 1.489 5.517 0 10.005-4.48 10.008-9.998.001-2.673-1.037-5.185-2.923-7.072C16.483 2.006 13.977.969 11.3.969 5.787.969 1.3 5.449 1.297 10.969c-.001 1.761.464 3.424 1.348 4.96L1.67 21.5l5.59-1.463c-.347-.206-.693-.412-1.04-.619-.103-.062-.206-.124-.309-.187-.001-.001-.001-.001-.001-.001v.001zm11.517-7.834c-.27-.135-1.597-.788-1.846-.878-.248-.09-.429-.135-.61.135-.181.271-.7 1.035-.858 1.216-.158.18-.316.203-.586.068-.27-.136-1.14-.42-2.171-1.339-.802-.716-1.343-1.6-1.501-1.871-.158-.271-.017-.417.118-.552.122-.122.27-.316.406-.474.135-.158.18-.271.27-.451.09-.18.045-.339-.022-.475-.068-.135-.61-1.467-.836-2.009-.22-.53-.442-.458-.61-.466-.158-.008-.339-.008-.52-.008-.18 0-.474.068-.722.339-.248.271-.948.927-.948 2.26 0 1.332.97 2.617 1.106 2.798.135.18 1.907 2.911 4.62 4.082.645.278 1.149.444 1.542.569.648.206 1.237.177 1.703.107.519-.078 1.597-.653 1.822-1.284.226-.632.226-1.173.158-1.285-.068-.113-.248-.18-.519-.315z" /></svg>
-                                </a>
-                            @endif
                         @endif
                     </div>
                 </div>
 
                 <!-- Right: Navigation Columns -->
                 <div class="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
-                    <!-- Column 1: Navigation -->
+                    <!-- Column 1: Navigasi -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Navigation</h4>
-                        <ul class="space-y-2.5 text-sm">
-                            <li><a href="#hero" class="text-slate-300 hover:text-accent-400 transition-colors">Home</a></li>
-                            <li><a href="#about" class="text-slate-300 hover:text-accent-400 transition-colors">About Me</a></li>
-                            <li><a href="#services" class="text-slate-300 hover:text-accent-400 transition-colors">Services</a></li>
-                            <li><a href="#experience" class="text-slate-300 hover:text-accent-400 transition-colors">Experiences</a></li>
-                            <li><a href="#projects" class="text-slate-300 hover:text-accent-400 transition-colors">Projects</a></li>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Navigasi</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><a href="#hero" class="hover:text-accent-400 transition-colors">Beranda</a></li>
+                            <li><a href="#about" class="hover:text-accent-400 transition-colors">Tentang Saya</a></li>
+                            <li><a href="#services" class="hover:text-accent-400 transition-colors">Keahlian</a></li>
+                            <li><a href="#experience" class="hover:text-accent-400 transition-colors">Riwayat</a></li>
+                            <li><a href="#projects" class="hover:text-accent-400 transition-colors">Proyek</a></li>
                         </ul>
                     </div>
 
-                    <!-- Column 2: Services -->
+                    <!-- Column 2: Keahlian -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Services</h4>
-                        <ul class="space-y-2.5 text-sm">
-                            <li><span class="text-slate-300">UI/UX Design</span></li>
-                            <li><span class="text-slate-300">Web Design</span></li>
-                            <li><span class="text-slate-300">Graphic Design</span></li>
-                            <li><span class="text-slate-300">Design System</span></li>
-                            <li><span class="text-slate-300">App Development</span></li>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Teknologi</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><span>Laravel & PHP</span></li>
+                            <li><span>Tailwind CSS</span></li>
+                            <li><span>MySQL Database</span></li>
+                            <li><span>RESTful API</span></li>
+                            <li><span>Git & GitHub</span></li>
                         </ul>
                     </div>
 
-                    <!-- Column 3: Company / Legal -->
+                    <!-- Column 3: Lainnya -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Explore</h4>
-                        <ul class="space-y-2.5 text-sm">
-                            <li><a href="#testimonials" class="text-slate-300 hover:text-accent-400 transition-colors">Testimonials</a></li>
-                            <li><a href="#contact" class="text-slate-300 hover:text-accent-400 transition-colors">Contact</a></li>
-                            <li><a href="{{ route('login') }}" class="text-slate-400 hover:text-white transition-colors">CMS Admin</a></li>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Lainnya</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li><a href="#testimonials" class="hover:text-accent-400 transition-colors">Testimoni</a></li>
+                            <li><a href="#contact" class="hover:text-accent-400 transition-colors">Kontak</a></li>
+                            <li><a href="{{ route('login') }}" class="hover:text-white transition-colors">CMS Admin</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom Copyright Bar -->
-            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
                 <p>&copy; {{ date('Y') }} {{ $user->name }}. All rights reserved.</p>
-                <div class="flex items-center gap-6">
-                    <span class="hover:text-white transition-colors cursor-pointer">Privacy Policy</span>
-                    <span>&bull;</span>
-                    <span class="hover:text-white transition-colors cursor-pointer">Terms of Service</span>
+                <div class="flex items-center gap-2">
+                    <span>Fullstack Web Developer</span>
                 </div>
             </div>
         </div>
@@ -263,7 +249,6 @@
                     }
                 });
 
-                // Close menu when a link is clicked
                 document.querySelectorAll('.mobile-nav-item').forEach(item => {
                     item.addEventListener('click', () => {
                         mobileMenu.classList.add('hidden');
