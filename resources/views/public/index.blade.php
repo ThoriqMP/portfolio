@@ -1,499 +1,800 @@
 @extends('layouts.public')
 
 @section('content')
-<!-- Hero / About Section (High-Contrast Structural Brutalist Split) -->
-<section id="hero" class="relative py-24 md:py-32 overflow-hidden bg-[#f5f5f5] border-b-8 border-black flex items-center min-h-[80vh]">
-    <!-- Brutalist Accent Element (Giant background text) -->
-    <div class="absolute right-0 bottom-0 select-none text-[15rem] leading-none font-black text-slate-200/50 uppercase tracking-tighter z-0 pointer-events-none">
-        PORTFOLIO
+<!-- Hero Section (Subtle Warm Mesh, Coordinate Grid & Cutout Portrait) -->
+<section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-accent-50/60 via-white to-white">
+    <!-- Subtle Background Coordinate Grid -->
+    <div class="absolute inset-0 bg-hero-grid pointer-events-none opacity-70"></div>
+    
+    <!-- Soft Reddish-Orange Ambient Glow -->
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-accent-400/15 blur-[120px] rounded-full pointer-events-none -z-0"></div>
+
+    <!-- Giant Faint Background Watermark: BRAND DESIGNER -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-[6rem] sm:text-[9rem] md:text-[13rem] lg:text-[16rem] font-black text-slate-900/[0.03] uppercase tracking-tighter pointer-events-none z-0 whitespace-nowrap">
+        {{ strtoupper($user->title ?? 'BRAND DESIGNER') }}
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
-            <!-- Left Column: Bold Copy & CTA -->
-            <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-7 lg:text-left">
-                <span class="inline-flex items-center px-4 py-1.5 border-2 border-black text-xs font-black uppercase tracking-widest bg-black text-[#ff5722] shadow-[2px_2px_0px_#ff5722] mb-8">
-                    // TERSEDIA UNTUK KERJA
-                </span>
-                
-                <!-- Massive Brutalist Header -->
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-6">
-                    HALO, SAYA <br class="hidden sm:inline">
-                    <span class="bg-[#ff5722] text-white px-3 py-1.5 inline-block transform -rotate-1 border-4 border-black shadow-[4px_4px_0px_#000000] tracking-tighter">
-                        {{ $user->name }}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+            
+            <!-- Left Column: Typographic Hero & Intro -->
+            <div class="lg:col-span-4 space-y-5 text-center lg:text-left">
+                <div class="space-y-1">
+                    <span class="block text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-800">
+                        I'M
                     </span>
-                </h1>
-                
-                <!-- Dynamic Professional Title -->
-                @if ($user->title)
-                    <p class="text-xl sm:text-2xl font-black uppercase tracking-wide text-black mb-8">
-                        // {{ $user->title }}
-                    </p>
-                @endif
-                
-                <!-- Structural Bio Card -->
-                <div class="border-4 border-black p-6 bg-white shadow-[6px_6px_0px_#000000] mb-8 max-w-2xl">
-                    <p class="text-lg md:text-xl font-bold leading-relaxed text-black">
-                        {{ $user->bio ?? 'Saya adalah pengembang web profesional yang berfokus membangun pengalaman digital berkinerja tinggi.' }}
-                    </p>
+                    <h1 class="text-6xl sm:text-7xl md:text-8xl font-black italic tracking-tighter text-slate-950 leading-none">
+                        {{ explode(' ', $user->name ?? 'Ethan')[0] }}
+                    </h1>
                 </div>
-                
-                <!-- Brutalist Action Buttons -->
-                <div class="flex flex-wrap gap-4 sm:justify-center lg:justify-start">
-                    <a href="#projects" class="brutal-btn inline-flex items-center justify-center px-8 py-4 text-base shadow-[6px_6px_0px_#000000] hover:shadow-[8px_8px_0px_#000000]">
-                        Lihat Proyek Saya
-                        <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+
+                <!-- Stylized Title Pill -->
+                <div>
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-accent-500 text-white shadow-sm shadow-accent-500/30">
+                        {{ $user->title ?? 'DIGITAL PRODUCT DESIGNER' }}
+                    </span>
+                </div>
+
+                <!-- Bio / Intro Copy -->
+                <p class="text-sm sm:text-base font-normal text-slate-600 leading-relaxed max-w-md mx-auto lg:mx-0">
+                    {{ $user->bio ?? 'Creating meaningful digital products that drive engagement, solve complex business problems, and elevate human experiences.' }}
+                </p>
+
+                <!-- Quick Action Button -->
+                <div class="pt-2 flex items-center justify-center lg:justify-start gap-3">
+                    <a href="#about" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-accent-500 text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm">
+                        Explore Work
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </a>
-                    <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 text-base font-extrabold uppercase tracking-wider text-black bg-white hover:bg-black hover:text-white border-3 border-black shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
-                        Hubungi Saya
                     </a>
                 </div>
             </div>
 
-            <!-- Right Column: Structural Blocky Graphic Card -->
-            <div id="about" class="mt-16 lg:mt-0 lg:col-span-5 flex justify-center">
-                <div class="relative w-80 h-80 sm:w-96 sm:h-96 bg-white border-4 border-black p-8 shadow-[10px_10px_0px_#000000] flex flex-col justify-between transform rotate-1 hover:rotate-0 transition duration-200">
-                    <!-- Brutalist Grid Overlay -->
-                    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"></div>
+            <!-- Middle Column: Portrait Cutout Photo -->
+            <div class="lg:col-span-4 flex justify-center order-first lg:order-none">
+                <div class="relative w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[430px] flex items-end justify-center">
+                    <!-- Subtle glow behind portrait -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-accent-500/20 to-transparent rounded-full blur-2xl -z-10"></div>
 
-                    <!-- Decorative Corner Block -->
-                    <div class="absolute -top-3 -left-3 w-6 h-6 bg-[#ff5722] border-2 border-black"></div>
-                    <div class="absolute -bottom-3 -right-3 w-6 h-6 bg-black border-2 border-[#ff5722]"></div>
-
-                    <!-- Initials Logo Block / Avatar Image -->
                     @if ($user->avatar_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar_path))
-                        <div class="w-32 h-32 bg-white border-4 border-black overflow-hidden shadow-[4px_4px_0px_#000000] mb-6 relative z-10">
-                            <img src="{{ asset('storage/' . $user->avatar_path) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
-                        </div>
+                        <img src="{{ asset('storage/' . $user->avatar_path) }}" alt="{{ $user->name }}" class="w-full h-full object-cover object-top rounded-3xl drop-shadow-2xl">
                     @else
-                        <div class="w-24 h-24 bg-black border-4 border-black text-[#ff5722] flex items-center justify-center shadow-[4px_4px_0px_#ff5722] mb-6">
-                            <span class="text-4xl font-black uppercase tracking-tighter">
-                                {{ substr($user->name, 0, 2) }}
-                            </span>
+                        <!-- High Fidelity Designer Portrait Matching Mockup -->
+                        <div class="relative w-full h-full overflow-hidden rounded-3xl group">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80" 
+                                 alt="{{ $user->name ?? 'Ethan Ward' }}" 
+                                 class="w-full h-full object-cover object-top drop-shadow-2xl filter contrast-[1.02] brightness-[1.02]">
+                            <!-- Soft subtle bottom gradient overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent"></div>
                         </div>
                     @endif
-
-                    <!-- User Meta Information -->
-                    <div class="space-y-3 z-10 relative mt-auto">
-                        <h3 class="text-2xl font-black uppercase tracking-tight text-black">{{ $user->name }}</h3>
-                        <p class="text-sm font-extrabold uppercase text-[#ff5722] tracking-wider">{{ $user->title ?? 'Web Developer' }}</p>
-                        
-                        <div class="flex flex-wrap gap-2 pt-2 text-xxs font-black uppercase">
-                            @forelse ($user->badges as $badge)
-                                <span class="px-2.5 py-1 border border-black shadow-[1px_1px_0px_#000000] font-black uppercase tracking-wider inline-block"
-                                      style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
-                                    {{ $badge->name }}
-                                </span>
-                            @empty
-                                <span class="px-2.5 py-1 bg-[#ff5722] text-black border border-black shadow-[1px_1px_0px_#000000] font-black uppercase tracking-wider inline-block">Laravel 11</span>
-                            @endforelse
-                        </div>
-                    </div>
                 </div>
+            </div>
+
+            <!-- Right Column: Follow Me Socials & Big Display Label -->
+            <div class="lg:col-span-4 flex flex-col justify-between h-full space-y-12 lg:space-y-24 text-center lg:text-left">
+                <!-- Top: Follow Me Socials -->
+                <div class="space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+                        Follow me
+                    </span>
+                    <div class="flex items-center justify-center lg:justify-start gap-2.5">
+                        <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-sm text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="LinkedIn">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                        </a>
+                        <a href="{{ $user->github_link ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-sm text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="GitHub">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" /></svg>
+                        </a>
+                        <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-slate-200/80 shadow-sm text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="Instagram">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
+                        </a>
+                    </div>
+                    <p class="text-xs text-slate-500 max-w-xs mx-auto lg:mx-0 leading-relaxed">
+                        I design intuitive and visually stunning user experiences for modern products.
+                    </p>
+                </div>
+
+                <!-- Bottom: Big Display Label -->
+                <div class="pt-4 lg:pt-0">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-slate-900 leading-tight">
+                        DIGITAL<br>
+                        PRODUCT<br>
+                        DESIGNER
+                    </h2>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- About Section ("Designing with Purpose, Building with Passion") -->
+<section id="about" class="py-20 md:py-28 bg-white border-y border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            <!-- Left: High Quality Workplace Photo Card -->
+            <div class="lg:col-span-6">
+                <div class="relative overflow-hidden rounded-3xl shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-slate-200/60 aspect-[4/3] group">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Designing with Purpose" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+
+            <!-- Right: About Editorial & CTA -->
+            <div class="lg:col-span-6 space-y-6">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-accent-500 mb-2 inline-block">
+                        ABOUT ME
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                        Designing with Purpose,<br>
+                        Building with Passion
+                    </h2>
+                </div>
+
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    With over a decade of design and development experience, I bridge the gap between creative aesthetics and high-performance engineering. Every interface I build begins with an in-depth understanding of user needs, functional clarity, and business outcomes.
+                </p>
+
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    Whether architecting scalable design systems, crafting intuitive mobile workflows, or designing responsive web applications, my mission is to deliver digital experiences that leave a lasting impression.
+                </p>
+
+                <div class="pt-2">
+                    <a href="#services" class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold shadow-md shadow-accent-500/25 hover:shadow-lg hover:shadow-accent-500/35 transition-all">
+                        Read More
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Stats / Metrics Strip (4 Horizontal Metrics) -->
+<section class="py-12 md:py-16 bg-white border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
+            <!-- Stat 1 -->
+            <div class="pt-4 md:pt-0">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+                    10+
+                </span>
+                <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
+                    Years Experience
+                </span>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="pt-4 md:pt-0">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+                    {{ max(109, ($user->projects->count() * 12)) }}+
+                </span>
+                <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
+                    Project Completed
+                </span>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="pt-4 md:pt-0">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+                    20/7
+                </span>
+                <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
+                    Support Available
+                </span>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="pt-4 md:pt-0">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+                    96%
+                </span>
+                <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
+                    Client Satisfaction
+                </span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Projects Section -->
-<section id="projects" class="py-24 bg-white border-b-8 border-black">
+<!-- Services / Specialties Bento Grid Section -->
+<section id="services" class="py-24 md:py-32 bg-[#FAFAFC]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Title (Brutalist Panel) -->
-        <div class="border-4 border-black p-8 bg-black text-white shadow-[6px_6px_0px_#ff5722] max-w-3xl mx-auto mb-20 text-center">
-            <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter">
-                Portofolio Proyek Terkini
-            </h2>
-            <p class="text-slate-350 text-sm uppercase tracking-widest mt-3 font-semibold">
-                // Koleksi proyek aplikasi web pilihan
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div class="space-y-2 max-w-xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
+                    SERVICES
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                    Designing digital solutions that empower your visions
+                </h2>
+            </div>
+            <p class="text-sm text-slate-500 max-w-md leading-relaxed">
+                Focused on delivering results that drive engagement, boost conversions, and elevate brands to the highest industry standards.
             </p>
         </div>
 
-        <!-- Projects Grid of Brutalist Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            @forelse ($user->projects as $project)
-                <div class="bg-white border-4 border-black rounded-none shadow-[8px_8px_0px_#000000] hover:shadow-[12px_12px_0px_#000000] hover:-translate-x-1 hover:-translate-y-1 transition duration-250 flex flex-col h-full {{ $project->grid_span == 2 ? 'md:col-span-2' : ($project->grid_span == 3 ? 'md:col-span-3' : '') }}">
-                    <!-- Image Area with bottom border -->
-                    <div class="relative aspect-video overflow-hidden bg-slate-100 border-b-4 border-black">
-                        @if($project->image_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($project->image_path))
-                            
-                            <!-- Widescreen Single Image Preview -->
-                            <img src="{{ asset('storage/' . $project->image_path) }}" alt="{{ $project->title }}" class="object-cover w-full h-full">
+        <!-- 6-Item Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Card 01: UI/UX Design -->
+            <div class="modern-card p-8 flex flex-col justify-between h-full group">
+                <div>
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                        01
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
+                        UI/UX Design
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Designing intuitive, user-centered digital interfaces that solve complex problems and deliver seamless, delight-inducing user journeys.
+                    </p>
+                </div>
+            </div>
 
-                        @else
-                            <!-- Fallback Brutalist Gradient Grid card -->
-                            <div class="w-full h-full bg-[linear-gradient(45deg,#ff5722_25%,transparent_25%),linear-gradient(-45deg,#ff5722_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#ff5722_75%),linear-gradient(-45deg,transparent_75%,#ff5722_75%)] bg-[size:20px_20px] bg-white flex flex-col items-center justify-center p-4">
-                                <div class="px-3 py-1 bg-black text-white font-extrabold text-xs uppercase border border-black shadow-[2px_2px_0px_#ff5722] tracking-wider">
-                                    Demo Proyek
-                                </div>
+            <!-- Card 02: Web Design -->
+            <div class="modern-card p-8 flex flex-col justify-between h-full group">
+                <div>
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                        02
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
+                        Web Design
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Crafting beautiful, responsive, and performance-focused websites that captivate audiences, convey brand trust, and drive conversions.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bento Visual Showcase 1: Smartphone In Hand Mockup -->
+            <div class="overflow-hidden rounded-3xl border border-slate-200/60 shadow-sm aspect-[4/3] md:aspect-auto group">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" 
+                     alt="Mobile App Mockup" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+
+            <!-- Bento Visual Showcase 2: Streetwear / Brand Print Graphic -->
+            <div class="overflow-hidden rounded-3xl border border-slate-200/60 shadow-sm aspect-[4/3] md:aspect-auto group">
+                <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" 
+                     alt="Brand Graphic Hoodie" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+
+            <!-- Card 03: Graphic Design -->
+            <div class="modern-card p-8 flex flex-col justify-between h-full group">
+                <div>
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                        03
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
+                        Graphic Design
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Creating memorable visual identities, brand guidelines, typography systems, and high-impact marketing collateral.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 04: Design System -->
+            <div class="modern-card p-8 flex flex-col justify-between h-full group">
+                <div>
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                        04
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
+                        Design System
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Building scalable, modular UI component libraries, tokens, and documentation that ensure seamless consistency across all products.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section ("Exploring My Growth as a Designer" with Warm Tinted Grid) -->
+<section id="experience" class="py-24 md:py-32 bg-warm-grid border-y border-accent-200/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div class="space-y-2 max-w-xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent-600 block">
+                    EXPERIENCE
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                    Exploring My Growth<br>as a Designer
+                </h2>
+            </div>
+            <p class="text-sm text-slate-600 max-w-md leading-relaxed">
+                A chronicle of hands-on experience and professional evolution across creative agencies, fast-growing tech studios, and independent ventures.
+            </p>
+        </div>
+
+        <!-- Experience Rows (Table / List matching the Mockup) -->
+        <div class="divide-y divide-accent-300/40 border-y border-accent-300/40">
+            @if ($user->experiences && $user->experiences->count() > 0)
+                @foreach ($user->experiences as $exp)
+                    <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                            <!-- Period / Year -->
+                            <div class="w-full sm:w-48 shrink-0">
+                                <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                                    {{ $exp->start_date ? $exp->start_date->format('Y') : '2023' }} &mdash; 
+                                    {{ $exp->end_date ? $exp->end_date->format('Y') : 'Present' }}
+                                </span>
                             </div>
-                        @endif
-                    </div>
 
-                    <!-- Details Area -->
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-black uppercase tracking-tight text-black mb-3">
-                            {{ $project->title }}
+                            <!-- Role / Title -->
+                            <div class="flex-1">
+                                <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                                    {{ $exp->position }}
+                                </h3>
+                                @if ($exp->description)
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl line-clamp-2">
+                                        {{ is_array(json_decode($exp->description, true)) ? implode(' &bull; ', json_decode($exp->description, true)) : $exp->description }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Company / Studio -->
+                            <div class="sm:text-right shrink-0">
+                                <span class="text-sm sm:text-base font-bold text-slate-800">
+                                    {{ $exp->company_name }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <!-- Mockup Accurate Presets if database is empty -->
+                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                            2023 &mdash; Present
+                        </span>
+                        <h3 class="flex-1 text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                            Senior UI/UX Designer
                         </h3>
-                        <p class="text-sm font-bold text-slate-700 leading-relaxed mb-4 flex-grow">
-                            {{ $project->description }}
-                        </p>
+                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
+                            Odama Studio
+                        </span>
+                    </div>
+                </div>
 
-                        <!-- Project Badges -->
-                        @if($project->badges && $project->badges->count() > 0)
-                            <div class="flex flex-wrap gap-1.5 mb-6">
-                                @foreach($project->badges as $badge)
-                                    <span class="px-2 py-0.5 border border-black shadow-[1px_1px_0px_#000000] font-sans font-bold text-xxs uppercase tracking-wider inline-block"
-                                          style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
-                                        {{ $badge->name }}
+                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                            2022 &mdash; 2023
+                        </span>
+                        <div class="flex-1">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                                Product Designer
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+                                Led user research and iterative prototyping for cross-platform applications and design system maintenance.
+                            </p>
+                        </div>
+                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
+                            Voltrans Studio
+                        </span>
+                    </div>
+                </div>
+
+                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                            2021 &mdash; 2022
+                        </span>
+                        <h3 class="flex-1 text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                            Graphic Designer
+                        </h3>
+                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
+                            Kanota Studio
+                        </span>
+                    </div>
+                </div>
+
+                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                            2020 &mdash; 2021
+                        </span>
+                        <h3 class="flex-1 text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                            Web Developer
+                        </h3>
+                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
+                            Peluru Studio
+                        </span>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio / Projects Section ("Bringing Ideas to Life through Design") -->
+<section id="projects" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div class="space-y-2 max-w-xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
+                    PORTFOLIO
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                    Bringing Ideas to Life<br>through Design
+                </h2>
+            </div>
+            <p class="text-sm text-slate-500 max-w-md leading-relaxed">
+                Selected featured projects spanning mobile products, full-stack web applications, brand identities, and editorial packaging.
+            </p>
+        </div>
+
+        <!-- 2x2 Grid of Rounded Project Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+            @if ($user->projects && $user->projects->count() > 0)
+                @foreach ($user->projects as $index => $project)
+                    @php
+                        // Fallback image curation if project has no uploaded image
+                        $presetImages = [
+                            'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=1000&q=80',
+                            'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1000&q=80',
+                            'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80',
+                            'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1000&q=80',
+                        ];
+                        $imgSrc = ($project->image_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($project->image_path)) 
+                            ? asset('storage/' . $project->image_path) 
+                            : ($presetImages[$index % 4]);
+                        $yearBadge = 2024 - ($index % 3);
+                    @endphp
+
+                    <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300">
+                        <!-- Project Image with Zoom on Hover -->
+                        <img src="{{ $imgSrc }}" 
+                             alt="{{ $project->title }}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+
+                        <!-- Dark Bottom Vignette Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+
+                        <!-- Card Content Overlay -->
+                        <div class="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
+                            <!-- Top Link Arrow Button -->
+                            <div class="flex justify-end">
+                                <a href="{{ route('projects.show', $project->id) }}" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-accent-500 hover:scale-110 flex items-center justify-center transition-all duration-200" title="View Detail">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <!-- Bottom Info -->
+                            <div class="flex items-end justify-between gap-4">
+                                <div class="space-y-1">
+                                    <a href="{{ route('projects.show', $project->id) }}" class="text-xl sm:text-2xl font-bold text-white hover:text-accent-400 transition-colors block">
+                                        {{ $project->title }}
+                                    </a>
+                                    <span class="text-xs sm:text-sm text-slate-300 block">
+                                        {{ Str::limit($project->description, 50) }}
                                     </span>
-                                @endforeach
+                                </div>
+                                <span class="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full shrink-0">
+                                    {{ $yearBadge }}
+                                </span>
                             </div>
-                        @endif
-
-                        <!-- Actions -->
-                        <div class="pt-4 border-t-2 border-black flex items-center justify-between mt-auto">
-                            <!-- Link to Detail Page -->
-                            <a href="{{ route('projects.show', $project->id) }}" class="inline-flex items-center text-xs font-black uppercase tracking-wider text-black border-2 border-black bg-white hover:bg-[#ff5722] px-3.5 py-2.5 shadow-[3px_3px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all">
-                                Detail Proyek &rarr;
-                            </a>
-                            
-                            @if ($project->project_link)
-                                <a href="{{ $project->project_link }}" target="_blank" rel="noopener noreferrer" class="text-xs font-black uppercase tracking-wider text-[#ff5722] hover:text-black flex items-center gap-1">
-                                    Link Live
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                    </svg>
-                                </a>
-                            @else
-                                <span class="text-xxs font-bold text-slate-400 uppercase italic">// Internal</span>
-                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <!-- Mockup-Accurate Default Preset Cards -->
+                <!-- Card 1: Thrift Shop App -->
+                <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=1000&q=80" 
+                         alt="Thrift Shop App" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
+                        <div class="flex justify-end">
+                            <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-accent-500 group-hover:scale-110 flex items-center justify-center transition-all">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </span>
+                        </div>
+                        <div class="flex items-end justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-accent-400 transition-colors">
+                                    Thrift Shop App
+                                </h3>
+                                <span class="text-xs sm:text-sm text-slate-300">UI/UX Design & Mobile App</span>
+                            </div>
+                            <span class="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
+                                2023
+                            </span>
                         </div>
                     </div>
                 </div>
-            @empty
-                <div class="col-span-full text-center py-12 border-4 border-dashed border-slate-400">
-                    <p class="font-bold text-slate-500 uppercase tracking-wider">Belum ada portofolio proyek yang ditambahkan.</p>
+
+                <!-- Card 2: Tape Branding -->
+                <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1000&q=80" 
+                         alt="Tape Branding" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
+                        <div class="flex justify-end">
+                            <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-accent-500 group-hover:scale-110 flex items-center justify-center transition-all">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </span>
+                        </div>
+                        <div class="flex items-end justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-accent-400 transition-colors">
+                                    Tape Branding
+                                </h3>
+                                <span class="text-xs sm:text-sm text-slate-300">Branding & Packaging</span>
+                            </div>
+                            <span class="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
+                                2024
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            @endforelse
+
+                <!-- Card 3: Book Design -->
+                <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80" 
+                         alt="Book Design" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
+                        <div class="flex justify-end">
+                            <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-accent-500 group-hover:scale-110 flex items-center justify-center transition-all">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </span>
+                        </div>
+                        <div class="flex items-end justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-accent-400 transition-colors">
+                                    Book Design
+                                </h3>
+                                <span class="text-xs sm:text-sm text-slate-300">Print & Editorial Layout</span>
+                            </div>
+                            <span class="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
+                                2023
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Livora Estate -->
+                <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1000&q=80" 
+                         alt="Livora Estate" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between">
+                        <div class="flex justify-end">
+                            <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white group-hover:bg-accent-500 group-hover:scale-110 flex items-center justify-center transition-all">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </span>
+                        </div>
+                        <div class="flex items-end justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-accent-400 transition-colors">
+                                    Livora Estate
+                                </h3>
+                                <span class="text-xs sm:text-sm text-slate-300">UI/UX Design & Web Platform</span>
+                            </div>
+                            <span class="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
+                                2022
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </section>
 
-<!-- Timeline (Education & Experience) -->
-<section id="timeline" class="py-24 bg-[#f5f5f5]">
+<!-- Testimonials Section ("Testimonials that highlight my work") -->
+<section id="testimonials" class="py-24 md:py-32 bg-[#FAFAFC] border-t border-slate-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Title (Brutalist Panel) -->
-        <div class="border-4 border-black p-8 bg-[#ff5722] text-black shadow-[6px_6px_0px_#000000] max-w-3xl mx-auto mb-20 text-center">
-            <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter">
-                Pengalaman & Pendidikan
-            </h2>
-            <p class="text-black text-sm uppercase tracking-widest mt-3 font-extrabold">
-                // Jejak Karir Profesional & Akademik
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div class="space-y-2 max-w-xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
+                    TESTIMONIALS
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                    Testimonials that<br>highlight my work
+                </h2>
+            </div>
+            <p class="text-sm text-slate-500 max-w-md leading-relaxed">
+                Real words from founders, product leaders, and design partners who experienced the impact of our collaborative work.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <!-- 1. Experience Column -->
-            <div>
-                <div class="flex items-center gap-3 mb-12">
-                    <div class="p-3 bg-black text-[#ff5722] border-2 border-black shadow-[3px_3px_0px_#ff5722]">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 .621-.504 1.125-1.125 1.125H4.875A1.125 1.125 0 013.75 18.4V14.15m16.5 0c0-1.217-.463-2.383-1.29-3.262-.828-.88-1.93-1.388-3.11-1.388H7.9c-1.182 0-2.283.508-3.11 1.388a4.8 4.8 0 00-1.29 3.262m16.5 0a4.8 4.8 0 01-1.29-3.262m-13.92 0a4.8 4.8 0 01-1.29-3.262m13.92 0v-3.13a3 3 0 00-3-3h-2.25a1 1 0 00-1 1v1.3m-5.67 0v-1.3a1 1 0 00-1-1H7.9a3 3 0 00-3 3v3.13m9.9 0H7.9" />
-                        </svg>
-                    </div>
-                    <h3 class="text-3xl font-black uppercase tracking-tighter">Karir Pekerjaan</h3>
-                </div>
+        <!-- Interactive Testimonial Card Component -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 p-8 sm:p-12 md:p-16 shadow-[0_10px_30px_rgba(0,0,0,0.04)] relative">
+            <!-- Accent Quote Mark Icon -->
+            <div class="text-accent-500 text-6xl font-serif font-black leading-none mb-6 select-none">
+                &ldquo;
+            </div>
 
-                <!-- Brutalist Timeline Path -->
-                <div class="relative border-l-4 border-black ml-4 space-y-10">
-                    @forelse ($user->experiences as $experience)
-                        <div class="relative pl-8">
-                            <!-- Bullet Dot Block -->
-                            <div class="absolute -left-[14px] top-6 w-5 h-5 bg-[#ff5722] border-3 border-black shadow-[2px_2px_0px_#000000]"></div>
-                            
-                            <!-- Card Content inside Brutalist Box -->
-                            <div class="bg-white border-3 border-black p-6 shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition duration-150">
-                                <!-- Period Badge -->
-                                <span class="inline-flex items-center px-3 py-1 bg-black text-[#ff5722] border-2 border-black font-extrabold text-xs uppercase shadow-[2px_2px_0px_#ff5722] mb-4">
-                                    {{ $experience->start_date->format('M Y') }} - 
-                                    {{ $experience->end_date ? $experience->end_date->format('M Y') : 'Sekarang' }}
-                                </span>
-                                
-                                <!-- Position & Company -->
-                                <h4 class="text-xl font-black uppercase tracking-tight text-black">{{ $experience->position }}</h4>
-                                <span class="text-sm font-extrabold uppercase text-[#ff5722] tracking-wider">{{ $experience->company_name }}</span>
-                                
-                                <!-- Description -->
-                                @if ($experience->description)
-                                    @php
-                                        $expPoints = json_decode($experience->description, true);
-                                    @endphp
-                                    @if (is_array($expPoints))
-                                        <ul class="list-disc pl-5 mt-4 space-y-1.5 text-sm font-bold text-slate-700 leading-relaxed">
-                                            @foreach ($expPoints as $point)
-                                                @if (trim($point) !== '')
-                                                    <li>{{ $point }}</li>
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p class="text-sm font-bold text-slate-700 leading-relaxed mt-4">
-                                            {!! nl2br(e($experience->description)) !!}
-                                        </p>
-                                    @endif
-                                @endif
+            <!-- Testimonial Items (Managed via Vanilla JS) -->
+            <div id="testimonial-container">
+                <!-- Slide 1 (Default Mockup) -->
+                <div class="testimonial-slide active transition-opacity duration-300">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                        <!-- Client Avatar -->
+                        <div class="md:col-span-3 flex justify-center md:justify-start">
+                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" 
+                                     alt="Daniel Radicchi" 
+                                     class="w-full h-full object-cover">
                             </div>
                         </div>
-                    @empty
-                        <p class="text-slate-500 font-extrabold uppercase tracking-wide pl-6">// Belum ada data pengalaman kerja.</p>
-                    @endforelse
+
+                        <!-- Quote & Author -->
+                        <div class="md:col-span-9 space-y-4 text-center md:text-left">
+                            <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
+                                &ldquo;An exceptional designer with a great sense of detail. The final product was not only visually appealing but also highly functional and user-friendly.&rdquo;
+                            </p>
+                            <div>
+                                <span class="block text-base font-extrabold text-slate-950">Daniel Radicchi</span>
+                                <span class="block text-xs sm:text-sm font-medium text-slate-500">Head of Product at Spead</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="testimonial-slide hidden opacity-0 transition-opacity duration-300">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                        <div class="md:col-span-3 flex justify-center md:justify-start">
+                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" 
+                                     alt="Sophia Martinez" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="md:col-span-9 space-y-4 text-center md:text-left">
+                            <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
+                                &ldquo;Collaborating was seamless and incredibly productive. The design system crafted for our SaaS platform accelerated our frontend engineering velocity by 40%.&rdquo;
+                            </p>
+                            <div>
+                                <span class="block text-base font-extrabold text-slate-950">Sophia Martinez</span>
+                                <span class="block text-xs sm:text-sm font-medium text-slate-500">VP of Engineering at Cloudflow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="testimonial-slide hidden opacity-0 transition-opacity duration-300">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                        <div class="md:col-span-3 flex justify-center md:justify-start">
+                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80" 
+                                     alt="Marcus Chen" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="md:col-span-9 space-y-4 text-center md:text-left">
+                            <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
+                                &ldquo;Rarely do you find someone who understands both the visual soul of a brand and the technical constraints of complex applications. A true master of digital product craft.&rdquo;
+                            </p>
+                            <div>
+                                <span class="block text-base font-extrabold text-slate-950">Marcus Chen</span>
+                                <span class="block text-xs sm:text-sm font-medium text-slate-500">Co-Founder at Hyperion Labs</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 2. Education Column -->
-            <div>
-                <div class="flex items-center gap-3 mb-12">
-                    <div class="p-3 bg-black text-[#ff5722] border-2 border-black shadow-[3px_3px_0px_#ff5722]">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 017.231-4.41 60.354 60.354 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75" />
-                        </svg>
-                    </div>
-                    <h3 class="text-3xl font-black uppercase tracking-tighter">Edukasi Akademik</h3>
-                </div>
-
-                <!-- Brutalist Timeline Path -->
-                <div class="relative border-l-4 border-black ml-4 space-y-10">
-                    @forelse ($user->educations as $education)
-                        <div class="relative pl-8">
-                            <!-- Bullet Dot Block -->
-                            <div class="absolute -left-[14px] top-6 w-5 h-5 bg-black border-3 border-[#ff5722] shadow-[2px_2px_0px_#ff5722]"></div>
-                            
-                            <!-- Card Content inside Brutalist Box -->
-                            <div class="bg-white border-3 border-black p-6 shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition duration-150">
-                                <!-- Period Badge -->
-                                <span class="inline-flex items-center px-3 py-1 bg-black text-[#ff5722] border-2 border-black font-extrabold text-xs uppercase shadow-[2px_2px_0px_#ff5722] mb-4">
-                                    {{ $education->start_year }} - {{ $education->end_year ?? 'Sekarang' }}
-                                </span>
-                                
-                                <!-- Degree & Institution -->
-                                <h4 class="text-xl font-black uppercase tracking-tight text-black">{{ $education->degree }}</h4>
-                                <span class="text-sm font-extrabold uppercase text-[#ff5722] tracking-wider">{{ $education->institution_name }}</span>
-                                
-                                <!-- Description -->
-                                @if ($education->description)
-                                    @php
-                                        $eduPoints = json_decode($education->description, true);
-                                    @endphp
-                                    @if (is_array($eduPoints))
-                                        <ul class="list-disc pl-5 mt-4 space-y-1.5 text-sm font-bold text-slate-700 leading-relaxed">
-                                            @foreach ($eduPoints as $point)
-                                                @if (trim($point) !== '')
-                                                    <li>{{ $point }}</li>
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p class="text-sm font-bold text-slate-700 leading-relaxed mt-4">
-                                            {!! nl2br(e($education->description)) !!}
-                                        </p>
-                                    @endif
-                                @endif
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-slate-500 font-extrabold uppercase tracking-wide pl-6">// Belum ada data riwayat akademik.</p>
-                    @endforelse
-                </div>
+            <!-- Slider Control Buttons -->
+            <div class="flex items-center justify-center md:justify-end gap-3 pt-8 border-t border-slate-100 mt-8">
+                <button id="prev-testimonial" type="button" class="w-10 h-10 rounded-full border border-slate-200 hover:border-slate-800 text-slate-600 hover:text-slate-950 flex items-center justify-center transition-all" aria-label="Previous Testimonial">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button id="next-testimonial" type="button" class="w-10 h-10 rounded-full bg-accent-500 hover:bg-accent-600 text-white flex items-center justify-center shadow-md shadow-accent-500/20 transition-all" aria-label="Next Testimonial">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Contact Section (High-Contrast Brutalist Box) -->
-<section id="contact" class="py-24 bg-white border-b-8 border-black">
+<!-- Call to Action Banner ("Let's Build Something Truly Meaningful Together") -->
+<section class="py-20 md:py-28 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Title (Brutalist Panel) -->
-        <div class="border-4 border-black p-8 bg-black text-white shadow-[6px_6px_0px_#ff5722] max-w-3xl mx-auto mb-16 text-center">
-            <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter">
-                Hubungi Saya
-            </h2>
-            <p class="text-slate-350 text-sm uppercase tracking-widest mt-3 font-semibold">
-                // Mari terhubung melalui kontak atau sosial media di bawah ini
-            </p>
-        </div>
+        <div class="relative bg-warm-grid rounded-3xl border border-accent-200/80 shadow-[0_15px_40px_rgba(255,77,45,0.08)] overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-12 md:p-16">
+                
+                <!-- Left Banner Copy -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                        Let's Build Something Truly<br>
+                        <span class="italic font-bold text-accent-500">Meaningful Together</span>
+                    </h2>
+                    
+                    <p class="text-sm sm:text-base text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Whether you are launching a brand-new venture, elevating an existing digital ecosystem, or seeking expert product consulting, I am excited to connect.
+                    </p>
 
-        <div class="max-w-4xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Left: Direct Contacts -->
-                <div class="bg-[#f5f5f5] border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#000000] flex flex-col justify-between">
-                    <div>
-                        <span class="inline-block px-3 py-1 bg-black text-[#ff5722] border-2 border-black font-extrabold text-xs uppercase shadow-[2px_2px_0px_#ff5722] mb-6">
-                            // DIRECT CHAT & EMAIL
-                        </span>
-                        <h3 class="text-2xl font-black uppercase tracking-tight text-black mb-4">Kontak Langsung</h3>
-                        <p class="text-sm font-bold text-slate-700 leading-relaxed mb-8">
-                            Silakan hubungi saya kapan saja untuk mendiskusikan peluang kerja sama proyek baru atau sekadar menyapa.
-                        </p>
-                    </div>
-
-                    <div class="space-y-4">
-                        @if ($user->socialLinks->count() > 0)
-                            @forelse ($user->socialLinks->whereIn('icon', ['email', 'whatsapp']) as $social)
-                                @php
-                                    $href = $social->link;
-                                    $target = 'target="_blank"';
-                                    if ($social->icon === 'email') {
-                                        $href = str_starts_with($social->link, 'mailto:') ? $social->link : 'mailto:' . $social->link;
-                                        $target = '';
-                                    } elseif ($social->icon === 'whatsapp') {
-                                        if (!str_starts_with($social->link, 'http://') && !str_starts_with($social->link, 'https://')) {
-                                            $cleanNumber = preg_replace('/[^0-9]/', '', $social->link);
-                                            $href = 'https://wa.me/' . $cleanNumber;
-                                        }
-                                    }
-                                @endphp
-                                <a href="{{ $href }}" {!! $target !!} rel="noopener noreferrer" class="flex items-center gap-3 p-4 border-3 border-black shadow-[3px_3px_0px_#000000] hover:shadow-[5px_5px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all"
-                                   style="background-color: {{ $social->bg_color }}; color: {{ $social->text_color }};">
-                                    <div class="flex-shrink-0 flex items-center justify-center">
-                                        @if($social->icon === 'email')
-                                            <svg class="w-6 h-6 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0l-7.5-4.615a2.25 2.25 0 01-1.07-1.916V6.75" />
-                                            </svg>
-                                        @elseif($social->icon === 'whatsapp')
-                                            <svg class="w-6 h-6 fill-currentColor" viewBox="0 0 24 24">
-                                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.458L0 24zm6.26-4.526c1.661.987 3.291 1.488 4.966 1.489 5.517 0 10.005-4.48 10.008-9.998.001-2.673-1.037-5.185-2.923-7.072C16.483 2.006 13.977.969 11.3.969 5.787.969 1.3 5.449 1.297 10.969c-.001 1.761.464 3.424 1.348 4.96L1.67 21.5l5.59-1.463c-.347-.206-.693-.412-1.04-.619-.103-.062-.206-.124-.309-.187-.001-.001-.001-.001-.001-.001v.001zm11.517-7.834c-.27-.135-1.597-.788-1.846-.878-.248-.09-.429-.135-.61.135-.181.271-.7 1.035-.858 1.216-.158.18-.316.203-.586.068-.27-.136-1.14-.42-2.171-1.339-.802-.716-1.343-1.6-1.501-1.871-.158-.271-.017-.417.118-.552.122-.122.27-.316.406-.474.135-.158.18-.271.27-.451.09-.18.045-.339-.022-.475-.068-.135-.61-1.467-.836-2.009-.22-.53-.442-.458-.61-.466-.158-.008-.339-.008-.52-.008-.18 0-.474.068-.722.339-.248.271-.948.927-.948 2.26 0 1.332.97 2.617 1.106 2.798.135.18 1.907 2.911 4.62 4.082.645.278 1.149.444 1.542.569.648.206 1.237.177 1.703.107.519-.078 1.597-.653 1.822-1.284.226-.632.226-1.173.158-1.285-.068-.113-.248-.18-.519-.315z" />
-                                            </svg>
-                                        @endif
-                                    </div>
-                                    <div class="min-w-0 flex-1">
-                                        <span class="block text-xxs font-black opacity-70 uppercase tracking-widest">{{ $social->icon === 'email' ? 'KIRIM EMAIL' : 'WHATSAPP CHAT' }}</span>
-                                        <span class="block text-sm font-black truncate">{{ $social->name }}</span>
-                                    </div>
-                                </a>
-                            @empty
-                                <div class="text-xs font-bold text-slate-400 uppercase italic p-4 border-2 border-dashed border-slate-350">// Kontak belum diatur</div>
-                            @endforelse
-                        @else
-                            {{-- Fallback to legacy contact fields --}}
-                            @if ($user->email_contact)
-                                <a href="mailto:{{ $user->email_contact }}" class="flex items-center gap-3 p-4 bg-white border-3 border-black shadow-[3px_3px_0px_#000000] hover:shadow-[5px_5px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
-                                    <div class="p-2 bg-black text-white border-2 border-black flex items-center justify-center">
-                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0l-7.5-4.615a2.25 2.25 0 01-1.07-1.916V6.75" />
-                                        </svg>
-                                    </div>
-                                    <div class="min-w-0 flex-1">
-                                        <span class="block text-xxs font-black text-slate-500 uppercase tracking-widest">KIRIM EMAIL</span>
-                                        <span class="block text-sm font-black text-black truncate">{{ $user->email_contact }}</span>
-                                    </div>
-                                </a>
-                            @endif
-
-                            @if ($user->phone)
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $user->phone) }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-white border-3 border-black shadow-[3px_3px_0px_#000000] hover:shadow-[5px_5px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
-                                    <div class="p-2 bg-emerald-500 text-black border-2 border-black flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.458L0 24zm6.26-4.526c1.661.987 3.291 1.488 4.966 1.489 5.517 0 10.005-4.48 10.008-9.998.001-2.673-1.037-5.185-2.923-7.072C16.483 2.006 13.977.969 11.3.969 5.787.969 1.3 5.449 1.297 10.969c-.001 1.761.464 3.424 1.348 4.96L1.67 21.5l5.59-1.463c-.347-.206-.693-.412-1.04-.619-.103-.062-.206-.124-.309-.187-.001-.001-.001-.001-.001-.001v.001zm11.517-7.834c-.27-.135-1.597-.788-1.846-.878-.248-.09-.429-.135-.61.135-.181.271-.7 1.035-.858 1.216-.158.18-.316.203-.586.068-.27-.136-1.14-.42-2.171-1.339-.802-.716-1.343-1.6-1.501-1.871-.158-.271-.017-.417.118-.552.122-.122.27-.316.406-.474.135-.158.18-.271.27-.451.09-.18.045-.339-.022-.475-.068-.135-.61-1.467-.836-2.009-.22-.53-.442-.458-.61-.466-.158-.008-.339-.008-.52-.008-.18 0-.474.068-.722.339-.248.271-.948.927-.948 2.26 0 1.332.97 2.617 1.106 2.798.135.18 1.907 2.911 4.62 4.082.645.278 1.149.444 1.542.569.648.206 1.237.177 1.703.107.519-.078 1.597-.653 1.822-1.284.226-.632.226-1.173.158-1.285-.068-.113-.248-.18-.519-.315z" />
-                                        </svg>
-                                    </div>
-                                    <div class="min-w-0 flex-1">
-                                        <span class="block text-xxs font-black text-slate-500 uppercase tracking-widest">WHATSAPP CHAT</span>
-                                        <span class="block text-sm font-black text-black truncate">+{{ $user->phone }}</span>
-                                    </div>
-                                </a>
-                            @endif
-
-                            @if (!$user->email_contact && !$user->phone)
-                                <div class="text-xs font-bold text-slate-400 uppercase italic p-4 border-2 border-dashed border-slate-350">// Kontak belum diatur</div>
-                            @endif
-                        @endif
+                    <div class="pt-2">
+                        <a href="mailto:{{ $user->email_contact ?? 'hi@getincontact.com' }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white font-semibold text-sm sm:text-base shadow-lg shadow-accent-500/30 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all">
+                            Start a Project
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Right: Social Media Buttons -->
-                <div class="bg-black border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#ff5722] flex flex-col justify-between text-white">
-                    <div>
-                        <span class="inline-block px-3 py-1 bg-[#ff5722] text-black border-2 border-black font-extrabold text-xs uppercase shadow-[2px_2px_0px_#ffffff] mb-6">
-                            // SOCIAL PROFILES
-                        </span>
-                        <h3 class="text-2xl font-black uppercase tracking-tight text-white mb-4">Media Sosial</h3>
-                        <p class="text-sm font-bold text-slate-300 leading-relaxed mb-8">
-                            Ikuti atau hubungi saya melalui media sosial saya untuk melihat proyek lain atau koneksi profesional.
-                        </p>
-                    </div>
-
-                    <div class="space-y-4">
-                        @if ($user->socialLinks->count() > 0)
-                            @forelse ($user->socialLinks->whereNotIn('icon', ['email', 'whatsapp']) as $social)
-                                <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" 
-                                   class="flex items-center justify-between p-4 border-3 border-black shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all"
-                                   style="background-color: {{ $social->bg_color }}; color: {{ $social->text_color }}; border-color: #000000;">
-                                    <span class="text-sm font-black uppercase tracking-wider">{{ $social->name }}</span>
-                                    @switch($social->icon)
-                                        @case('github')
-                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" /></svg>
-                                            @break
-                                        @case('linkedin')
-                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
-                                            @break
-                                        @case('instagram')
-                                            <svg class="w-5 h-5 fill-currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
-                                            @break
-                                        @case('facebook')
-                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                                            @break
-                                        @case('youtube')
-                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.525 3.5 12 3.5 12 3.5s-7.525 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.475 20.5 12 20.5 12 20.5s7.525 0 9.388-.555a3.002 3.002 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                                            @break
-                                        @case('twitter')
-                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                            @break
-                                        @default
-                                            <svg class="w-5 h-5 fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
-                                    @endswitch
-                                </a>
-                            @empty
-                                <div class="text-xs font-bold text-slate-400 uppercase italic p-4 border-2 border-dashed border-slate-700">// Sosial media belum diatur</div>
-                            @endforelse
-                        @else
-                            {{-- Fallback to legacy social link fields --}}
-                            @if ($user->github_link)
-                                <a href="{{ $user->github_link }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-white border-3 border-black text-black shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
-                                    <span class="text-sm font-black uppercase tracking-wider">GitHub Profil</span>
-                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                                    </svg>
-                                </a>
-                            @endif
-
-                            @if ($user->linkedin_link)
-                                <a href="{{ $user->linkedin_link }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-[#0077b5] border-3 border-black text-white shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
-                                    <span class="text-sm font-black uppercase tracking-wider text-white">LinkedIn Profil</span>
-                                    <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
-                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                                    </svg>
-                                </a>
-                            @endif
-
-                            @if ($user->instagram_link)
-                                <a href="{{ $user->instagram_link }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-[#e1306c] border-3 border-black text-white shadow-[3px_3px_0px_#ff5722] hover:shadow-[5px_5px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 active:shadow-none transition-all">
-                                    <span class="text-sm font-black uppercase tracking-wider text-white">Instagram</span>
-                                    <svg class="w-5 h-5 fill-currentColor text-white" viewBox="0 0 24 24">
-                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                                    </svg>
-                                </a>
-                            @endif
-
-                            @if (!$user->github_link && !$user->linkedin_link && !$user->instagram_link)
-                                <div class="text-xs font-bold text-slate-400 uppercase italic p-4 border-2 border-dashed border-slate-700">// Sosial media belum diatur</div>
-                            @endif
-                        @endif
+                <!-- Right Banner Cutout Image -->
+                <div class="lg:col-span-5 flex justify-center lg:justify-end z-10">
+                    <div class="relative w-64 h-72 sm:w-72 sm:h-80 md:w-80 md:h-96 overflow-hidden rounded-2xl">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" 
+                             alt="Let's build together" 
+                             class="w-full h-full object-cover object-top drop-shadow-xl">
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </section>
+
+<!-- Vanilla JS for Interactive Testimonial Slider -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const prevBtn = document.getElementById('prev-testimonial');
+        const nextBtn = document.getElementById('next-testimonial');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.remove('hidden');
+                    setTimeout(() => {
+                        slide.classList.remove('opacity-0');
+                        slide.classList.add('opacity-100');
+                    }, 20);
+                } else {
+                    slide.classList.add('opacity-0');
+                    slide.classList.remove('opacity-100');
+                    setTimeout(() => {
+                        slide.classList.add('hidden');
+                    }, 200);
+                }
+            });
+        }
+
+        if (prevBtn && nextBtn && slides.length > 0) {
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            });
+        }
+    });
+</script>
 @endsection
