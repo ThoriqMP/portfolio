@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user->name }} &mdash; {{ $user->title ?? 'Fullstack Web Developer' }}</title>
+    <title>{{ $user->name }} &mdash; {{ $user->title ?? 'Digital Product Designer' }}</title>
     
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="Portofolio resmi {{ $user->name }}. Berfokus pada perancangan dan pengembangan aplikasi web modern, performa tinggi, dan solusi digital terstruktur.">
-    <meta name="keywords" content="Portfolio, Fullstack Web Developer, Laravel, PHP, Tailwind CSS, MySQL, Web Developer Indonesia">
+    <meta name="description" content="Portofolio resmi {{ $user->name }}. Berfokus pada perancangan produk digital, UI/UX, dan pengembangan aplikasi web.">
+    <meta name="keywords" content="Portfolio, Fullstack Web Developer, UI/UX Designer, Laravel, Tailwind CSS, Web Design">
     <meta name="author" content="{{ $user->name }}">
 
     <!-- Google Fonts: Plus Jakarta Sans -->
@@ -45,9 +45,9 @@
                             400: '#D5CCBF',
                         },
                         dark: {
-                            800: '#15171C',
-                            900: '#0E1015',
-                            950: '#080A0E',
+                            800: '#141824',
+                            900: '#0C101B',
+                            950: '#070A12',
                         }
                     }
                 }
@@ -61,7 +61,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #FAF8F5;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
-            color: #1A1F2C;
+            color: #0F172A;
             overflow-x: hidden;
         }
 
@@ -83,10 +83,22 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
         }
 
-        /* Organic paper card with subtle fiber texture */
+        /* Modern card with smooth paper tactile border */
+        .modern-card {
+            background-color: #FFFFFF;
+            border: 1px solid rgba(226, 232, 240, 0.85);
+            border-radius: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modern-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+            border-color: rgba(255, 77, 45, 0.3);
+        }
+
+        /* Organic paper card */
         .paper-card {
             background-color: #FFFFFF;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
             border: 1px solid #E8E3D8;
             border-radius: 1.5rem;
             box-shadow: 0 4px 18px -2px rgba(45, 35, 25, 0.04);
@@ -129,29 +141,34 @@
         @yield('content')
     </main>
 
-    <!-- Footer (Clean, Editorial & Grounded) -->
-    <footer id="contact" class="bg-dark-950 text-white pt-20 pb-12 relative overflow-hidden border-t border-slate-800/80">
+    <!-- Footer (Deep Dark Luxury Section with Giant Faded Watermark from Mockup) -->
+    <footer id="contact" class="bg-dark-950 text-white pt-24 pb-12 relative overflow-hidden border-t border-slate-800/80">
+        <!-- Giant Watermark Background Text at bottom of footer (from mockup) -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 select-none text-[12rem] sm:text-[18rem] md:text-[24rem] font-black text-white/[0.035] leading-none tracking-tighter uppercase pointer-events-none z-0 whitespace-nowrap">
+            {{ strtoupper(explode(' ', $user->name ?? 'ETHAN')[0]) }}
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Top Footer Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-slate-800/80">
-                <!-- Left: Direct Contact -->
-                <div class="lg:col-span-6 space-y-5">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-20 border-b border-slate-800/80">
+                <!-- Left: Big CTA & Direct Contact -->
+                <div class="lg:col-span-6 space-y-6">
                     <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent-400">
                         <span class="w-2 h-2 rounded-full bg-accent-500"></span>
-                        Kontak & Kolaborasi
+                        Let's Talk
                     </span>
                     
                     <div>
-                        <a href="mailto:{{ $user->email_contact ?? 'hi@getincontact.com' }}" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white hover:text-accent-400 transition-colors tracking-tight block">
+                        <a href="mailto:{{ $user->email_contact ?? 'hi@getincontact.com' }}" class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white hover:text-accent-400 transition-colors tracking-tight block">
                             {{ $user->email_contact ?? 'hi@getincontact.com' }}
                         </a>
                         <p class="text-slate-400 text-sm mt-3 max-w-md leading-relaxed font-normal">
-                            Tertarik berdiskusi seputar peluang kerja, proyek web, atau konsultasi teknis? Jangan ragu untuk mengirimkan pesan.
+                            Have an idea, a project inquiry, or just want to chat? Send me an email and let's craft something remarkable together.
                         </p>
                     </div>
 
-                    <!-- Social Media Links (Clean Circular Buttons) -->
-                    <div class="flex items-center gap-2.5 pt-2">
+                    <!-- Social Media Links (Modern Circular Pills) -->
+                    <div class="flex items-center gap-3 pt-4">
                         @if ($user->socialLinks && $user->socialLinks->count() > 0)
                             @foreach ($user->socialLinks as $social)
                                 <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" title="{{ $social->name }}" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200">
@@ -180,47 +197,48 @@
 
                 <!-- Right: Navigation Columns -->
                 <div class="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
-                    <!-- Column 1: Navigasi -->
+                    <!-- Column 1: Navigation -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Navigasi</h4>
-                        <ul class="space-y-2 text-sm text-slate-300">
-                            <li><a href="#hero" class="hover:text-accent-400 transition-colors">Beranda</a></li>
-                            <li><a href="#about" class="hover:text-accent-400 transition-colors">Tentang Saya</a></li>
-                            <li><a href="#services" class="hover:text-accent-400 transition-colors">Keahlian</a></li>
-                            <li><a href="#experience" class="hover:text-accent-400 transition-colors">Riwayat</a></li>
-                            <li><a href="#projects" class="hover:text-accent-400 transition-colors">Proyek</a></li>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Navigation</h4>
+                        <ul class="space-y-2.5 text-sm">
+                            <li><a href="#hero" class="text-slate-300 hover:text-accent-400 transition-colors">Home</a></li>
+                            <li><a href="#about" class="text-slate-300 hover:text-accent-400 transition-colors">About Me</a></li>
+                            <li><a href="#services" class="text-slate-300 hover:text-accent-400 transition-colors">Services</a></li>
+                            <li><a href="#experience" class="text-slate-300 hover:text-accent-400 transition-colors">Experiences</a></li>
+                            <li><a href="#projects" class="text-slate-300 hover:text-accent-400 transition-colors">Projects</a></li>
                         </ul>
                     </div>
 
-                    <!-- Column 2: Keahlian -->
+                    <!-- Column 2: Services -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Teknologi</h4>
-                        <ul class="space-y-2 text-sm text-slate-300">
-                            <li><span>Laravel & PHP</span></li>
-                            <li><span>Tailwind CSS</span></li>
-                            <li><span>MySQL Database</span></li>
-                            <li><span>RESTful API</span></li>
-                            <li><span>Git & GitHub</span></li>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Services</h4>
+                        <ul class="space-y-2.5 text-sm text-slate-300">
+                            <li><span>UI/UX Design</span></li>
+                            <li><span>Web Design</span></li>
+                            <li><span>Graphic Design</span></li>
+                            <li><span>Design System</span></li>
                         </ul>
                     </div>
 
-                    <!-- Column 3: Lainnya -->
+                    <!-- Column 3: Explore -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Lainnya</h4>
-                        <ul class="space-y-2 text-sm text-slate-300">
-                            <li><a href="#testimonials" class="hover:text-accent-400 transition-colors">Testimoni</a></li>
-                            <li><a href="#contact" class="hover:text-accent-400 transition-colors">Kontak</a></li>
-                            <li><a href="{{ route('login') }}" class="hover:text-white transition-colors">CMS Admin</a></li>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Explore</h4>
+                        <ul class="space-y-2.5 text-sm">
+                            <li><a href="#testimonials" class="text-slate-300 hover:text-accent-400 transition-colors">Testimonials</a></li>
+                            <li><a href="#contact" class="text-slate-300 hover:text-accent-400 transition-colors">Contact</a></li>
+                            <li><a href="{{ route('login') }}" class="text-slate-400 hover:text-white transition-colors">CMS Admin</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom Copyright Bar -->
-            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
                 <p>&copy; {{ date('Y') }} {{ $user->name }}. All rights reserved.</p>
-                <div class="flex items-center gap-2">
-                    <span>Fullstack Web Developer</span>
+                <div class="flex items-center gap-6">
+                    <span class="hover:text-white transition-colors cursor-pointer">Privacy Policy</span>
+                    <span>&bull;</span>
+                    <span class="hover:text-white transition-colors cursor-pointer">Terms of Service</span>
                 </div>
             </div>
         </div>
@@ -229,7 +247,6 @@
     <!-- Scripts for Navigation, Scrollspy & Mobile Menu -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Mobile Menu Toggle
             const menuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const iconOpen = document.getElementById('menu-icon-open');
@@ -258,7 +275,6 @@
                 });
             }
 
-            // Scrollspy Active Section Indicator
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-item');
 

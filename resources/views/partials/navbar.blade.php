@@ -4,7 +4,7 @@
         <!-- Brand Logo -->
         <a href="{{ Route::is('home') ? '#hero' : route('home') }}" class="group flex items-center gap-1.5 select-none shrink-0">
             <span class="font-extrabold text-base sm:text-lg tracking-tight uppercase text-slate-900 group-hover:text-accent-500 transition-colors">
-                {{ $user->name ?? 'PORTOFOLIO' }}
+                {{ strtoupper(explode(' ', $user->name ?? 'THORIQ')[0]) }}
             </span>
             <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
         </a>
@@ -12,29 +12,29 @@
         <!-- Desktop Navigation Links -->
         <nav class="hidden md:flex items-center gap-1 lg:gap-2">
             <a href="{{ Route::is('home') ? '#hero' : route('home') . '#hero' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
-                Beranda
+                Home
             </a>
             <a href="{{ Route::is('home') ? '#about' : route('home') . '#about' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
-                Tentang
+                About Me
             </a>
             <a href="{{ Route::is('home') ? '#services' : route('home') . '#services' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
-                Keahlian
+                Services
             </a>
             <a href="{{ Route::is('home') ? '#experience' : route('home') . '#experience' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
-                Riwayat
+                Experiences
             </a>
             <a href="{{ Route::is('home') ? '#projects' : route('home') . '#projects' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
-                Proyek
+                Projects
             </a>
             <a href="{{ Route::is('home') ? '#testimonials' : route('home') . '#testimonials' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
-                Testimoni
+                Testimonials
             </a>
         </nav>
 
         <!-- Right Side: Contact CTA & Mobile Menu Toggle -->
         <div class="flex items-center gap-2 sm:gap-3">
             <a href="{{ Route::is('home') ? '#contact' : route('home') . '#contact' }}" class="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-full bg-accent-500 hover:bg-accent-600 text-white text-xs sm:text-sm font-semibold shadow-sm hover:shadow-md hover:shadow-accent-500/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-150">
-                Hubungi Saya
+                Let's Talk
             </a>
 
             <!-- Mobile Hamburger Button -->
@@ -53,25 +53,25 @@
     <div id="mobile-menu" class="hidden md:hidden mt-2 glass-header rounded-2xl border border-paper-300 shadow-xl p-4 transition-all duration-200">
         <nav class="flex flex-col space-y-1">
             <a href="{{ Route::is('home') ? '#hero' : route('home') . '#hero' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
-                Beranda
+                Home
             </a>
             <a href="{{ Route::is('home') ? '#about' : route('home') . '#about' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
-                Tentang Saya
+                About Me
             </a>
             <a href="{{ Route::is('home') ? '#services' : route('home') . '#services' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
-                Keahlian & Layanan
+                Services
             </a>
             <a href="{{ Route::is('home') ? '#experience' : route('home') . '#experience' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
-                Riwayat Pengalaman
+                Experiences
             </a>
             <a href="{{ Route::is('home') ? '#projects' : route('home') . '#projects' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
-                Portofolio Proyek
+                Projects
             </a>
             <a href="{{ Route::is('home') ? '#testimonials' : route('home') . '#testimonials' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
-                Testimoni Pengunjung
+                Testimonials
             </a>
             <a href="{{ Route::is('home') ? '#contact' : route('home') . '#contact' }}" class="mt-2 text-center py-2.5 rounded-full bg-accent-500 text-white font-semibold text-sm shadow-sm">
-                Hubungi Saya
+                Let's Talk
             </a>
         </nav>
     </div>
