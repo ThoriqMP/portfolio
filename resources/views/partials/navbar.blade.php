@@ -1,14 +1,10 @@
 <!-- Header / Navigation (Floating Paper Pill Bar) -->
 <header id="main-header" class="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.25rem)] sm:w-[calc(100%-2rem)] max-w-6xl transition-all duration-300">
     <div class="glass-header rounded-full border border-paper-300 shadow-[0_4px_20px_rgba(45,35,25,0.05)] px-3.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
-        <!-- Brand Logo with Cool Typographic Styling -->
-        <a href="{{ Route::is('home') ? '#hero' : route('home') }}" class="group flex items-center gap-2 select-none shrink-0">
-            <div class="relative w-8 h-8 rounded-xl bg-slate-950 text-white flex items-center justify-center font-display font-black text-sm shadow-sm border border-slate-800 group-hover:border-accent-500 group-hover:bg-accent-500 transition-all duration-200">
-                <span>T</span>
-                <span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-accent-500 ring-2 ring-white"></span>
-            </div>
-            <span class="font-display font-black text-base sm:text-lg tracking-tight text-slate-900 group-hover:text-accent-500 transition-colors">
-                Thoriq<span class="text-accent-500 inline-block group-hover:translate-x-0.5 transition-transform">.</span>
+        <!-- Brand Logo: Pure Wordmark 'THORIQ' (Matching Reference Extended Geometric Typography) -->
+        <a href="{{ Route::is('home') ? '#hero' : route('home') }}" class="group inline-flex items-center select-none shrink-0 py-1" aria-label="THORIQ">
+            <span class="font-brand font-black text-sm sm:text-base tracking-[0.32em] uppercase text-slate-950 group-hover:text-accent-500 transition-colors duration-200">
+                THORIQ
             </span>
         </a>
 
