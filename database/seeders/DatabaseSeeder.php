@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             ['username' => 'admin'],
             [
                 'name' => 'Thoriq',
-                'email' => 'thoriqpasya860@gmail.com',
                 'email_contact' => 'thoriqpasya860@gmail.com',
                 'title' => 'Fullstack Web Developer',
                 'bio' => 'Seorang Fullstack Web Developer yang bersemangat dalam membangun aplikasi web modern yang responsif, berkinerja tinggi, dan berestetika premium menggunakan ekosistem Laravel dan Tailwind CSS.',

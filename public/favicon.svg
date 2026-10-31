@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B4A"/>
+      <stop offset="50%" stop-color="#FF4D2D"/>
+      <stop offset="100%" stop-color="#FF2E00"/>
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7B58" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FF4D2D" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#FF4D2D" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base -->
+  <rect x="4" y="4" width="120" height="120" rx="30" fill="url(#bgGrad)"/>
+  <rect x="4" y="4" width="120" height="120" rx="30" fill="none" stroke="url(#borderGrad)" stroke-width="2.5"/>
+
+  <!-- Glowing Accent Dot -->
+  <circle cx="98" cy="30" r="5" fill="#FF4D2D" filter="url(#glow)"/>
+
+  <!-- Stylized Geometric "T" Monogram with Cool Modern Cuts -->
+  <g filter="url(#glow)">
+    <!-- Top Horizontal Crossbar with Dynamic Cut -->
+    <path d="M 28 34 L 100 34 C 102.2 34 104 35.8 104 38 L 104 46 C 104 48.2 102.2 50 100 50 L 73 50 L 73 96 C 73 98.2 71.2 100 69 100 L 59 100 C 56.8 100 55 98.2 55 96 L 55 50 L 28 50 C 25.8 50 24 48.2 24 46 L 24 38 C 24 35.8 25.8 34 28 34 Z" fill="url(#brandGrad)"/>
+    <!-- Diagonal Precision Tech Slash inside T -->
+    <path d="M 55 34 L 73 50 L 55 50 Z" fill="#FFFFFF" opacity="0.35"/>
+  </g>
+
+  <!-- Modern Subtext "THORIQ" at the bottom -->
+  <text x="64" y="114" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Space Grotesk', system-ui, sans-serif" font-weight="900" font-size="12" letter-spacing="3.5" fill="#FFFFFF" opacity="0.95">THORIQ</text>
+</svg>
+

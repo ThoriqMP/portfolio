@@ -42,8 +42,23 @@
                 <div class="w-full bg-white border-3 border-black rounded-none px-4 py-4 focus-within:-translate-y-0.5 focus-within:shadow-[4px_4px_0px_#000000] transition-all duration-150">
                     <input type="file" name="image" id="image" accept="image/*" class="text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:bg-[#ff5722] file:text-black hover:file:bg-orange-600 file:cursor-pointer cursor-pointer">
                 </div>
-                <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Opsional pada pembuatan draf. Mendukung JPEG, JPG, PNG (Maks 10MB).</p>
+                <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Opsional pada pembuatan draf. Mendukung JPEG, JPG, PNG, WEBP (Maks 10MB).</p>
                 @error('image')
+                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Additional Carousel Images Upload -->
+            <div>
+                <label for="additional_images" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Foto Tambahan untuk Carousel (Opsional - Bisa Pilih Banyak Sekaligus)</label>
+                <div class="w-full bg-white border-3 border-black rounded-none px-4 py-4 focus-within:-translate-y-0.5 focus-within:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                    <input type="file" name="additional_images[]" id="additional_images" multiple accept="image/*" class="text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:bg-black file:text-white hover:file:bg-[#ff5722] hover:file:text-black file:cursor-pointer cursor-pointer">
+                </div>
+                <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Format: JPG, PNG, WEBP. Foto-foto ini akan membentuk slideshow carousel di halaman detail proyek.</p>
+                @error('additional_images')
+                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                @enderror
+                @error('additional_images.*')
                     <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
                 @enderror
             </div>

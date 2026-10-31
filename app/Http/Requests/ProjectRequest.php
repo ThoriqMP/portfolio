@@ -29,14 +29,14 @@ class ProjectRequest extends FormRequest
             'image' => [
                 $isCreate ? 'required' : 'nullable',
                 'image',
-                'mimes:jpeg,png,jpg',
+                'mimes:jpeg,png,jpg,webp',
                 'max:10240' // Max 10MB
             ],
             'project_link' => ['nullable', 'url'],
             'grid_span' => ['required', 'integer', 'between:1,3'],
             'thumbnail_composition' => ['required', 'string', 'in:single,split,mosaic,carousel'],
             'additional_images' => ['nullable', 'array'],
-            'additional_images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:10240'],
+            'additional_images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
             'badges' => ['nullable', 'array'],
             'badges.*' => ['integer', 'exists:badges,id'],
             'new_badges' => ['nullable', 'string'],

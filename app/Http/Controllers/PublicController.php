@@ -117,15 +117,18 @@ class PublicController extends Controller
     }
 
     /**
-     * Display a specific project's public detail page.
+     * Display a specific project's public detail page with interactive carousel.
      */
     public function showProject(Project $project)
     {
         // Eager load relationships
-        $project->load(['images', 'badges', 'user']);
+        $project->load(['images' => function ($query) {
+            $query->orderBy('sort_order', 'asc')->orderBy('id', 'asc');
+        }, 'badges', 'user']);
         
         $user = $project->user;
+        $slides = $project->carousel_slides;
         
-        return view('public.projects.show', compact('project', 'user'));
+        return view('public.projects.show', compact('project', 'user', 'slides'));
     }
 }

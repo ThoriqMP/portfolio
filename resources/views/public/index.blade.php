@@ -53,8 +53,8 @@
                 </div>
             </div>
 
-            <!-- Middle Column: Portrait Cutout Photo Matching Mockup -->
-            <div class="lg:col-span-4 flex justify-center order-first lg:order-none">
+            <!-- Middle Column: Portrait Cutout Photo with Glassmorphism Tools Card -->
+            <div class="lg:col-span-4 flex flex-col items-center justify-center order-first lg:order-none">
                 <div class="relative w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[430px] flex items-end justify-center">
                     <!-- Subtle ambient warmth behind portrait -->
                     <div class="absolute inset-0 bg-gradient-to-t from-accent-500/15 to-transparent rounded-full blur-2xl -z-10"></div>
@@ -73,6 +73,174 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent"></div>
                         </div>
                     @endif
+                </div>
+
+                <!-- Glassmorphism Tools Card Floating on Lower Photo -->
+                <div class="relative -mt-10 sm:-mt-14 w-full max-w-[340px] sm:max-w-[420px] z-20 px-2 sm:px-0">
+                    <div class="bg-white/75 backdrop-blur-xl border border-white/80 shadow-[0_16px_36px_rgba(15,23,42,0.12)] rounded-2xl sm:rounded-3xl p-3 sm:p-4 transition-all duration-300 hover:shadow-[0_20px_44px_rgba(255,77,45,0.15)] hover:border-white">
+                        <!-- Top Header Indicator -->
+                        <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200/60">
+                            <div class="flex items-center gap-1.5">
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                <span class="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-800">
+                                    Tools &amp; Stack
+                                </span>
+                            </div>
+                            <span class="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent-50 text-accent-600 border border-accent-200">
+                                10 Core Tools
+                            </span>
+                        </div>
+
+                        <!-- 10 Tools Grid (5 columns x 2 rows) -->
+                        <div class="grid grid-cols-5 gap-1 sm:gap-1.5 text-center">
+                            <!-- 1. Figma -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+                                        <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+                                        <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.25329 33.7467 0 28.5 0H19Z" fill="#FF7262"/>
+                                        <path d="M0 9.5C0 14.7467 4.25329 19 9.5 19H19V0H9.5C4.25329 0 0 4.25329 0 9.5Z" fill="#F24E1E"/>
+                                        <path d="M0 28.5C0 33.7467 4.25329 38 9.5 38H19V19H9.5C4.25329 19 0 23.2533 0 28.5Z" fill="#A259FF"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    Figma
+                                </span>
+                            </div>
+
+                            <!-- 2. Capcut -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="32" height="32" rx="7" fill="#0F172A"/>
+                                        <path d="M7 11.5C7 11.5 10.5 14 16 14C21.5 14 25 11.5 25 11.5L23.5 16C23.5 16 20 14 16 14C12 14 8.5 16 8.5 16L7 11.5Z" fill="#FFFFFF"/>
+                                        <path d="M7 20.5C7 20.5 10.5 18 16 18C21.5 18 25 20.5 25 20.5L23.5 16C23.5 16 20 18 16 18C12 18 8.5 16 8.5 16L7 20.5Z" fill="#00D2C4"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    Capcut
+                                </span>
+                            </div>
+
+                            <!-- 3. Laravel -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M37.3 12.3L21.4 3.1c-.8-.5-1.9-.5-2.8 0L2.7 12.3c-.9.5-1.4 1.4-1.4 2.4v18.4c0 1 .5 1.9 1.4 2.4l15.9 9.2c.8.5 1.9.5 2.8 0l15.9-9.2c.9-.5 1.4-1.4 1.4-2.4V14.7c0-1-.5-1.9-1.4-2.4z" fill="#FF2D20"/>
+                                        <path d="M20 22.8l15-8.7-15-8.7-15 8.7 15 8.7z" fill="#FF5E54"/>
+                                        <path d="M5 16.3v13.5l15 8.7V25L5 16.3z" fill="#E0241A"/>
+                                        <path d="M35 16.3L20 25v13.5l15-8.7V16.3z" fill="#B31911"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    Laravel
+                                </span>
+                            </div>
+
+                            <!-- 4. Rust -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="16" cy="16" r="14" fill="#1E1E1E"/>
+                                        <circle cx="16" cy="16" r="11.5" fill="none" stroke="#DEA584" stroke-width="1.8"/>
+                                        <path d="M12 10h5.5c2.3 0 4 1.3 4 3.5 0 1.8-1.3 3-3.2 3.4L22 22h-3l-3.3-4.8H14.5V22H12V10zm2.5 5h2.8c1.1 0 1.9-.6 1.9-1.5s-.8-1.5-1.9-1.5h-2.8V15z" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    Rust
+                                </span>
+                            </div>
+
+                            <!-- 5. PHP -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <ellipse cx="16" cy="16" rx="15" ry="9.5" fill="#777BB4"/>
+                                        <path d="M9.5 12.5h2.3c1.5 0 2.3.7 2 2-.3 1.3-1.6 2-3 2h-1.3l-.7 3H7.3l2.2-7zm1 2.7h.8c.8 0 1.4-.3 1.5-.9.1-.5-.3-.8-1.1-.8h-.8l-.4 1.7zm6-2.7h1.5l-.7 3h2.2l.7-3h1.5l-1.6 7h-1.5l.7-2.8h-2.2l-.7 2.8h-1.5l1.6-7zm7.5 0h2.3c1.5 0 2.3.7 2 2-.3 1.3-1.6 2-3 2h-1.3l-.7 3h-1.5l2.2-7zm1 2.7h.8c.8 0 1.4-.3 1.5-.9.1-.5-.3-.8-1.1-.8h-.8l-.4 1.7z" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    PHP
+                                </span>
+                            </div>
+
+                            <!-- 6. Tailwind -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 9c-4 0-6.5 2-7.5 6 1.5-2 3.5-2.7 6-2 1.4.4 2.4 1.4 3.5 2.6C19.8 17.4 22 20 27 20c4 0 6.5-2 7.5-6-1.5 2-3.5 2.7-6 2-1.4-.4-2.4-1.4-3.5-2.6C23.2 11.6 21 9 16 9zm-11 9c-4 0-6.5 2-7.5 6 1.5-2 3.5-2.7 6-2 1.4.4 2.4 1.4 3.5 2.6C8.8 26.4 11 29 16 29c4 0 6.5-2 7.5-6-1.5 2-3.5 2.7-6 2-1.4-.4-2.4-1.4-3.5-2.6C12.2 20.6 10 18 5 18z" transform="scale(0.85) translate(2, 0)" fill="#06B6D4"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    Tailwind
+                                </span>
+                            </div>
+
+                            <!-- 7. Supabase -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="32" height="32" rx="7" fill="#1C1C1C"/>
+                                        <path d="M18.8 3L6.5 18.2c-.6.8 0 1.9 1 1.9H16l-2.8 9.9c-.4 1.2 1.1 2 2 1.1L27.5 15.9c.6-.8 0-1.9-1-1.9H18l2.8-9.9c.4-1.2-1.1-2-2-1.1z" fill="#3ECF8E"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    Supabase
+                                </span>
+                            </div>
+
+                            <!-- 8. MY SQL -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="32" height="32" rx="7" fill="#00758F"/>
+                                        <path d="M7 16c2-4 6-7 10-6 3 .8 5.5 3 7 6-1.5 2-4 4.5-8 4-3-.4-6-2.5-9-4z" fill="#F29111"/>
+                                        <circle cx="19" cy="13" r="1.5" fill="#FFFFFF"/>
+                                        <path d="M12 21c2 2 6 3 9 1" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    MY SQL
+                                </span>
+                            </div>
+
+                            <!-- 9. MEDIAMTX -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="32" height="32" rx="7" fill="#4F46E5"/>
+                                        <path d="M8 11a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2h-8a2 2 0 01-2-2V11z" fill="#FFFFFF"/>
+                                        <path d="M20 14l5-3v10l-5-3v-4z" fill="#A5B4FC"/>
+                                        <circle cx="14" cy="16" r="2" fill="#4F46E5"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    MEDIAMTX
+                                </span>
+                            </div>
+
+                            <!-- 10. WEB RTC -->
+                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="32" height="32" rx="7" fill="#0284C7"/>
+                                        <circle cx="16" cy="9.5" r="2.8" fill="#FFFFFF"/>
+                                        <circle cx="9.5" cy="22" r="2.8" fill="#FFFFFF"/>
+                                        <circle cx="22.5" cy="22" r="2.8" fill="#FFFFFF"/>
+                                        <path d="M16 9.5L9.5 22M16 9.5L22.5 22M9.5 22H22.5" stroke="#BAE6FD" stroke-width="1.8"/>
+                                        <circle cx="16" cy="17" r="1.3" fill="#38BDF8"/>
+                                    </svg>
+                                </div>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-700 group-hover/tool:text-accent-500 tracking-tight mt-1 truncate max-w-full">
+                                    WEB RTC
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -408,9 +576,18 @@
                                 <span class="block sm:hidden text-xs font-semibold text-accent-600">
                                     {{ $exp->company_name }}
                                 </span>
-                                @if ($exp->description)
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl line-clamp-2 leading-relaxed">
-                                        {{ is_array(json_decode($exp->description, true)) ? implode(' &bull; ', json_decode($exp->description, true)) : $exp->description }}
+                                @if ($exp->has_bullet_points)
+                                    <ul class="mt-2.5 space-y-1.5 text-xs sm:text-sm text-slate-600 max-w-2xl">
+                                        @foreach ($exp->points as $point)
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-accent-500 mt-1.5 shrink-0"></span>
+                                                <span class="leading-relaxed">{{ $point }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @elseif ($exp->description)
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed whitespace-pre-line">
+                                        {{ $exp->description }}
                                     </p>
                                 @endif
                             </div>
@@ -539,13 +716,22 @@
                             <!-- Degree / Major, Mobile Institution & Description -->
                             <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
                                 <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
-                                    {{ $edu->degree }} &bull; {{ $edu->major }}
+                                    {{ $edu->degree }}{{ !empty($edu->major) ? ' &bull; ' . $edu->major : '' }}
                                 </h3>
                                 <span class="block sm:hidden text-xs font-semibold text-accent-600">
                                     {{ $edu->institution_name }}
                                 </span>
-                                @if ($edu->description)
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl line-clamp-2 leading-relaxed">
+                                @if ($edu->has_bullet_points)
+                                    <ul class="mt-2.5 space-y-1.5 text-xs sm:text-sm text-slate-600 max-w-2xl">
+                                        @foreach ($edu->points as $point)
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-accent-500 mt-1.5 shrink-0"></span>
+                                                <span class="leading-relaxed">{{ $point }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @elseif ($edu->description)
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed whitespace-pre-line">
                                         {{ $edu->description }}
                                     </p>
                                 @endif

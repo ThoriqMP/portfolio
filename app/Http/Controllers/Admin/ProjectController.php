@@ -85,7 +85,10 @@ class ProjectController extends Controller
                 $path = $this->compressAndStoreImage($file, 'projects');
                 $project->images()->create([
                     'image_path' => $path,
-                    'order' => $index,
+                    'is_thumbnail' => false,
+                    'col_span' => 1,
+                    'row_position' => 1,
+                    'sort_order' => $index + 1,
                 ]);
             }
         }
@@ -160,6 +163,21 @@ class ProjectController extends Controller
             }
         }
         $project->badges()->sync($badgeIds);
+
+        // Handle newly uploaded additional mockup images for the carousel
+        if ($request->hasFile('additional_images')) {
+            $currentMaxOrder = $project->images()->max('sort_order') ?? 0;
+            foreach ($request->file('additional_images') as $index => $file) {
+                $path = $this->compressAndStoreImage($file, 'projects');
+                $project->images()->create([
+                    'image_path' => $path,
+                    'is_thumbnail' => false,
+                    'col_span' => 1,
+                    'row_position' => 1,
+                    'sort_order' => $currentMaxOrder + $index + 1,
+                ]);
+            }
+        }
 
         // Clean up the session draft as it is now finalized and saved in database
         session()->forget('project_draft_' . $project->id);

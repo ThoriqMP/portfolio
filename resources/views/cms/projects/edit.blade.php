@@ -88,19 +88,60 @@
                 @enderror
             </div>
 
-            <!-- Dedicated Media & Layout Manager Place Section -->
-            <div class="border-3 border-dashed border-black bg-orange-50/10 p-6 text-center space-y-4 shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] transition-all">
-                <span class="block text-xs font-black uppercase tracking-widest text-[#ff5722]">
-                    // DEDICATED MEDIA & LAYOUT GRID MANAGER
-                </span>
-                <p class="text-xs font-bold text-slate-700 uppercase tracking-wide leading-relaxed max-w-lg mx-auto">
-                    Kelola galeri gambar pendukung, kustomisasi urutan mockup, setel gambar sampul utama (thumbnail), serta atur lebar kolom grid (1: Standar, 2: Lebar, 3: Banner Penuh) secara asimetris.
-                </p>
-                <div>
+            <!-- Gallery & Carousel Photos Section -->
+            <div class="border-3 border-black p-5 bg-white space-y-4 shadow-[3px_3px_0px_#000000]">
+                <div class="flex items-center justify-between pb-2 border-b-2 border-black">
+                    <div>
+                        <span class="block text-xs font-black uppercase tracking-widest text-[#ff5722]">// GALERI FOTO CAROUSEL PROYEK</span>
+                        <p class="text-xxs font-bold uppercase text-slate-500">Foto-foto ini akan tampil di carousel halaman detail proyek.</p>
+                    </div>
                     <button type="submit" formaction="{{ route('admin.projects.saveDraft', $project->id) }}"
-                        class="inline-flex items-center text-xs font-black uppercase tracking-wider text-black border-2 border-black bg-white hover:bg-[#ff5722] px-5 py-2.5 shadow-[4px_4px_0px_#000000] hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer">
-                        [ Kelola Gambar & Layout ]
+                        class="inline-flex items-center text-xxs font-black uppercase tracking-wider text-black border-2 border-black bg-white hover:bg-[#ff5722] px-3 py-1.5 shadow-[2px_2px_0px_#000000] hover:-translate-y-0.5 transition-all cursor-pointer">
+                        [ Pengelola Tata Letak Grid ]
                     </button>
+                </div>
+
+                <!-- Existing Carousel Images List -->
+                @if ($project->images->isNotEmpty())
+                    <div>
+                        <label class="block text-xxs font-black uppercase tracking-wider text-slate-700 mb-2">Foto Carousel Saat Ini ({{ $project->images->count() }} Foto):</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            @foreach ($project->images as $img)
+                                <div class="relative group border-2 border-black bg-slate-100 aspect-video overflow-hidden">
+                                    <img src="{{ asset('storage/' . $img->image_path) }}" alt="Mockup" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-1.5 transition-opacity">
+                                        <button type="button" 
+                                                onclick="if(confirm('Hapus foto ini dari galeri carousel?')) document.getElementById('delete-img-{{ $img->id }}').submit();"
+                                                class="px-2 py-1 bg-rose-600 text-white font-black text-xxs uppercase border border-black shadow-[1px_1px_0px_#000000] hover:bg-rose-700 transition cursor-pointer">
+                                            Hapus
+                                        </button>
+                                    </div>
+                                    @if ($img->is_thumbnail)
+                                        <span class="absolute bottom-1 left-1 bg-[#ff5722] text-black text-[9px] font-black uppercase px-1.5 py-0.5 border border-black">
+                                            Cover
+                                        </span>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <p class="text-xs font-bold text-slate-500 uppercase italic">// Belum ada foto tambahan di carousel. Unggah foto di bawah ini.</p>
+                @endif
+
+                <!-- Upload Additional Photos Input -->
+                <div class="pt-3 border-t-2 border-black">
+                    <label for="additional_images" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Tambah Foto Carousel Baru (Bisa Pilih Banyak Foto Sekaligus)</label>
+                    <div class="w-full bg-white border-3 border-black rounded-none px-4 py-3 focus-within:-translate-y-0.5 focus-within:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                        <input type="file" name="additional_images[]" id="additional_images" multiple accept="image/*" class="text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:bg-black file:text-white hover:file:bg-[#ff5722] hover:file:text-black file:cursor-pointer cursor-pointer">
+                    </div>
+                    <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Format: JPG, PNG, WEBP. Maksimal 10MB per foto. Foto otomatis dikompres secara optimal.</p>
+                    @error('additional_images')
+                        <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    @enderror
+                    @error('additional_images.*')
+                        <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
@@ -178,6 +219,14 @@
                 </button>
             </div>
         </form>
+
+        <!-- Hidden delete forms for gallery images -->
+        @foreach ($project->images as $img)
+            <form id="delete-img-{{ $img->id }}" action="{{ route('admin.projects.deleteMedia', [$project->id, $img->id]) }}" method="POST" class="hidden">
+                @csrf
+                @method('DELETE')
+            </form>
+        @endforeach
     </div>
 </div>
 @endsection
