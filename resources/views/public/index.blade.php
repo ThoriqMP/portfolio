@@ -987,7 +987,7 @@
                                 {{ $user->name }}
                             </h3>
                             <span class="text-xs font-medium text-slate-400">
-                                (@{{ $ghUsername }})
+                                ({{ '@' . $ghUsername }})
                             </span>
                         </div>
                         <div class="flex items-center gap-3 text-xs text-slate-400 mt-1 flex-wrap">
