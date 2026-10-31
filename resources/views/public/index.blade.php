@@ -85,18 +85,21 @@
                         @if ($user->socialLinks && $user->socialLinks->count() > 0)
                             @foreach ($user->socialLinks->take(4) as $social)
                                 <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 text-slate-700 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center shadow-xs transition-all duration-200" title="{{ $social->name }}">
-                                    <span class="text-xs font-bold uppercase">{{ substr($social->name, 0, 2) }}</span>
+                                    @include('partials.social-icon', ['social' => $social])
                                 </a>
                             @endforeach
                         @else
                             <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="LinkedIn">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                                @include('partials.social-icon', ['type' => 'linkedin'])
                             </a>
                             <a href="{{ $user->github_link ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="GitHub">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" /></svg>
+                                @include('partials.social-icon', ['type' => 'github'])
                             </a>
                             <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="Instagram">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
+                                @include('partials.social-icon', ['type' => 'instagram'])
+                            </a>
+                            <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="Email: thoriqpasya860@gmail.com">
+                                @include('partials.social-icon', ['type' => 'email'])
                             </a>
                         @endif
                     </div>
@@ -388,28 +391,28 @@
                     <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
                             <!-- Period / Year -->
-                            <div class="w-full sm:w-48 shrink-0">
-                                <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
+                            <div class="w-full sm:w-44 lg:w-48 shrink-0">
+                                <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
                                     {{ $exp->start_date ? $exp->start_date->format('Y') : '2023' }} &mdash; 
                                     {{ $exp->end_date ? $exp->end_date->format('Y') : 'Present' }}
                                 </span>
                             </div>
 
-                            <!-- Role / Title -->
-                            <div class="flex-1">
+                            <!-- Role / Title & Description -->
+                            <div class="flex-1 min-w-0 sm:pr-6">
                                 <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
                                     {{ $exp->position }}
                                 </h3>
                                 @if ($exp->description)
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl line-clamp-2">
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl line-clamp-2">
                                         {{ is_array(json_decode($exp->description, true)) ? implode(' &bull; ', json_decode($exp->description, true)) : $exp->description }}
                                     </p>
                                 @endif
                             </div>
 
-                            <!-- Company / Studio -->
-                            <div class="sm:text-right shrink-0">
-                                <span class="text-sm sm:text-base font-bold text-slate-800">
+                            <!-- Company / Studio (Restricted Width & Right Justified) -->
+                            <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
+                                <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
                                     {{ $exp->company_name }}
                                 </span>
                             </div>
@@ -420,62 +423,84 @@
                 <!-- Mockup-Accurate Fallback Preset Rows -->
                 <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
-                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
-                            2023 &mdash; Present
-                        </span>
-                        <h3 class="flex-1 text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
-                            Senior UI/UX Designer
-                        </h3>
-                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
-                            Odama Studio
-                        </span>
+                        <div class="w-full sm:w-44 lg:w-48 shrink-0">
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
+                                2023 &mdash; Present
+                            </span>
+                        </div>
+                        <div class="flex-1 min-w-0 sm:pr-6">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                                Senior UI/UX Designer
+                            </h3>
+                        </div>
+                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                                Odama Studio
+                            </span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
-                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
-                            2022 &mdash; 2023
-                        </span>
-                        <div class="flex-1">
+                        <div class="w-full sm:w-44 lg:w-48 shrink-0">
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
+                                2022 &mdash; 2023
+                            </span>
+                        </div>
+                        <div class="flex-1 min-w-0 sm:pr-6">
                             <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
                                 Product Designer
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+                            <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
                                 Led user research and iterative prototyping for cross-platform applications and design system maintenance.
                             </p>
                         </div>
-                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
-                            Voltrans Studio
-                        </span>
+                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                                Voltrans Studio
+                            </span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
-                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
-                            2021 &mdash; 2022
-                        </span>
-                        <h3 class="flex-1 text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
-                            Graphic Designer
-                        </h3>
-                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
-                            Kanota Studio
-                        </span>
+                        <div class="w-full sm:w-44 lg:w-48 shrink-0">
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
+                                2021 &mdash; 2022
+                            </span>
+                        </div>
+                        <div class="flex-1 min-w-0 sm:pr-6">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                                Graphic Designer
+                            </h3>
+                        </div>
+                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                                Kanota Studio
+                            </span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
-                        <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
-                            2020 &mdash; 2021
-                        </span>
-                        <h3 class="flex-1 text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
-                            Web Developer
-                        </h3>
-                        <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
-                            Peluru Studio
-                        </span>
+                        <div class="w-full sm:w-44 lg:w-48 shrink-0">
+                            <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
+                                2020 &mdash; 2021
+                            </span>
+                        </div>
+                        <div class="flex-1 min-w-0 sm:pr-6">
+                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                                Web Developer
+                            </h3>
+                        </div>
+                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                                Peluru Studio
+                            </span>
+                        </div>
                     </div>
                 </div>
             @endif
@@ -487,22 +512,31 @@
                 @foreach ($user->educations as $edu)
                     <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
-                            <span class="w-full sm:w-48 text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">
-                                {{ $edu->start_year }} &mdash; {{ $edu->end_year ?? 'Selesai' }}
-                            </span>
-                            <div class="flex-1">
+                            <!-- Period / Year -->
+                            <div class="w-full sm:w-44 lg:w-48 shrink-0">
+                                <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
+                                    {{ $edu->start_year }} &mdash; {{ $edu->end_year ?? 'Selesai' }}
+                                </span>
+                            </div>
+
+                            <!-- Degree / Major & Description -->
+                            <div class="flex-1 min-w-0 sm:pr-6">
                                 <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
                                     {{ $edu->degree }} &bull; {{ $edu->major }}
                                 </h3>
                                 @if ($edu->description)
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
                                         {{ $edu->description }}
                                     </p>
                                 @endif
                             </div>
-                            <span class="sm:text-right text-sm sm:text-base font-bold text-slate-800">
-                                {{ $edu->institution_name }}
-                            </span>
+
+                            <!-- Institution (Restricted Width & Right Justified) -->
+                            <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
+                                <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                                    {{ $edu->institution_name }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -887,7 +921,7 @@
                     </p>
 
                     <div class="pt-2">
-                        <a href="mailto:{{ $user->email_contact ?? ($user->email ?? 'hi@getincontact.com') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white font-semibold text-sm sm:text-base shadow-lg shadow-accent-500/30 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all">
+                        <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white font-semibold text-sm sm:text-base shadow-lg shadow-accent-500/30 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all">
                             Start a Project
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
