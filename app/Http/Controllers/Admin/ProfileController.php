@@ -54,6 +54,7 @@ class ProfileController extends Controller
             'projects_completed' => ['nullable', 'string', 'max:50'],
             'support_available' => ['nullable', 'string', 'max:50'],
             'client_satisfaction' => ['nullable', 'string', 'max:50'],
+            'github_link' => ['nullable', 'string', 'max:255'],
             'password' => ['nullable', 'string', 'min:6'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
@@ -79,6 +80,7 @@ class ProfileController extends Controller
         if ($request->has('projects_completed')) $dataToUpdate['projects_completed'] = $request->input('projects_completed');
         if ($request->has('support_available')) $dataToUpdate['support_available'] = $request->input('support_available');
         if ($request->has('client_satisfaction')) $dataToUpdate['client_satisfaction'] = $request->input('client_satisfaction');
+        if ($request->has('github_link')) $dataToUpdate['github_link'] = $request->input('github_link');
 
         // Handle Base64 Transparent Avatar (generated from client background removal)
         if (!empty($validated['avatar_transparent']) && str_starts_with($validated['avatar_transparent'], 'data:image/png;base64,')) {

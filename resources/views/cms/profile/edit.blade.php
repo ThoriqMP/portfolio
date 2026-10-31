@@ -189,6 +189,13 @@
                 </div>
 
                 <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-black mb-1.5">Link / Username GitHub Kontributor</label>
+                    <input type="text" name="github_link" value="{{ old('github_link', $user->github_link ?? 'https://github.com/ThoriqMP') }}" placeholder="https://github.com/ThoriqMP"
+                        class="w-full bg-white border-3 border-black px-4 py-2.5 text-black font-bold focus:outline-none">
+                    <p class="text-slate-500 text-xxs font-bold uppercase mt-1">// Profil GitHub ini digunakan untuk mengintegrasikan grafik kontributor, commit calendar, dan repositori secara otomatis.</p>
+                </div>
+
+                <div>
                     <label class="block text-xs font-black uppercase tracking-widest text-black mb-1.5">Judul Bagian "About Me"</label>
                     <input type="text" name="about_title" value="{{ old('about_title', $user->about_title ?? 'Designing with Purpose, Building with Passion') }}"
                         class="w-full bg-white border-3 border-black px-4 py-2.5 text-black font-bold focus:outline-none">

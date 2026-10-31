@@ -101,4 +101,33 @@ class User extends Authenticatable
     {
         return $this->hasMany(SocialLink::class);
     }
+
+    /**
+     * Get the clean GitHub username from profile or fallback to ThoriqMP.
+     */
+    public function getGithubUsernameAttribute(): string
+    {
+        if (!empty($this->github_link)) {
+            $parsed = parse_url($this->github_link, PHP_URL_PATH);
+            $clean = trim($parsed ?? '', '/');
+            if (!empty($clean) && !str_contains($clean, 'admin')) {
+                return $clean;
+            }
+        }
+
+        // Check if there's a socialLink for GitHub
+        $githubSocial = $this->relationLoaded('socialLinks') 
+            ? $this->socialLinks->firstWhere('icon', 'github') 
+            : $this->socialLinks()->where('icon', 'github')->first();
+
+        if ($githubSocial && !empty($githubSocial->link)) {
+            $parsed = parse_url($githubSocial->link, PHP_URL_PATH);
+            $clean = trim($parsed ?? '', '/');
+            if (!empty($clean) && !str_contains($clean, 'admin')) {
+                return $clean;
+            }
+        }
+
+        return 'ThoriqMP';
+    }
 }

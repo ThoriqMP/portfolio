@@ -51,6 +51,9 @@
             <a href="{{ Route::is('home') ? '#projects' : route('home') . '#projects' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
                 Projects
             </a>
+            <a href="{{ Route::is('home') ? '#activity' : route('home') . '#activity' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
+                Activity
+            </a>
             <a href="{{ Route::is('home') ? '#testimonials' : route('home') . '#testimonials' }}" class="nav-item px-3.5 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-accent-500 rounded-full transition-colors">
                 Testimonials
             </a>
@@ -91,6 +94,9 @@
             </a>
             <a href="{{ Route::is('home') ? '#projects' : route('home') . '#projects' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
                 Projects
+            </a>
+            <a href="{{ Route::is('home') ? '#activity' : route('home') . '#activity' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
+                Activity
             </a>
             <a href="{{ Route::is('home') ? '#testimonials' : route('home') . '#testimonials' }}" class="mobile-nav-item px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-accent-50 hover:text-accent-500 rounded-xl transition-colors">
                 Testimonials

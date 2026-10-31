@@ -939,6 +939,301 @@
     </div>
 </section>
 
+<!-- ======================================================== -->
+<!-- GITHUB CONTRIBUTOR & CODE ACTIVITY SECTION (DYNAMIC)     -->
+<!-- ======================================================== -->
+@php
+    $ghUsername = $user->github_username ?? 'ThoriqMP';
+@endphp
+<section id="activity" class="py-24 md:py-32 bg-[#090D16] text-white relative overflow-hidden border-t border-slate-800">
+    <!-- Ambient Reddish Glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-accent-500/10 blur-[140px] rounded-full pointer-events-none z-0"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full space-y-12">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800/80 pb-8">
+            <div class="space-y-2 max-w-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 border border-accent-500/30 text-accent-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
+                    Live GitHub Matrix
+                </div>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight text-white">
+                    Code Activity &amp;<br>Open-Source Impact
+                </h2>
+            </div>
+            
+            <p class="text-sm text-slate-400 max-w-md leading-relaxed">
+                Aktivitas pemrograman nyata yang terhubung langsung dengan repositori GitHub saya secara dinamis dan real-time.
+            </p>
+        </div>
+
+        <!-- Main GitHub Console Card (Matching Screenshot Dark Aesthetic) -->
+        <div class="bg-[#0D1117] border border-[#30363D] rounded-3xl p-5 sm:p-7 md:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-8">
+            
+            <!-- Top Profile Strip -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#21262D]">
+                <div class="flex items-center gap-4">
+                    <div class="relative shrink-0">
+                        <img id="gh-avatar" 
+                             src="https://github.com/{{ $ghUsername }}.png" 
+                             alt="{{ $ghUsername }}" 
+                             class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#30363D] bg-slate-800 object-cover shadow-md">
+                        <span class="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#0D1117]" title="Active Status"></span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg sm:text-xl font-extrabold text-white tracking-tight">
+                                {{ $user->name }}
+                            </h3>
+                            <span class="text-xs font-medium text-slate-400">
+                                (@{{ $ghUsername }})
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs text-slate-400 mt-1 flex-wrap">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.002 4.002 0 0 0-7.898 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.953.754.754 0 0 1-.58-.58 3.51 3.51 0 0 0-3.315-2.653.75.75 0 0 1 0-1.5 1.5 1.5 0 0 0 0-3 .75.75 0 0 1 0-1.5ZM5.5 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
+                                </svg>
+                                <strong id="gh-followers" class="text-slate-200">5</strong> followers
+                            </span>
+                            <span>&bull;</span>
+                            <span class="flex items-center gap-1">
+                                <strong id="gh-following" class="text-slate-200">6</strong> following
+                            </span>
+                            <span>&bull;</span>
+                            <span class="flex items-center gap-1">
+                                <strong id="gh-public-repos" class="text-slate-200">22+</strong> repositories
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://github.com/{{ $ghUsername }}" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#21262D] hover:bg-accent-500 hover:text-white text-slate-200 text-xs font-bold border border-[#30363D] hover:border-accent-400 transition-all shadow-sm active:scale-95 shrink-0">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                    Buka Profil GitHub
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Heatmap Contribution Calendar Box -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <span id="gh-total-commits" class="text-base sm:text-lg font-bold text-white">
+                            1,812 kontribusi
+                        </span>
+                        <span class="text-xs text-slate-400 font-normal">
+                            sepanjang tahun 2026
+                        </span>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
+                        <span>Kurang</span>
+                        <span class="w-2.5 h-2.5 rounded-xs bg-[#161B22]"></span>
+                        <span class="w-2.5 h-2.5 rounded-xs bg-[#632C03]"></span>
+                        <span class="w-2.5 h-2.5 rounded-xs bg-[#934005]"></span>
+                        <span class="w-2.5 h-2.5 rounded-xs bg-[#C25408]"></span>
+                        <span class="w-2.5 h-2.5 rounded-xs bg-[#FF4D2D]"></span>
+                        <span>Lebih Sering</span>
+                    </div>
+                </div>
+
+                <!-- Live Dynamic Heatmap SVG Container -->
+                <div class="w-full bg-[#161B22] border border-[#30363D] rounded-2xl p-4 sm:p-5 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700">
+                    <div class="min-w-[720px] flex justify-center py-2">
+                        <img id="gh-heatmap-img" 
+                             src="https://ghchart.rshah.org/FF4D2D/{{ $ghUsername }}" 
+                             alt="Kalender Kontribusi GitHub {{ $ghUsername }}" 
+                             class="w-full h-auto filter drop-shadow-md select-none"
+                             loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Split: Pinned / Active Repositories & Activity Radar -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+                <!-- Left: Repositories List -->
+                <div class="lg:col-span-7 space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                        Repositori Unggulan &amp; Aktif
+                    </span>
+
+                    <div id="gh-repos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Repo 1: Says-app -->
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <a href="https://github.com/{{ $ghUsername }}/Says-app" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                        Says-app
+                                    </a>
+                                    <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                    Aplikasi diet &amp; real-time video streaming communication platform.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-[#f15a24]"></span>
+                                    Blade
+                                </span>
+                                <span>&bull;</span>
+                                <span>136 commits</span>
+                            </div>
+                        </div>
+
+                        <!-- Repo 2: screen-cast -->
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <a href="https://github.com/{{ $ghUsername }}/screen-cast" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                        screen-cast
+                                    </a>
+                                    <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                    High-performance screen casting utility via MediaMTX &amp; WebRTC.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-[#dea584]"></span>
+                                    Rust / JS
+                                </span>
+                                <span>&bull;</span>
+                                <span>69 commits</span>
+                            </div>
+                        </div>
+
+                        <!-- Repo 3: mind-metric -->
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <a href="https://github.com/{{ $ghUsername }}/mind-metric" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                        mind-metric
+                                    </a>
+                                    <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                    Data analytics and intelligence reporting portal with MySQL backend.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-[#4F5D95]"></span>
+                                    PHP
+                                </span>
+                                <span>&bull;</span>
+                                <span>Database</span>
+                            </div>
+                        </div>
+
+                        <!-- Repo 4: suratrahasia -->
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <a href="https://github.com/{{ $ghUsername }}/suratrahasia" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                        suratrahasia
+                                    </a>
+                                    <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">
+                                    Interactive web project surat rahasia &amp; responsive UI components.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+                                <span class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-[#f15a24]"></span>
+                                    Blade
+                                </span>
+                                <span>&bull;</span>
+                                <span>Frontend</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Activity Radar & Focus (matching screenshot) -->
+                <div class="lg:col-span-5 space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                        Overview Aktivitas &amp; Rasio Kode
+                    </span>
+
+                    <div class="p-4 sm:p-5 rounded-xl bg-[#161B22] border border-[#30363D] h-[calc(100%-1.75rem)] flex flex-col justify-between space-y-4">
+                        <!-- Cross / Radar Visual -->
+                        <div class="relative w-full aspect-[2/1] min-h-[120px] flex items-center justify-center">
+                            <!-- Horizontal Axis -->
+                            <div class="absolute inset-x-8 top-1/2 h-[1px] bg-slate-700"></div>
+                            <!-- Vertical Axis -->
+                            <div class="absolute inset-y-4 left-1/2 w-[1px] bg-slate-700"></div>
+
+                            <!-- Labels -->
+                            <span class="absolute top-1 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-400 uppercase">Code Review</span>
+                            <span class="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-400 uppercase">Pull Requests</span>
+                            <span class="absolute left-1 top-1/2 -translate-y-1/2 text-[9px] font-bold text-accent-400 uppercase text-right leading-none">100%<br>Commits</span>
+                            <span class="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] font-bold text-slate-400 uppercase">Issues</span>
+
+                            <!-- Active Commits Indicator Node -->
+                            <div class="absolute left-1/4 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                                <span class="w-3 h-3 rounded-full bg-accent-500 shadow-[0_0_12px_#FF4D2D] block animate-pulse"></span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Breakdown -->
+                        <div class="space-y-2 pt-2 border-t border-[#21262D] text-xs">
+                            <div class="flex items-center justify-between text-slate-400">
+                                <span>Fokus Utama: Fullstack Engineering</span>
+                                <span class="font-bold text-accent-400">95% Code Execution</span>
+                            </div>
+                            <div class="w-full h-2 rounded-full bg-[#21262D] overflow-hidden flex">
+                                <div class="h-full bg-accent-500 w-[75%]" title="PHP / Laravel / Blade"></div>
+                                <div class="h-full bg-cyan-400 w-[15%]" title="Tailwind / Frontend"></div>
+                                <div class="h-full bg-amber-400 w-[10%]" title="Rust / WebRTC"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Dynamic Live Hydration Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ghUsername = "{{ $ghUsername }}";
+        if (!ghUsername) return;
+
+        // Fetch Live User Stats asynchronously
+        fetch(`https://api.github.com/users/${ghUsername}`)
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (!data) return;
+                const followersEl = document.getElementById('gh-followers');
+                const followingEl = document.getElementById('gh-following');
+                const reposEl = document.getElementById('gh-public-repos');
+                const avatarEl = document.getElementById('gh-avatar');
+
+                if (followersEl && data.followers !== undefined) followersEl.textContent = data.followers;
+                if (followingEl && data.following !== undefined) followingEl.textContent = data.following;
+                if (reposEl && data.public_repos !== undefined) reposEl.textContent = data.public_repos;
+                if (avatarEl && data.avatar_url) avatarEl.src = data.avatar_url;
+            })
+            .catch(() => {});
+    });
+</script>
+
 <!-- Testimonials Section ("Testimonials that highlight my work" with Visitor Form) -->
 <section id="testimonials" class="py-24 md:py-32 bg-paper-100 border-t border-paper-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
