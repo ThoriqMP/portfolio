@@ -28,17 +28,10 @@
                 </span>
             </div>
 
-            <!-- Luxury Wordmark & Micro Hallmark -->
-            <div class="flex flex-col">
-                <span class="font-brand font-black text-sm sm:text-base tracking-[0.34em] uppercase text-slate-950 group-hover:text-accent-500 transition-colors duration-200 leading-none">
-                    THORIQ
-                </span>
-                <span class="text-[7.5px] sm:text-[8px] font-black uppercase tracking-[0.45em] text-slate-400 mt-1 pl-0.5 leading-none group-hover:text-slate-600 transition-colors flex items-center gap-1">
-                    <span>STUDIO</span>
-                    <span class="w-1 h-1 rounded-full bg-accent-500"></span>
-                    <span>ATELIER</span>
-                </span>
-            </div>
+            <!-- Brand Name Wordmark -->
+            <span class="font-brand font-black text-sm sm:text-base tracking-[0.3em] uppercase text-slate-950 group-hover:text-accent-500 transition-colors duration-200">
+                THORIQ
+            </span>
         </a>
 
         <!-- Desktop Navigation Links -->
