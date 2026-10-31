@@ -238,7 +238,6 @@
                         <ul class="space-y-2.5 text-sm">
                             <li><a href="#testimonials" class="text-slate-300 hover:text-accent-400 transition-colors">Testimonials</a></li>
                             <li><a href="#contact" class="text-slate-300 hover:text-accent-400 transition-colors">Contact</a></li>
-                            <li><a href="{{ route('login') }}" class="text-slate-400 hover:text-white transition-colors">CMS Admin</a></li>
                         </ul>
                     </div>
                 </div>
