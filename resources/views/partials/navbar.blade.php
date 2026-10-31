@@ -1,11 +1,44 @@
 <!-- Header / Navigation (Floating Paper Pill Bar) -->
 <header id="main-header" class="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.25rem)] sm:w-[calc(100%-2rem)] max-w-6xl transition-all duration-300">
     <div class="glass-header rounded-full border border-paper-300 shadow-[0_4px_20px_rgba(45,35,25,0.05)] px-3.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
-        <!-- Brand Logo: Pure Wordmark 'THORIQ' (Matching Reference Extended Geometric Typography) -->
-        <a href="{{ Route::is('home') ? '#hero' : route('home') }}" class="group inline-flex items-center select-none shrink-0 py-1" aria-label="THORIQ">
-            <span class="font-brand font-black text-sm sm:text-base tracking-[0.32em] uppercase text-slate-950 group-hover:text-accent-500 transition-colors duration-200">
-                THORIQ
-            </span>
+        <!-- Luxury Brand Identity: Monogram Crest + Bespoke Extended Wordmark -->
+        <a href="{{ Route::is('home') ? '#hero' : route('home') }}" class="group flex items-center gap-2.5 sm:gap-3 select-none shrink-0 py-1" aria-label="THORIQ">
+            <!-- Luxury Monogram Icon Emblem -->
+            <div class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-950 p-0.5 shadow-md shadow-slate-950/20 group-hover:shadow-accent-500/25 transition-all duration-300 group-hover:scale-105 border border-slate-800 group-hover:border-accent-500/60 flex items-center justify-center shrink-0">
+                <!-- Inner Specular Light -->
+                <div class="absolute inset-0 rounded-[11px] bg-gradient-to-tr from-white/[0.04] to-white/[0.14] pointer-events-none"></div>
+
+                <!-- Architectural Monogram T -->
+                <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 5 7 L 27 7 L 25.5 11.5 L 18 11.5 L 18 26 L 14 26 L 14 11.5 L 6.5 11.5 Z" fill="url(#navLuxuryT)"/>
+                    <path d="M 6 7 L 26 7 L 25 8.5 L 7 8.5 Z" fill="#FFFFFF" fill-opacity="0.7"/>
+                    <defs>
+                        <linearGradient id="navLuxuryT" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFFFF"/>
+                            <stop offset="60%" stop-color="#F1F5F9"/>
+                            <stop offset="100%" stop-color="#94A3B8"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <!-- Diamond Sparkle Accent on Top Right -->
+                <span class="absolute -top-1 -right-1 flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
+                </span>
+            </div>
+
+            <!-- Luxury Wordmark & Micro Hallmark -->
+            <div class="flex flex-col">
+                <span class="font-brand font-black text-sm sm:text-base tracking-[0.34em] uppercase text-slate-950 group-hover:text-accent-500 transition-colors duration-200 leading-none">
+                    THORIQ
+                </span>
+                <span class="text-[7.5px] sm:text-[8px] font-black uppercase tracking-[0.45em] text-slate-400 mt-1 pl-0.5 leading-none group-hover:text-slate-600 transition-colors flex items-center gap-1">
+                    <span>STUDIO</span>
+                    <span class="w-1 h-1 rounded-full bg-accent-500"></span>
+                    <span>ATELIER</span>
+                </span>
+            </div>
         </a>
 
         <!-- Desktop Navigation Links -->
