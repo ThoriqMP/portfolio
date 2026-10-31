@@ -2,25 +2,27 @@
 
 @section('content')
 <!-- Hero Section (Organic Paper Texture, 3-Column Mockup Composition & Ambient Warmth) -->
-<section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+<section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden w-full max-w-full">
     <!-- Soft Reddish-Orange Ambient Glow (No Grid Lines) -->
-    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-accent-400/10 blur-[120px] rounded-full pointer-events-none -z-0"></div>
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] max-w-full h-[350px] bg-accent-400/10 blur-[120px] rounded-full pointer-events-none -z-0"></div>
 
     <!-- Giant Faint Background Watermark: Title from Mockup -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none text-[6rem] sm:text-[9rem] md:text-[13rem] lg:text-[16rem] font-black text-slate-900/[0.03] uppercase tracking-tighter pointer-events-none z-0 whitespace-nowrap">
-        {{ strtoupper($user->title ?? 'BRAND DESIGNER') }}
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
+        <div class="select-none text-[5rem] sm:text-[9rem] md:text-[13rem] lg:text-[16rem] font-black text-slate-900/[0.03] uppercase tracking-tighter whitespace-nowrap">
+            {{ strtoupper($user->title ?? 'BRAND DESIGNER') }}
+        </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
             
             <!-- Left Column: Typographic Hero & Intro (Exact Mockup Alignment) -->
-            <div class="lg:col-span-4 space-y-5 text-center lg:text-left">
+            <div class="lg:col-span-4 space-y-5 text-center lg:text-left min-w-0">
                 <div class="space-y-1">
                     <span class="block text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-800">
                         I'M
                     </span>
-                    <h1 class="text-6xl sm:text-7xl md:text-8xl font-black italic tracking-tighter text-slate-950 leading-none">
+                    <h1 class="text-5xl sm:text-7xl md:text-8xl font-black italic tracking-tighter text-slate-950 leading-none break-words">
                         {{ explode(' ', $user->name ?? 'Ethan')[0] }}
                     </h1>
                 </div>
@@ -388,8 +390,8 @@
         <div id="tab-content-exp" class="divide-y divide-paper-300 border-y border-paper-300 transition-opacity duration-300">
             @if ($user->experiences && $user->experiences->count() > 0)
                 @foreach ($user->experiences as $exp)
-                    <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                    <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                             <!-- Period / Year -->
                             <div class="w-full sm:w-44 lg:w-48 shrink-0">
                                 <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
@@ -398,21 +400,24 @@
                                 </span>
                             </div>
 
-                            <!-- Role / Title & Description -->
-                            <div class="flex-1 min-w-0 sm:pr-6">
-                                <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                            <!-- Role / Title, Mobile Company & Description -->
+                            <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
+                                <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
                                     {{ $exp->position }}
                                 </h3>
+                                <span class="block sm:hidden text-xs font-semibold text-accent-600">
+                                    {{ $exp->company_name }}
+                                </span>
                                 @if ($exp->description)
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl line-clamp-2">
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl line-clamp-2 leading-relaxed">
                                         {{ is_array(json_decode($exp->description, true)) ? implode(' &bull; ', json_decode($exp->description, true)) : $exp->description }}
                                     </p>
                                 @endif
                             </div>
 
-                            <!-- Company / Studio (Restricted Width & Right Justified) -->
-                            <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
-                                <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                            <!-- Company / Studio (Desktop Only, Right Justified) -->
+                            <div class="hidden sm:flex sm:w-64 md:w-72 lg:w-80 shrink-0 sm:justify-end text-right">
+                                <span class="text-sm sm:text-base font-bold text-slate-800 text-right leading-snug">
                                     {{ $exp->company_name }}
                                 </span>
                             </div>
@@ -421,83 +426,95 @@
                 @endforeach
             @else
                 <!-- Mockup-Accurate Fallback Preset Rows -->
-                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                         <div class="w-full sm:w-44 lg:w-48 shrink-0">
                             <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
                                 2023 &mdash; Present
                             </span>
                         </div>
-                        <div class="flex-1 min-w-0 sm:pr-6">
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                        <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
+                            <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
                                 Senior UI/UX Designer
                             </h3>
+                            <span class="block sm:hidden text-xs font-semibold text-accent-600">
+                                Odama Studio
+                            </span>
                         </div>
-                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
-                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                        <div class="hidden sm:flex sm:w-64 md:w-72 lg:w-80 shrink-0 sm:justify-end text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-right leading-snug">
                                 Odama Studio
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                         <div class="w-full sm:w-44 lg:w-48 shrink-0">
                             <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
                                 2022 &mdash; 2023
                             </span>
                         </div>
-                        <div class="flex-1 min-w-0 sm:pr-6">
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                        <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
+                            <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
                                 Product Designer
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+                            <span class="block sm:hidden text-xs font-semibold text-accent-600">
+                                Voltrans Studio
+                            </span>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
                                 Led user research and iterative prototyping for cross-platform applications and design system maintenance.
                             </p>
                         </div>
-                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
-                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                        <div class="hidden sm:flex sm:w-64 md:w-72 lg:w-80 shrink-0 sm:justify-end text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-right leading-snug">
                                 Voltrans Studio
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                         <div class="w-full sm:w-44 lg:w-48 shrink-0">
                             <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
                                 2021 &mdash; 2022
                             </span>
                         </div>
-                        <div class="flex-1 min-w-0 sm:pr-6">
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                        <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
+                            <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
                                 Graphic Designer
                             </h3>
+                            <span class="block sm:hidden text-xs font-semibold text-accent-600">
+                                Kanota Studio
+                            </span>
                         </div>
-                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
-                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                        <div class="hidden sm:flex sm:w-64 md:w-72 lg:w-80 shrink-0 sm:justify-end text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-right leading-snug">
                                 Kanota Studio
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                         <div class="w-full sm:w-44 lg:w-48 shrink-0">
                             <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
                                 2020 &mdash; 2021
                             </span>
                         </div>
-                        <div class="flex-1 min-w-0 sm:pr-6">
-                            <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                        <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
+                            <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
                                 Web Developer
                             </h3>
+                            <span class="block sm:hidden text-xs font-semibold text-accent-600">
+                                Peluru Studio
+                            </span>
                         </div>
-                        <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
-                            <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                        <div class="hidden sm:flex sm:w-64 md:w-72 lg:w-80 shrink-0 sm:justify-end text-right">
+                            <span class="text-sm sm:text-base font-bold text-slate-800 text-right leading-snug">
                                 Peluru Studio
                             </span>
                         </div>
@@ -510,8 +527,8 @@
         <div id="tab-content-edu" class="divide-y divide-paper-300 border-y border-paper-300 hidden opacity-0 transition-opacity duration-300">
             @if ($user->educations && $user->educations->count() > 0)
                 @foreach ($user->educations as $edu)
-                    <div class="py-6 sm:py-8 px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6">
+                    <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                             <!-- Period / Year -->
                             <div class="w-full sm:w-44 lg:w-48 shrink-0">
                                 <span class="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider block">
@@ -519,21 +536,24 @@
                                 </span>
                             </div>
 
-                            <!-- Degree / Major & Description -->
-                            <div class="flex-1 min-w-0 sm:pr-6">
-                                <h3 class="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors">
+                            <!-- Degree / Major, Mobile Institution & Description -->
+                            <div class="flex-1 min-w-0 sm:pr-6 space-y-1">
+                                <h3 class="text-base sm:text-xl font-bold text-slate-900 group-hover:text-accent-500 transition-colors leading-snug">
                                     {{ $edu->degree }} &bull; {{ $edu->major }}
                                 </h3>
+                                <span class="block sm:hidden text-xs font-semibold text-accent-600">
+                                    {{ $edu->institution_name }}
+                                </span>
                                 @if ($edu->description)
-                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+                                    <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl line-clamp-2 leading-relaxed">
                                         {{ $edu->description }}
                                     </p>
                                 @endif
                             </div>
 
-                            <!-- Institution (Restricted Width & Right Justified) -->
-                            <div class="w-full sm:w-64 md:w-72 lg:w-80 shrink-0 flex sm:justify-end text-left sm:text-right">
-                                <span class="text-sm sm:text-base font-bold text-slate-800 text-left sm:text-right leading-snug">
+                            <!-- Institution (Desktop Only, Right Justified) -->
+                            <div class="hidden sm:flex sm:w-64 md:w-72 lg:w-80 shrink-0 sm:justify-end text-right">
+                                <span class="text-sm sm:text-base font-bold text-slate-800 text-right leading-snug">
                                     {{ $edu->institution_name }}
                                 </span>
                             </div>
@@ -907,11 +927,11 @@
 <section class="py-20 md:py-28 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="relative bg-paper-warm rounded-3xl border border-paper-300 shadow-[0_15px_40px_rgba(45,35,25,0.06)] overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-12 md:p-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-12 md:p-16">
                 
                 <!-- Left Banner Copy -->
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10">
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10 min-w-0">
+                    <h2 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
                         Let's Build Something Truly<br>
                         <span class="italic font-bold text-accent-500">Meaningful Together</span>
                     </h2>
@@ -932,7 +952,7 @@
 
                 <!-- Right Banner Cutout Image -->
                 <div class="lg:col-span-5 flex justify-center lg:justify-end z-10">
-                    <div class="relative w-64 h-72 sm:w-72 sm:h-80 md:w-80 md:h-96 overflow-hidden rounded-2xl">
+                    <div class="relative w-60 h-68 sm:w-72 sm:h-80 md:w-80 md:h-96 max-w-full overflow-hidden rounded-2xl">
                         @if ($user->cta_image_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->cta_image_path))
                             <img src="{{ asset('storage/' . $user->cta_image_path) }}" 
                                  alt="Let's build together" 

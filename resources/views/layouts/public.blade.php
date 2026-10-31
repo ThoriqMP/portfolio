@@ -56,13 +56,19 @@
     </script>
     
     <style>
+        /* Prevent any unwanted horizontal overflow */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+            width: 100%;
+        }
+
         /* Base Paper Texture using SVG Fractal Noise */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #FAF8F5;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.038'/%3E%3C/svg%3E");
             color: #0F172A;
-            overflow-x: hidden;
         }
 
         ::selection {
@@ -131,35 +137,35 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-accent-500 selection:text-white">
+<body class="min-h-screen flex flex-col antialiased selection:bg-accent-500 selection:text-white w-full max-w-full overflow-x-hidden relative">
 
     <!-- Header / Navigation (Floating Pill Navbar) -->
     @include('partials.navbar')
 
     <!-- Main Content -->
-    <main class="flex-grow">
+    <main class="flex-grow w-full max-w-full overflow-x-hidden">
         @yield('content')
     </main>
 
     <!-- Footer (Deep Dark Luxury Section with Giant Faded Watermark from Mockup) -->
-    <footer id="contact" class="bg-dark-950 text-white pt-24 pb-12 relative overflow-hidden border-t border-slate-800/80">
+    <footer id="contact" class="bg-dark-950 text-white pt-24 pb-12 relative overflow-hidden border-t border-slate-800/80 w-full max-w-full">
         <!-- Giant Watermark Background Text at bottom of footer (from mockup) -->
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 select-none text-[12rem] sm:text-[18rem] md:text-[24rem] font-black text-white/[0.035] leading-none tracking-tighter uppercase pointer-events-none z-0 whitespace-nowrap">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 select-none text-[6rem] sm:text-[12rem] md:text-[18rem] lg:text-[24rem] font-black text-white/[0.035] leading-none tracking-tighter uppercase pointer-events-none z-0 whitespace-nowrap overflow-hidden">
             {{ strtoupper(explode(' ', $user->name ?? 'ETHAN')[0]) }}
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <!-- Top Footer Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-20 border-b border-slate-800/80">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-20 border-b border-slate-800/80 items-start">
                 <!-- Left: Big CTA & Direct Contact -->
-                <div class="lg:col-span-6 space-y-6">
+                <div class="lg:col-span-7 xl:col-span-7 space-y-6 min-w-0">
                     <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent-400">
                         <span class="w-2 h-2 rounded-full bg-accent-500"></span>
                         Let's Talk
                     </span>
                     
-                    <div>
-                        <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white hover:text-accent-400 transition-colors tracking-tight block">
+                    <div class="min-w-0">
+                        <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-extrabold text-white hover:text-accent-400 transition-colors tracking-tight block break-all sm:break-normal max-w-full">
                             {{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}
                         </a>
                         <p class="text-slate-400 text-sm mt-3 max-w-md leading-relaxed font-normal">
@@ -168,7 +174,7 @@
                     </div>
 
                     <!-- Social Media Links (Modern Circular Pills) -->
-                    <div class="flex items-center gap-3 pt-4">
+                    <div class="flex items-center gap-3 pt-4 flex-wrap">
                         @if ($user->socialLinks && $user->socialLinks->count() > 0)
                             @foreach ($user->socialLinks as $social)
                                 <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" title="{{ $social->name }}" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200">
@@ -196,7 +202,7 @@
                 </div>
 
                 <!-- Right: Navigation Columns -->
-                <div class="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
+                <div class="lg:col-span-5 xl:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 min-w-0">
                     <!-- Column 1: Navigation -->
                     <div>
                         <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Navigation</h4>

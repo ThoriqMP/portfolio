@@ -1,6 +1,6 @@
 <!-- Header / Navigation (Floating Paper Pill Bar) -->
-<header id="main-header" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl transition-all duration-300">
-    <div class="glass-header rounded-full border border-paper-300 shadow-[0_4px_20px_rgba(45,35,25,0.05)] px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between">
+<header id="main-header" class="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.25rem)] sm:w-[calc(100%-2rem)] max-w-6xl transition-all duration-300">
+    <div class="glass-header rounded-full border border-paper-300 shadow-[0_4px_20px_rgba(45,35,25,0.05)] px-3.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
         <!-- Brand Logo -->
         <a href="{{ Route::is('home') ? '#hero' : route('home') }}" class="group flex items-center gap-1.5 select-none shrink-0">
             <span class="font-extrabold text-base sm:text-lg tracking-tight uppercase text-slate-900 group-hover:text-accent-500 transition-colors">
