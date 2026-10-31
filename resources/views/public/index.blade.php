@@ -717,25 +717,27 @@
                 <p class="text-sm text-slate-500 max-w-md leading-relaxed">
                     Real words from founders, product leaders, and design partners who experienced the impact of our collaborative work.
                 </p>
-                <button id="toggle-t-form-btn" type="button" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-xs font-semibold transition-colors shrink-0">
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    Tulis Ulasan
-                </button>
+                @if (isset($testimonials) && $testimonials->count() > 0)
+                    <button id="toggle-t-form-btn" type="button" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-accent-300 bg-accent-50 hover:bg-accent-100 text-accent-700 text-xs font-semibold transition-colors shrink-0">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Tulis Ulasan
+                    </button>
+                @endif
             </div>
         </div>
 
-        <!-- Interactive Testimonial Card Component (Mockup Layout) -->
-        <div class="bg-white rounded-3xl border border-paper-300 p-8 sm:p-12 md:p-16 shadow-[0_10px_30px_rgba(0,0,0,0.03)] relative">
-            <!-- Accent Quote Mark Icon -->
-            <div class="text-accent-500 text-6xl font-serif font-black leading-none mb-6 select-none">
-                &ldquo;
-            </div>
+        @if (isset($testimonials) && $testimonials->count() > 0)
+            <!-- Interactive Testimonial Card Component (Only Rendered When Real Testimonials Exist) -->
+            <div class="bg-white rounded-3xl border border-paper-300 p-8 sm:p-12 md:p-16 shadow-[0_10px_30px_rgba(0,0,0,0.03)] relative mb-8">
+                <!-- Accent Quote Mark Icon -->
+                <div class="text-accent-500 text-6xl font-serif font-black leading-none mb-6 select-none">
+                    &ldquo;
+                </div>
 
-            <!-- Testimonial Items (Dynamic from Database or Fallback Mockup) -->
-            <div id="testimonial-container">
-                @if (isset($testimonials) && $testimonials->count() > 0)
+                <!-- Testimonial Items (Dynamic from Database) -->
+                <div id="testimonial-container">
                     @foreach ($testimonials as $tIndex => $testi)
                         <div class="testimonial-slide {{ $tIndex === 0 ? 'active' : 'hidden opacity-0' }} transition-opacity duration-300">
                             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
@@ -767,107 +769,43 @@
                             </div>
                         </div>
                     @endforeach
-                @else
-                    <!-- Slide 1 (Default Mockup) -->
-                    <div class="testimonial-slide active transition-opacity duration-300">
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                            <!-- Client Avatar -->
-                            <div class="md:col-span-3 flex justify-center md:justify-start">
-                                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-paper-300 shadow-xs">
-                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" 
-                                         alt="Daniel Radicchi" 
-                                         class="w-full h-full object-cover">
-                                </div>
-                            </div>
+                </div>
 
-                            <!-- Quote & Author -->
-                            <div class="md:col-span-9 space-y-4 text-center md:text-left">
-                                <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
-                                    &ldquo;An exceptional designer with a great sense of detail. The final product was not only visually appealing but also highly functional and user-friendly.&rdquo;
-                                </p>
-                                <div>
-                                    <span class="block text-base font-extrabold text-slate-950">Daniel Radicchi</span>
-                                    <span class="block text-xs sm:text-sm font-medium text-slate-500">Head of Product at Spead</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 2 -->
-                    <div class="testimonial-slide hidden opacity-0 transition-opacity duration-300">
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                            <div class="md:col-span-3 flex justify-center md:justify-start">
-                                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-paper-300 shadow-xs">
-                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" 
-                                         alt="Sophia Martinez" 
-                                         class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <div class="md:col-span-9 space-y-4 text-center md:text-left">
-                                <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
-                                    &ldquo;Collaborating was seamless and incredibly productive. The design system crafted for our platform accelerated our frontend engineering velocity by 40%.&rdquo;
-                                </p>
-                                <div>
-                                    <span class="block text-base font-extrabold text-slate-950">Sophia Martinez</span>
-                                    <span class="block text-xs sm:text-sm font-medium text-slate-500">VP of Engineering at Cloudflow</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="testimonial-slide hidden opacity-0 transition-opacity duration-300">
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                            <div class="md:col-span-3 flex justify-center md:justify-start">
-                                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-paper-300 shadow-xs">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80" 
-                                         alt="Marcus Chen" 
-                                         class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <div class="md:col-span-9 space-y-4 text-center md:text-left">
-                                <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
-                                    &ldquo;Rarely do you find someone who understands both the visual soul of a brand and the technical constraints of complex applications. A true master of digital product craft.&rdquo;
-                                </p>
-                                <div>
-                                    <span class="block text-base font-extrabold text-slate-950">Marcus Chen</span>
-                                    <span class="block text-xs sm:text-sm font-medium text-slate-500">Co-Founder at Hyperion Labs</span>
-                                </div>
-                            </div>
-                        </div>
+                @if ($testimonials->count() > 1)
+                    <!-- Slider Control Buttons -->
+                    <div class="flex items-center justify-center md:justify-end gap-3 pt-8 border-t border-paper-300 mt-8">
+                        <button id="prev-testimonial" type="button" class="w-10 h-10 rounded-full border border-paper-300 hover:border-slate-800 text-slate-600 hover:text-slate-950 flex items-center justify-center transition-all" aria-label="Previous Testimonial">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <button id="next-testimonial" type="button" class="w-10 h-10 rounded-full bg-accent-500 hover:bg-accent-600 text-white flex items-center justify-center shadow-md shadow-accent-500/20 transition-all" aria-label="Next Testimonial">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
                     </div>
                 @endif
             </div>
-
-            <!-- Slider Control Buttons -->
-            <div class="flex items-center justify-center md:justify-end gap-3 pt-8 border-t border-paper-300 mt-8">
-                <button id="prev-testimonial" type="button" class="w-10 h-10 rounded-full border border-paper-300 hover:border-slate-800 text-slate-600 hover:text-slate-950 flex items-center justify-center transition-all" aria-label="Previous Testimonial">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button id="next-testimonial" type="button" class="w-10 h-10 rounded-full bg-accent-500 hover:bg-accent-600 text-white flex items-center justify-center shadow-md shadow-accent-500/20 transition-all" aria-label="Next Testimonial">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+        @endif
 
         <!-- Visitor Testimonial Submission Form (Device-Restricted via Fingerprint & IP) -->
-        <div id="visitor-form-container" class="mt-8 hidden transition-all duration-300">
-            <div class="paper-card p-6 sm:p-8 bg-white border border-paper-300">
-                <div class="max-w-2xl mx-auto space-y-6">
+        <div id="visitor-form-container" class="{{ (isset($testimonials) && $testimonials->count() > 0) ? 'hidden' : '' }} transition-all duration-300">
+            <div class="paper-card p-6 sm:p-10 bg-white border border-paper-300 shadow-sm max-w-2xl mx-auto">
+                <div class="space-y-6">
                     <div class="text-center space-y-1">
-                        <h3 class="text-xl font-bold text-slate-950">Tinggalkan Ulasan / Testimoni</h3>
-                        <p class="text-xs sm:text-sm text-slate-500">
+                        <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
+                            Feedback & Ulasan
+                        </span>
+                        <h3 class="text-2xl font-extrabold text-slate-950 tracking-tight">Tinggalkan Ulasan / Testimoni</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
                             Masukan Anda sangat berharga bagi kami. Setiap perangkat dibatasi mengirimkan 1 testimoni.
                         </p>
                     </div>
 
                     <!-- Already Submitted Notice -->
-                    <div id="testimonial-already-submitted" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm text-center">
-                        <p class="font-bold">✓ Anda telah mengirimkan ulasan dari perangkat ini.</p>
+                    <div id="testimonial-already-submitted" class="hidden p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm text-center">
+                        <p class="font-bold text-sm">✓ Anda telah mengirimkan ulasan dari perangkat ini.</p>
                         <p class="text-emerald-700 mt-1">Terima kasih banyak atas feedback dan kepercayaan Anda!</p>
                     </div>
 
@@ -880,12 +818,12 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="t-name" class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap *</label>
-                                <input type="text" id="t-name" name="name" required placeholder="Contoh: Daniel Radicchi"
+                                <input type="text" id="t-name" name="name" required placeholder="Nama Lengkap Anda"
                                        class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-paper-300 focus:outline-none focus:border-accent-500 bg-paper-50/50">
                             </div>
                             <div>
                                 <label for="t-role" class="block text-xs font-semibold text-slate-700 mb-1">Jabatan & Perusahaan</label>
-                                <input type="text" id="t-role" name="role" placeholder="Contoh: Product Manager di Acme Corp"
+                                <input type="text" id="t-role" name="role" placeholder="Jabatan atau Perusahaan (Opsional)"
                                        class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-paper-300 focus:outline-none focus:border-accent-500 bg-paper-50/50">
                             </div>
                         </div>
@@ -914,10 +852,12 @@
                         <div id="t-message" class="hidden text-xs font-semibold p-2.5 rounded-xl text-center"></div>
 
                         <div class="flex items-center justify-end gap-3 pt-2">
-                            <button type="button" id="cancel-t-form-btn" class="px-5 py-2 rounded-full border border-paper-300 text-slate-600 hover:text-slate-900 text-xs font-semibold">
-                                Tutup
-                            </button>
-                            <button type="submit" id="t-submit-btn" class="px-6 py-2 rounded-full bg-accent-500 hover:bg-accent-600 text-white text-xs font-semibold shadow-sm transition-all">
+                            @if (isset($testimonials) && $testimonials->count() > 0)
+                                <button type="button" id="cancel-t-form-btn" class="px-5 py-2 rounded-full border border-paper-300 text-slate-600 hover:text-slate-900 text-xs font-semibold">
+                                    Tutup
+                                </button>
+                            @endif
+                            <button type="submit" id="t-submit-btn" class="px-6 py-2.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white text-xs sm:text-sm font-semibold shadow-sm hover:shadow-md hover:shadow-accent-500/20 transition-all">
                                 Kirim Ulasan
                             </button>
                         </div>
