@@ -247,31 +247,31 @@
                 </div>
             </div>
 
-            <!-- Right Column: Follow Me Socials & Big Display Label (Exact Mockup with reveal animation) -->
-            <div class="lg:col-span-4 flex flex-col justify-between h-full space-y-12 lg:space-y-24 text-center lg:text-left reveal-right delay-200">
+            <!-- Right Column: Follow Me Socials & Big Display Label (Dramatic Morph-In Entrance) -->
+            <div class="lg:col-span-4 flex flex-col justify-between h-full space-y-12 lg:space-y-24 text-center lg:text-left animate-morph-right">
                 <!-- Top: Follow Me Socials -->
                 <div class="space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block animate-morph-pill">
                         Follow me
                     </span>
                     <div class="flex items-center justify-center lg:justify-start gap-2.5">
                         @if ($user->socialLinks && $user->socialLinks->count() > 0)
-                            @foreach ($user->socialLinks->take(4) as $social)
-                                <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 text-slate-700 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center shadow-xs hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="{{ $social->name }}">
+                            @foreach ($user->socialLinks->take(4) as $sIndex => $social)
+                                <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" class="animate-morph-social delay-{{ ($sIndex + 1) * 75 }} w-9 h-9 rounded-full bg-white border border-paper-300 text-slate-700 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center shadow-xs hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="{{ $social->name }}">
                                     @include('partials.social-icon', ['social' => $social])
                                 </a>
                             @endforeach
                         @else
-                            <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="LinkedIn">
+                            <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="animate-morph-social delay-100 w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="LinkedIn">
                                 @include('partials.social-icon', ['type' => 'linkedin'])
                             </a>
-                            <a href="{{ $user->github_link ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="GitHub">
+                            <a href="{{ $user->github_link ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer" class="animate-morph-social delay-150 w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="GitHub">
                                 @include('partials.social-icon', ['type' => 'github'])
                             </a>
-                            <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="Instagram">
+                            <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="animate-morph-social delay-200 w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="Instagram">
                                 @include('partials.social-icon', ['type' => 'instagram'])
                             </a>
-                            <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="Email: thoriqpasya860@gmail.com">
+                            <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="animate-morph-social delay-250 w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="Email: thoriqpasya860@gmail.com">
                                 @include('partials.social-icon', ['type' => 'email'])
                             </a>
                         @endif
@@ -287,8 +287,8 @@
                 @endphp
                 <div class="pt-4 lg:pt-0 hidden lg:block text-right">
                     <h2 class="text-3xl xl:text-4xl 2xl:text-5xl font-black uppercase tracking-tight text-slate-900 leading-none">
-                        @foreach ($titleWords as $word)
-                            <span class="block">{{ $word }}</span>
+                        @foreach ($titleWords as $wIndex => $word)
+                            <span class="block animate-morph-right delay-{{ ($wIndex + 1) * 100 }}">{{ $word }}</span>
                         @endforeach
                     </h2>
                 </div>
