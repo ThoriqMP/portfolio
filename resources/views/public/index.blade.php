@@ -3,8 +3,8 @@
 @section('content')
 <!-- Hero Section (Organic Paper Texture, 3-Column Mockup Composition & Ambient Warmth) -->
 <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden w-full max-w-full">
-    <!-- Soft Reddish-Orange Ambient Glow (Animated breathing pulse) -->
-    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] max-w-full h-[350px] bg-accent-400/10 blur-[120px] rounded-full pointer-events-none -z-0 animate-aura-pulse"></div>
+    <!-- Soft Reddish-Orange Ambient Glow (Morph Bloom on load + breathing pulse) -->
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] max-w-full h-[350px] bg-accent-400/15 blur-[120px] rounded-full pointer-events-none -z-0 animate-aura-bloom"></div>
 
     <!-- Giant Faint Background Watermark: Title from Mockup -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
@@ -16,8 +16,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
             
-            <!-- Left Column: Typographic Hero & Intro (Exact Mockup Alignment with reveal animation) -->
-            <div class="lg:col-span-4 space-y-5 text-center lg:text-left min-w-0 reveal-left">
+            <!-- Left Column: Typographic Hero & Intro (Dramatic Morph-In Entrance) -->
+            <div class="lg:col-span-4 space-y-5 text-center lg:text-left min-w-0 animate-morph-left">
                 <div class="space-y-1">
                     <span class="block text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-800">
                         I'M
@@ -27,9 +27,9 @@
                     </h1>
                 </div>
 
-                <!-- Stylized Title Pill -->
+                <!-- Stylized Title Pill with Spring Morph -->
                 <div>
-                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-accent-500 text-white shadow-sm shadow-accent-500/30 transition-transform duration-300 hover:scale-105 cursor-default">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-accent-500 text-white shadow-sm shadow-accent-500/30 transition-transform duration-300 hover:scale-105 cursor-default animate-morph-pill">
                         {{ $user->title ?? 'DIGITAL PRODUCT DESIGNER' }}
                     </span>
                 </div>
@@ -39,23 +39,24 @@
                     {{ $user->bio ?? 'Creating meaningful digital products that drive engagement, solve complex business problems, and elevate human experiences.' }}
                 </p>
 
-                <!-- Quick Action Buttons -->
+                <!-- Quick Action Buttons (Staggered Morph Pop) -->
                 <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                    <a href="#projects" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-accent-500 text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-accent-500/25 hover:-translate-y-0.5 active:translate-y-0">
+                    <a href="#projects" class="animate-morph-tool delay-300 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-accent-500 text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-accent-500/25 hover:-translate-y-0.5 active:translate-y-0">
                         Explore Work
                         <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </a>
-                    <a href="#about" class="inline-flex items-center px-5 py-2.5 rounded-full border border-paper-300 hover:border-slate-800 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                    <a href="#about" class="animate-morph-tool delay-350 inline-flex items-center px-5 py-2.5 rounded-full border border-paper-300 hover:border-slate-800 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
                         About Me
                     </a>
                 </div>
             </div>
 
-            <!-- Middle Column: Portrait Cutout Photo with Floating Glassmorphism Tools Card -->
-            <div class="lg:col-span-4 flex flex-col items-center justify-center order-first lg:order-none reveal-scale delay-100">
-                <div class="relative w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[430px] flex items-end justify-center">
+            <!-- Middle Column: Portrait Cutout Photo with Morph-In Glassmorphism Tools Card -->
+            <div class="lg:col-span-4 flex flex-col items-center justify-center order-first lg:order-none">
+                <!-- Portrait Cutout Container with Organic Morph-In -->
+                <div class="animate-morph-portrait relative w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[430px] flex items-end justify-center">
                     <!-- Subtle ambient warmth behind portrait -->
                     <div class="absolute inset-0 bg-gradient-to-t from-accent-500/15 to-transparent rounded-full blur-2xl -z-10 animate-aura-pulse"></div>
 
@@ -75,9 +76,11 @@
                     @endif
                 </div>
 
-                <!-- Glassmorphism Tools Card Floating on Lower Photo (Interactive Levitation Animation) -->
+                <!-- Glassmorphism Tools Card Floating on Lower Photo -->
+                <!-- Outer wrapper handles the continuous floating levitation -->
                 <div class="relative -mt-10 sm:-mt-14 w-full max-w-[340px] sm:max-w-[420px] z-20 px-2 sm:px-0 animate-float-levitate">
-                    <div class="bg-white/80 backdrop-blur-xl border border-white/90 shadow-[0_16px_36px_rgba(15,23,42,0.12)] rounded-2xl sm:rounded-3xl p-3 sm:p-4 transition-all duration-300 hover:shadow-[0_24px_48px_rgba(255,77,45,0.18)] hover:border-white">
+                    <!-- Inner card runs the dramatic Morph-In entrance + Specular Shimmer Wipe -->
+                    <div class="animate-morph-glass morph-shimmer bg-white/80 backdrop-blur-xl border border-white/90 shadow-[0_16px_36px_rgba(15,23,42,0.12)] rounded-2xl sm:rounded-3xl p-3 sm:p-4 transition-all duration-300 hover:shadow-[0_24px_48px_rgba(255,77,45,0.18)] hover:border-white">
                         <!-- Top Header Indicator -->
                         <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200/60">
                             <div class="flex items-center gap-1.5">
@@ -94,10 +97,10 @@
                             </span>
                         </div>
 
-                        <!-- 10 Tools Grid (5 columns x 2 rows) -->
+                        <!-- 10 Tools Grid (Cascading Morph Pop for each tool) -->
                         <div class="grid grid-cols-5 gap-1 sm:gap-1.5 text-center">
                             <!-- 1. Figma -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-100 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
@@ -113,7 +116,7 @@
                             </div>
 
                             <!-- 2. Capcut -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-150 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="7" fill="#0F172A"/>
@@ -127,7 +130,7 @@
                             </div>
 
                             <!-- 3. Laravel -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-200 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M37.3 12.3L21.4 3.1c-.8-.5-1.9-.5-2.8 0L2.7 12.3c-.9.5-1.4 1.4-1.4 2.4v18.4c0 1 .5 1.9 1.4 2.4l15.9 9.2c.8.5 1.9.5 2.8 0l15.9-9.2c.9-.5 1.4-1.4 1.4-2.4V14.7c0-1-.5-1.9-1.4-2.4z" fill="#FF2D20"/>
@@ -142,7 +145,7 @@
                             </div>
 
                             <!-- 4. Rust -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-250 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="16" cy="16" r="14" fill="#1E1E1E"/>
@@ -156,7 +159,7 @@
                             </div>
 
                             <!-- 5. PHP -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-300 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <ellipse cx="16" cy="16" rx="15" ry="9.5" fill="#777BB4"/>
@@ -169,7 +172,7 @@
                             </div>
 
                             <!-- 6. Tailwind -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-350 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M16 9c-4 0-6.5 2-7.5 6 1.5-2 3.5-2.7 6-2 1.4.4 2.4 1.4 3.5 2.6C19.8 17.4 22 20 27 20c4 0 6.5-2 7.5-6-1.5 2-3.5 2.7-6 2-1.4-.4-2.4-1.4-3.5-2.6C23.2 11.6 21 9 16 9zm-11 9c-4 0-6.5 2-7.5 6 1.5-2 3.5-2.7 6-2 1.4.4 2.4 1.4 3.5 2.6C8.8 26.4 11 29 16 29c4 0 6.5-2 7.5-6-1.5 2-3.5 2.7-6 2-1.4-.4-2.4-1.4-3.5-2.6C12.2 20.6 10 18 5 18z" transform="scale(0.85) translate(2, 0)" fill="#06B6D4"/>
@@ -181,7 +184,7 @@
                             </div>
 
                             <!-- 7. Supabase -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-400 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="7" fill="#1C1C1C"/>
@@ -194,7 +197,7 @@
                             </div>
 
                             <!-- 8. MY SQL -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-450 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="7" fill="#00758F"/>
@@ -209,7 +212,7 @@
                             </div>
 
                             <!-- 9. MEDIAMTX -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-500 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="7" fill="#4F46E5"/>
@@ -224,7 +227,7 @@
                             </div>
 
                             <!-- 10. WEB RTC -->
-                            <div class="flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
+                            <div class="animate-morph-tool delay-600 flex flex-col items-center justify-center p-1 sm:p-1.5 rounded-xl hover:bg-white/90 hover:scale-105 transition-all duration-150 group/tool cursor-default">
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center">
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="7" fill="#0284C7"/>

@@ -472,8 +472,16 @@
                 transform: none !important;
                 transition: none !important;
             }
-            .animate-float-levitate, .animate-radar-sweep, .animate-sonar, .animate-aura-pulse {
+            .animate-float-levitate, .animate-radar-sweep, .animate-sonar, .animate-aura-pulse,
+            .animate-morph-left, .animate-morph-portrait, .animate-morph-glass, .animate-morph-tool,
+            .animate-morph-right, .animate-morph-pill, .animate-morph-social, .animate-aura-bloom {
                 animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+            .morph-shimmer::after {
+                display: none !important;
             }
         }
 
