@@ -456,6 +456,92 @@
             animation: heroAuraBloom 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
+        /* ======================================================== */
+        /* KINETIC LUXURY PRELOADER                                 */
+        /* ======================================================== */
+        body.preloader-active {
+            overflow: hidden !important;
+        }
+
+        /* Hold hero entrance animations in initial 0% state while preloader plays */
+        body.preloader-active .animate-morph-left,
+        body.preloader-active .animate-morph-portrait,
+        body.preloader-active .animate-morph-glass,
+        body.preloader-active .animate-morph-tool,
+        body.preloader-active .animate-morph-right,
+        body.preloader-active .animate-morph-pill,
+        body.preloader-active .animate-morph-social,
+        body.preloader-active .animate-aura-bloom {
+            animation-play-state: paused !important;
+        }
+
+        /* Kinetic Slide In From Left (THORIQ, PASYA) */
+        @keyframes preloaderSlideInLeft {
+            0% {
+                transform: translate3d(-105%, 0, 0);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            55% {
+                filter: blur(0);
+            }
+            85% {
+                transform: translate3d(2%, 0, 0);
+            }
+            100% {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        /* Kinetic Slide In From Right (MUHAMMAD, PORTFOLIO) */
+        @keyframes preloaderSlideInRight {
+            0% {
+                transform: translate3d(105%, 0, 0);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            55% {
+                filter: blur(0);
+            }
+            85% {
+                transform: translate3d(-2%, 0, 0);
+            }
+            100% {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        .preloader-line-1 {
+            animation: preloaderSlideInLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+            will-change: transform, opacity, filter;
+        }
+        .preloader-line-2 {
+            animation: preloaderSlideInRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+            will-change: transform, opacity, filter;
+        }
+        .preloader-line-3 {
+            animation: preloaderSlideInLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.36s both;
+            will-change: transform, opacity, filter;
+        }
+        .preloader-line-4 {
+            animation: preloaderSlideInRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.50s both;
+            will-change: transform, opacity, filter;
+        }
+
+        /* Dramatic Curtain Lift Exit */
+        #preloader {
+            transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+            will-change: transform;
+        }
+        #preloader.preloader-curtain-up {
+            transform: translate3d(0, -100%, 0);
+            pointer-events: none;
+        }
+
         /* Card interactive lift & glow */
         .hover-lift {
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
@@ -467,6 +553,12 @@
 
         /* Respect Reduced Motion Preferences */
         @media (prefers-reduced-motion: reduce) {
+            #preloader {
+                display: none !important;
+            }
+            body.preloader-active {
+                overflow: auto !important;
+            }
             .reveal-on-scroll, .reveal-left, .reveal-right, .reveal-scale {
                 opacity: 1 !important;
                 transform: none !important;
@@ -506,7 +598,10 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-accent-500 selection:text-white w-full max-w-full overflow-x-hidden relative">
+<body class="preloader-active min-h-screen flex flex-col antialiased selection:bg-accent-500 selection:text-white w-full max-w-full overflow-x-hidden relative">
+
+    <!-- Luxury Kinetic Preloader -->
+    @include('partials.preloader')
 
     <!-- Header / Navigation (Floating Pill Navbar) -->
     @include('partials.navbar')
