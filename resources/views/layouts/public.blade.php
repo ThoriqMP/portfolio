@@ -270,7 +270,7 @@
             }
         }
         .animate-morph-left {
-            animation: heroMorphLeft 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: heroMorphLeft 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         /* 2. Middle Portrait Cutout: Morphs from organic capsule with blur into sharp card */
@@ -296,7 +296,7 @@
             }
         }
         .animate-morph-portrait {
-            animation: heroMorphPortrait 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+            animation: heroMorphPortrait 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
         }
 
         /* 3. Glassmorphism Tools Card: Dramatic Morph from frosted capsule with sheen sweep */
@@ -325,7 +325,7 @@
             }
         }
         .animate-morph-glass {
-            animation: heroMorphGlass 1.25s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+            animation: heroMorphGlass 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
         }
 
         /* 4. Individual Tool Icons: Staggered Morph Pop */
@@ -336,7 +336,7 @@
                 filter: blur(4px);
             }
             70% {
-                transform: scale(1.18) translateY(-2px);
+                transform: scale(1.15) translateY(-2px);
             }
             100% {
                 opacity: 1;
@@ -345,7 +345,7 @@
             }
         }
         .animate-morph-tool {
-            animation: heroMorphTool 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            animation: heroMorphTool 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
         /* 5. Right Hero Column: Morphs in with elastic slide from right */
@@ -368,7 +368,7 @@
             }
         }
         .animate-morph-right {
-            animation: heroMorphRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+            animation: heroMorphRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
         }
 
         /* 6. Title Pill & Badge Elastic Morph Pop */
@@ -389,7 +389,7 @@
             }
         }
         .animate-morph-pill {
-            animation: heroMorphPill 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.28s both;
+            animation: heroMorphPill 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both;
         }
 
         /* 7. Social Pills Cascade Morph */
@@ -399,7 +399,7 @@
                 transform: scale(0.35) rotate(-15deg);
             }
             75% {
-                transform: scale(1.22) rotate(4deg);
+                transform: scale(1.2) rotate(3deg);
             }
             100% {
                 opacity: 1;
@@ -407,7 +407,7 @@
             }
         }
         .animate-morph-social {
-            animation: heroMorphSocial 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            animation: heroMorphSocial 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
         /* 8. Specular Light Ray Sheen Sweep across Card */
@@ -434,7 +434,7 @@
             inset: -50% -100%;
             background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
             pointer-events-none;
-            animation: morphShimmerWipe 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+            animation: morphShimmerWipe 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
         }
 
         /* 9. Background Aura Bloom */
@@ -453,7 +453,7 @@
             }
         }
         .animate-aura-bloom {
-            animation: heroAuraBloom 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: heroAuraBloom 2.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         /* ======================================================== */
@@ -516,25 +516,25 @@
         }
 
         .preloader-line-1 {
-            animation: preloaderSlideInLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+            animation: preloaderSlideInLeft 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.20s both;
             will-change: transform, opacity, filter;
         }
         .preloader-line-2 {
-            animation: preloaderSlideInRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+            animation: preloaderSlideInRight 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
             will-change: transform, opacity, filter;
         }
         .preloader-line-3 {
-            animation: preloaderSlideInLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.36s both;
+            animation: preloaderSlideInLeft 1.15s cubic-bezier(0.16, 1, 0.3, 1) 1.30s both;
             will-change: transform, opacity, filter;
         }
         .preloader-line-4 {
-            animation: preloaderSlideInRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.50s both;
+            animation: preloaderSlideInRight 1.15s cubic-bezier(0.16, 1, 0.3, 1) 1.85s both;
             will-change: transform, opacity, filter;
         }
 
         /* Dramatic Curtain Lift Exit */
         #preloader {
-            transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+            transition: transform 1.15s cubic-bezier(0.76, 0, 0.24, 1), opacity 1.15s cubic-bezier(0.76, 0, 0.24, 1);
             will-change: transform;
         }
         #preloader.preloader-curtain-up {

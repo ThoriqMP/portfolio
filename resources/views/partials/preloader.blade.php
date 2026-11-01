@@ -136,7 +136,7 @@
                 if (preloader.parentNode) {
                     preloader.parentNode.removeChild(preloader);
                 }
-            }, 900);
+            }, 1250);
         }
 
         // Allow click or tap to dismiss immediately
@@ -148,7 +148,7 @@
         });
 
         // Animate counter from 0 to 100 with smooth easeOutCubic
-        const duration = 1600; // 1.6s
+        const duration = 3000; // 3.0s smooth duration
         const startTime = performance.now();
 
         function tick(now) {
@@ -162,9 +162,9 @@
             if (progressBar) progressBar.style.width = currentPercent + '%';
             if (counter) counter.textContent = currentPercent + '%';
 
-            if (currentPercent > 35 && currentPercent < 75) {
+            if (currentPercent > 30 && currentPercent < 70) {
                 if (statusText) statusText.textContent = 'LOADING ASSETS';
-            } else if (currentPercent >= 75 && currentPercent < 100) {
+            } else if (currentPercent >= 70 && currentPercent < 100) {
                 if (statusText) statusText.textContent = 'FINALIZING';
             }
 
@@ -172,15 +172,15 @@
                 requestAnimationFrame(tick);
             } else {
                 if (statusText) statusText.textContent = 'READY';
-                // Brief pause at 100% before curtain lifts
-                setTimeout(dismissPreloader, 180);
+                // Hold at 100% for 500ms so user can appreciate the completed composition
+                setTimeout(dismissPreloader, 500);
             }
         }
 
         requestAnimationFrame(tick);
 
-        // Fail-safe timeout: dismiss after 3.2s under any circumstances
-        setTimeout(dismissPreloader, 3200);
+        // Fail-safe timeout: dismiss after 5.5s under any circumstances
+        setTimeout(dismissPreloader, 5500);
     })();
 </script>
 
