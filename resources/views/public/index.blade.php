@@ -3,8 +3,8 @@
 @section('content')
 <!-- Hero Section (Organic Paper Texture, 3-Column Mockup Composition & Ambient Warmth) -->
 <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden w-full max-w-full">
-    <!-- Soft Reddish-Orange Ambient Glow (No Grid Lines) -->
-    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] max-w-full h-[350px] bg-accent-400/10 blur-[120px] rounded-full pointer-events-none -z-0"></div>
+    <!-- Soft Reddish-Orange Ambient Glow (Animated breathing pulse) -->
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] max-w-full h-[350px] bg-accent-400/10 blur-[120px] rounded-full pointer-events-none -z-0 animate-aura-pulse"></div>
 
     <!-- Giant Faint Background Watermark: Title from Mockup -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
@@ -16,8 +16,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
             
-            <!-- Left Column: Typographic Hero & Intro (Exact Mockup Alignment) -->
-            <div class="lg:col-span-4 space-y-5 text-center lg:text-left min-w-0">
+            <!-- Left Column: Typographic Hero & Intro (Exact Mockup Alignment with reveal animation) -->
+            <div class="lg:col-span-4 space-y-5 text-center lg:text-left min-w-0 reveal-left">
                 <div class="space-y-1">
                     <span class="block text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-slate-800">
                         I'M
@@ -29,7 +29,7 @@
 
                 <!-- Stylized Title Pill -->
                 <div>
-                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-accent-500 text-white shadow-sm shadow-accent-500/30">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-accent-500 text-white shadow-sm shadow-accent-500/30 transition-transform duration-300 hover:scale-105 cursor-default">
                         {{ $user->title ?? 'DIGITAL PRODUCT DESIGNER' }}
                     </span>
                 </div>
@@ -41,43 +41,43 @@
 
                 <!-- Quick Action Buttons -->
                 <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                    <a href="#projects" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-accent-500 text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm">
+                    <a href="#projects" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-accent-500 text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-accent-500/25 hover:-translate-y-0.5 active:translate-y-0">
                         Explore Work
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </a>
-                    <a href="#about" class="inline-flex items-center px-5 py-2.5 rounded-full border border-paper-300 hover:border-slate-800 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-slate-800 transition-colors">
+                    <a href="#about" class="inline-flex items-center px-5 py-2.5 rounded-full border border-paper-300 hover:border-slate-800 bg-white/70 hover:bg-white text-xs sm:text-sm font-semibold text-slate-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
                         About Me
                     </a>
                 </div>
             </div>
 
-            <!-- Middle Column: Portrait Cutout Photo with Glassmorphism Tools Card -->
-            <div class="lg:col-span-4 flex flex-col items-center justify-center order-first lg:order-none">
+            <!-- Middle Column: Portrait Cutout Photo with Floating Glassmorphism Tools Card -->
+            <div class="lg:col-span-4 flex flex-col items-center justify-center order-first lg:order-none reveal-scale delay-100">
                 <div class="relative w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[430px] flex items-end justify-center">
                     <!-- Subtle ambient warmth behind portrait -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-accent-500/15 to-transparent rounded-full blur-2xl -z-10"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-accent-500/15 to-transparent rounded-full blur-2xl -z-10 animate-aura-pulse"></div>
 
                     @if ($user->avatar_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar_path))
                         <img src="{{ asset('storage/' . $user->avatar_path) }}" 
                              alt="{{ $user->name }}" 
-                             class="w-full h-full object-cover object-top rounded-3xl drop-shadow-2xl">
+                             class="w-full h-full object-cover object-top rounded-3xl drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
                     @else
                         <!-- High Fidelity Designer Portrait Matching Mockup -->
                         <div class="relative w-full h-full overflow-hidden rounded-3xl group">
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80" 
                                  alt="{{ $user->name ?? 'Ethan Ward' }}" 
-                                 class="w-full h-full object-cover object-top drop-shadow-2xl filter contrast-[1.02] brightness-[1.02]">
+                                 class="w-full h-full object-cover object-top drop-shadow-2xl filter contrast-[1.02] brightness-[1.02] transition-transform duration-700 group-hover:scale-105">
                             <!-- Soft subtle bottom gradient overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent"></div>
                         </div>
                     @endif
                 </div>
 
-                <!-- Glassmorphism Tools Card Floating on Lower Photo -->
-                <div class="relative -mt-10 sm:-mt-14 w-full max-w-[340px] sm:max-w-[420px] z-20 px-2 sm:px-0">
-                    <div class="bg-white/75 backdrop-blur-xl border border-white/80 shadow-[0_16px_36px_rgba(15,23,42,0.12)] rounded-2xl sm:rounded-3xl p-3 sm:p-4 transition-all duration-300 hover:shadow-[0_20px_44px_rgba(255,77,45,0.15)] hover:border-white">
+                <!-- Glassmorphism Tools Card Floating on Lower Photo (Interactive Levitation Animation) -->
+                <div class="relative -mt-10 sm:-mt-14 w-full max-w-[340px] sm:max-w-[420px] z-20 px-2 sm:px-0 animate-float-levitate">
+                    <div class="bg-white/80 backdrop-blur-xl border border-white/90 shadow-[0_16px_36px_rgba(15,23,42,0.12)] rounded-2xl sm:rounded-3xl p-3 sm:p-4 transition-all duration-300 hover:shadow-[0_24px_48px_rgba(255,77,45,0.18)] hover:border-white">
                         <!-- Top Header Indicator -->
                         <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200/60">
                             <div class="flex items-center gap-1.5">
@@ -89,7 +89,7 @@
                                     Tools &amp; Stack
                                 </span>
                             </div>
-                            <span class="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent-50 text-accent-600 border border-accent-200">
+                            <span class="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent-50 text-accent-600 border border-accent-200 transition-colors hover:bg-accent-100">
                                 10 Core Tools
                             </span>
                         </div>
@@ -244,8 +244,8 @@
                 </div>
             </div>
 
-            <!-- Right Column: Follow Me Socials & Big Display Label (Exact Mockup) -->
-            <div class="lg:col-span-4 flex flex-col justify-between h-full space-y-12 lg:space-y-24 text-center lg:text-left">
+            <!-- Right Column: Follow Me Socials & Big Display Label (Exact Mockup with reveal animation) -->
+            <div class="lg:col-span-4 flex flex-col justify-between h-full space-y-12 lg:space-y-24 text-center lg:text-left reveal-right delay-200">
                 <!-- Top: Follow Me Socials -->
                 <div class="space-y-3">
                     <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">
@@ -254,21 +254,21 @@
                     <div class="flex items-center justify-center lg:justify-start gap-2.5">
                         @if ($user->socialLinks && $user->socialLinks->count() > 0)
                             @foreach ($user->socialLinks->take(4) as $social)
-                                <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 text-slate-700 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center shadow-xs transition-all duration-200" title="{{ $social->name }}">
+                                <a href="{{ $social->link }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 text-slate-700 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center shadow-xs hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="{{ $social->name }}">
                                     @include('partials.social-icon', ['social' => $social])
                                 </a>
                             @endforeach
                         @else
-                            <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="LinkedIn">
+                            <a href="{{ $user->linkedin_link ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="LinkedIn">
                                 @include('partials.social-icon', ['type' => 'linkedin'])
                             </a>
-                            <a href="{{ $user->github_link ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="GitHub">
+                            <a href="{{ $user->github_link ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="GitHub">
                                 @include('partials.social-icon', ['type' => 'github'])
                             </a>
-                            <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="Instagram">
+                            <a href="{{ $user->instagram_link ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="Instagram">
                                 @include('partials.social-icon', ['type' => 'instagram'])
                             </a>
-                            <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center transition-all duration-200" title="Email: thoriqpasya860@gmail.com">
+                            <a href="mailto:{{ $user->email_contact ?: ($user->email ?: 'thoriqpasya860@gmail.com') }}" class="w-9 h-9 rounded-full bg-white border border-paper-300 shadow-xs text-slate-600 hover:text-white hover:bg-accent-500 hover:border-accent-500 flex items-center justify-center hover:scale-110 hover:-translate-y-0.5 transition-all duration-200" title="Email: thoriqpasya860@gmail.com">
                                 @include('partials.social-icon', ['type' => 'email'])
                             </a>
                         @endif
@@ -301,22 +301,22 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             <!-- Left: High Quality Workplace Photo Card -->
-            <div class="lg:col-span-6">
-                <div class="relative overflow-hidden rounded-3xl shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-paper-300 aspect-[4/3] group bg-paper-100">
+            <div class="lg:col-span-6 reveal-left">
+                <div class="relative overflow-hidden rounded-3xl shadow-[0_15px_35px_rgba(0,0,0,0.06)] border border-paper-300 aspect-[4/3] group bg-paper-100 hover:shadow-xl transition-all duration-500">
                     @if ($user->about_image_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->about_image_path))
                         <img src="{{ asset('storage/' . $user->about_image_path) }}" 
                              alt="{{ $user->name }}" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     @else
                         <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80" 
                              alt="Designing with Purpose" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     @endif
                 </div>
             </div>
 
             <!-- Right: About Editorial & CTA -->
-            <div class="lg:col-span-6 space-y-6">
+            <div class="lg:col-span-6 space-y-6 reveal-right delay-150">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-wider text-accent-500 mb-2 inline-flex items-center gap-2">
                         <span class="w-4 h-0.5 bg-accent-500"></span>
@@ -345,7 +345,7 @@
                     <div class="pt-2">
                         <div class="flex flex-wrap gap-2">
                             @foreach ($user->badges as $badge)
-                                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border shadow-2xs"
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border shadow-2xs hover:scale-105 transition-transform cursor-default"
                                       style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }}; border-color: rgba(0,0,0,0.06);">
                                     {{ $badge->name }}
                                 </span>
@@ -355,7 +355,7 @@
                 @endif
 
                 <div class="pt-2">
-                    <a href="#services" class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold shadow-md shadow-accent-500/25 hover:shadow-lg hover:shadow-accent-500/35 transition-all">
+                    <a href="#services" class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold shadow-md shadow-accent-500/25 hover:shadow-lg hover:shadow-accent-500/35 hover:-translate-y-0.5 active:translate-y-0 transition-all">
                         Read More
                     </a>
                 </div>
@@ -365,13 +365,21 @@
     </div>
 </section>
 
-<!-- Stats / Metrics Strip (4 Horizontal Metrics matching Mockup) -->
+<!-- Stats / Metrics Strip (4 Horizontal Metrics with Animated Digital Counter Ticker) -->
+@php
+    $yearsNum = (int) preg_replace('/[^0-9]/', '', $user->years_experience ?? '10');
+    $projectsRaw = $user->projects_completed ?? (max(109, ($user->projects->count() > 0 ? $user->projects->count() * 12 : 109)) . '+');
+    $projectsNum = (int) preg_replace('/[^0-9]/', '', $projectsRaw);
+    $satisfactionNum = (int) preg_replace('/[^0-9]/', '', $user->client_satisfaction ?? '96');
+@endphp
 <section class="py-12 md:py-16 bg-white border-b border-paper-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-paper-300">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-paper-300 reveal-on-scroll">
             <!-- Stat 1: Years Experience -->
-            <div class="pt-4 md:pt-0">
-                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+            <div class="pt-4 md:pt-0 group">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block group-hover:text-accent-500 transition-colors"
+                      data-counter-target="{{ $yearsNum > 0 ? $yearsNum : 10 }}" 
+                      data-counter-suffix="+">
                     {{ $user->years_experience ?? '10+' }}
                 </span>
                 <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
@@ -380,9 +388,11 @@
             </div>
 
             <!-- Stat 2: Projects Completed -->
-            <div class="pt-4 md:pt-0">
-                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
-                    {{ $user->projects_completed ?? (max(109, ($user->projects->count() > 0 ? $user->projects->count() * 12 : 109)) . '+') }}
+            <div class="pt-4 md:pt-0 group">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block group-hover:text-accent-500 transition-colors"
+                      data-counter-target="{{ $projectsNum > 0 ? $projectsNum : 109 }}" 
+                      data-counter-suffix="+">
+                    {{ $projectsRaw }}
                 </span>
                 <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
                     Project Completed
@@ -390,8 +400,10 @@
             </div>
 
             <!-- Stat 3: Support Available -->
-            <div class="pt-4 md:pt-0">
-                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+            <div class="pt-4 md:pt-0 group">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block group-hover:text-accent-500 transition-colors"
+                      data-counter-target="20" 
+                      data-counter-suffix="/7">
                     {{ $user->support_available ?? '20/7' }}
                 </span>
                 <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
@@ -400,8 +412,10 @@
             </div>
 
             <!-- Stat 4: Client Satisfaction -->
-            <div class="pt-4 md:pt-0">
-                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block">
+            <div class="pt-4 md:pt-0 group">
+                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 tracking-tight block group-hover:text-accent-500 transition-colors"
+                      data-counter-target="{{ $satisfactionNum > 0 ? $satisfactionNum : 96 }}" 
+                      data-counter-suffix="%">
                     {{ $user->client_satisfaction ?? '96%' }}
                 </span>
                 <span class="text-xs sm:text-sm font-medium text-slate-500 mt-1 block uppercase tracking-wider">
@@ -412,11 +426,11 @@
     </div>
 </section>
 
-<!-- Services / Bento Grid Section (Exact 6-Item Mockup Layout) -->
+<!-- Services / Bento Grid Section (Exact 6-Item Mockup Layout with Staggered Scroll Animations) -->
 <section id="services" class="py-24 md:py-32 bg-paper-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 reveal-on-scroll">
             <div class="space-y-2 max-w-xl">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
                     SERVICES
@@ -434,9 +448,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             <!-- Card 01: UI/UX Design -->
-            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white">
+            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white reveal-on-scroll delay-75">
                 <div>
-                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 group-hover:translate-x-1 transition-all duration-300 block mb-6">
                         01
                     </span>
                     <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
@@ -449,9 +463,9 @@
             </div>
 
             <!-- Card 02: Web Design -->
-            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white">
+            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white reveal-on-scroll delay-150">
                 <div>
-                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 group-hover:translate-x-1 transition-all duration-300 block mb-6">
                         02
                     </span>
                     <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
@@ -464,35 +478,35 @@
             </div>
 
             <!-- Bento Visual Showcase 1: Smartphone In Hand Mockup -->
-            <div class="overflow-hidden rounded-3xl border border-paper-300 shadow-sm aspect-[4/3] md:aspect-auto group bg-white">
+            <div class="overflow-hidden rounded-3xl border border-paper-300 shadow-sm aspect-[4/3] md:aspect-auto group bg-white reveal-on-scroll delay-200 hover:shadow-xl transition-all duration-500">
                 @if ($user->bento_image_1 && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->bento_image_1))
                     <img src="{{ asset('storage/' . $user->bento_image_1) }}" 
                          alt="Mobile App Mockup" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 @else
                     <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80" 
                          alt="Mobile App Mockup" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 @endif
             </div>
 
             <!-- Bento Visual Showcase 2: Streetwear / Brand Print Graphic -->
-            <div class="overflow-hidden rounded-3xl border border-paper-300 shadow-sm aspect-[4/3] md:aspect-auto group bg-white">
+            <div class="overflow-hidden rounded-3xl border border-paper-300 shadow-sm aspect-[4/3] md:aspect-auto group bg-white reveal-on-scroll delay-250 hover:shadow-xl transition-all duration-500">
                 @if ($user->bento_image_2 && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->bento_image_2))
                     <img src="{{ asset('storage/' . $user->bento_image_2) }}" 
                          alt="Brand Graphic Hoodie" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 @else
                     <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80" 
                          alt="Brand Graphic Hoodie" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 @endif
             </div>
 
             <!-- Card 03: Graphic Design -->
-            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white">
+            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white reveal-on-scroll delay-300">
                 <div>
-                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 group-hover:translate-x-1 transition-all duration-300 block mb-6">
                         03
                     </span>
                     <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
@@ -505,9 +519,9 @@
             </div>
 
             <!-- Card 04: Design System -->
-            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white">
+            <div class="modern-card p-8 flex flex-col justify-between h-full group bg-white reveal-on-scroll delay-400">
                 <div>
-                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 transition-colors block mb-6">
+                    <span class="text-3xl font-black text-slate-300 group-hover:text-accent-400 group-hover:translate-x-1 transition-all duration-300 block mb-6">
                         04
                     </span>
                     <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-accent-500 transition-colors">
@@ -527,7 +541,7 @@
 <section id="experience" class="py-24 md:py-32 bg-paper-warm border-y border-paper-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 reveal-on-scroll">
             <div class="space-y-2 max-w-xl">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent-600 block">
                     EXPERIENCE
@@ -558,7 +572,7 @@
         <div id="tab-content-exp" class="divide-y divide-paper-300 border-y border-paper-300 transition-opacity duration-300">
             @if ($user->experiences && $user->experiences->count() > 0)
                 @foreach ($user->experiences as $exp)
-                    <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200 group">
+                    <div class="py-5 sm:py-8 px-3 sm:px-4 rounded-2xl hover:bg-white/80 hover:shadow-xs transition-all duration-300 group reveal-on-scroll">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-6">
                             <!-- Period / Year -->
                             <div class="w-full sm:w-44 lg:w-48 shrink-0">
@@ -760,7 +774,7 @@
 <section id="projects" class="py-24 md:py-32 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 reveal-on-scroll">
             <div class="space-y-2 max-w-xl">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
                     PORTFOLIO
@@ -790,13 +804,15 @@
                             ? asset('storage/' . $project->image_path) 
                             : ($presetImages[$index % 4]);
                         $yearBadge = 2024 - ($index % 3);
+                        $delays = ['delay-100', 'delay-200', 'delay-150', 'delay-250'];
+                        $delayClass = $delays[$index % 4];
                     @endphp
 
-                    <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-paper-300 shadow-md hover:shadow-2xl transition-all duration-300">
+                    <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] bg-slate-900 border border-paper-300 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 reveal-on-scroll {{ $delayClass }}">
                         <!-- Project Image with Zoom on Hover -->
                         <img src="{{ $imgSrc }}" 
                              alt="{{ $project->title }}" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                             class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700">
 
                         <!-- Dark Bottom Vignette Gradient Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
@@ -946,13 +962,13 @@
     $ghUsername = $user->github_username ?? 'ThoriqMP';
 @endphp
 <section id="activity" class="py-24 md:py-32 bg-[#090D16] text-white relative overflow-hidden border-t border-slate-800">
-    <!-- Ambient Reddish Glow -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-accent-500/10 blur-[140px] rounded-full pointer-events-none z-0"></div>
+    <!-- Ambient Reddish Glow (Breathing Pulse) -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-accent-500/10 blur-[140px] rounded-full pointer-events-none z-0 animate-aura-pulse"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full space-y-12">
         
         <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800/80 pb-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800/80 pb-8 reveal-on-scroll">
             <div class="space-y-2 max-w-xl">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 border border-accent-500/30 text-accent-400 text-xs font-bold uppercase tracking-wider">
                     <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
@@ -968,17 +984,17 @@
             </p>
         </div>
 
-        <!-- Main GitHub Console Card (Matching Screenshot Dark Aesthetic) -->
-        <div class="bg-[#0D1117] border border-[#30363D] rounded-3xl p-5 sm:p-7 md:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-8">
+        <!-- Main GitHub Console Card (Matching Screenshot Dark Aesthetic with Reveal Scale Animation) -->
+        <div class="bg-[#0D1117] border border-[#30363D] rounded-3xl p-5 sm:p-7 md:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-8 reveal-scale">
             
             <!-- Top Profile Strip -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#21262D]">
                 <div class="flex items-center gap-4">
-                    <div class="relative shrink-0">
+                    <div class="relative shrink-0 group">
                         <img id="gh-avatar" 
                              src="https://github.com/{{ $ghUsername }}.png" 
                              alt="{{ $ghUsername }}" 
-                             class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#30363D] bg-slate-800 object-cover shadow-md">
+                             class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#30363D] group-hover:border-accent-500 bg-slate-800 object-cover shadow-md transition-all duration-300 group-hover:scale-105">
                         <span class="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#0D1117]" title="Active Status"></span>
                     </div>
                     <div>
@@ -1012,22 +1028,26 @@
                 <a href="https://github.com/{{ $ghUsername }}" 
                    target="_blank" 
                    rel="noopener noreferrer" 
-                   class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#21262D] hover:bg-accent-500 hover:text-white text-slate-200 text-xs font-bold border border-[#30363D] hover:border-accent-400 transition-all shadow-sm active:scale-95 shrink-0">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                   class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#21262D] hover:bg-accent-500 hover:text-white text-slate-200 text-xs font-bold border border-[#30363D] hover:border-accent-400 hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-sm shrink-0 group">
+                    <svg class="w-4 h-4 fill-current transition-transform group-hover:rotate-12" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
                     </svg>
                     Buka Profil GitHub
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
                 </a>
             </div>
 
             <!-- Heatmap Contribution Calendar Box -->
-            <div class="space-y-4">
+            <div class="space-y-4 reveal-on-scroll delay-100">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
-                        <span id="gh-total-commits" class="text-base sm:text-lg font-bold text-white">
+                        <span id="gh-total-commits" 
+                              class="text-base sm:text-lg font-bold text-white tracking-tight"
+                              data-counter-target="1812" 
+                              data-counter-comma="true" 
+                              data-counter-suffix=" kontribusi">
                             1,812 kontribusi
                         </span>
                         <span class="text-xs text-slate-400 font-normal">
@@ -1048,12 +1068,12 @@
                 </div>
 
                 <!-- Live Dynamic Heatmap SVG Container -->
-                <div class="w-full bg-[#161B22] border border-[#30363D] rounded-2xl p-4 sm:p-5 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700">
+                <div class="w-full bg-[#161B22] border border-[#30363D] hover:border-slate-600 rounded-2xl p-4 sm:p-5 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700 transition-colors">
                     <div class="min-w-[720px] flex justify-center py-2">
                         <img id="gh-heatmap-img" 
                              src="https://ghchart.rshah.org/FF4D2D/{{ $ghUsername }}" 
                              alt="Kalender Kontribusi GitHub {{ $ghUsername }}" 
-                             class="w-full h-auto filter drop-shadow-md select-none"
+                             class="w-full h-auto filter drop-shadow-md select-none transition-transform duration-500 hover:scale-[1.01]"
                              loading="lazy">
                     </div>
                 </div>
@@ -1069,10 +1089,10 @@
 
                     <div id="gh-repos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <!-- Repo 1: Says-app -->
-                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/80 hover:shadow-[0_8px_25px_rgba(255,77,45,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-2 group/repo reveal-on-scroll delay-100">
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <a href="https://github.com/{{ $ghUsername }}/Says-app" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                    <a href="https://github.com/{{ $ghUsername }}/Says-app" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 group-hover/repo:text-accent-300 hover:underline truncate">
                                         Says-app
                                     </a>
                                     <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
@@ -1092,10 +1112,10 @@
                         </div>
 
                         <!-- Repo 2: screen-cast -->
-                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/80 hover:shadow-[0_8px_25px_rgba(255,77,45,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-2 group/repo reveal-on-scroll delay-150">
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <a href="https://github.com/{{ $ghUsername }}/screen-cast" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                    <a href="https://github.com/{{ $ghUsername }}/screen-cast" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 group-hover/repo:text-accent-300 hover:underline truncate">
                                         screen-cast
                                     </a>
                                     <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
@@ -1115,10 +1135,10 @@
                         </div>
 
                         <!-- Repo 3: mind-metric -->
-                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/80 hover:shadow-[0_8px_25px_rgba(255,77,45,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-2 group/repo reveal-on-scroll delay-200">
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <a href="https://github.com/{{ $ghUsername }}/mind-metric" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                    <a href="https://github.com/{{ $ghUsername }}/mind-metric" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 group-hover/repo:text-accent-300 hover:underline truncate">
                                         mind-metric
                                     </a>
                                     <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
@@ -1138,10 +1158,10 @@
                         </div>
 
                         <!-- Repo 4: suratrahasia -->
-                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/50 transition-colors flex flex-col justify-between space-y-2">
+                        <div class="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-accent-500/80 hover:shadow-[0_8px_25px_rgba(255,77,45,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-2 group/repo reveal-on-scroll delay-250">
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <a href="https://github.com/{{ $ghUsername }}/suratrahasia" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 hover:underline truncate">
+                                    <a href="https://github.com/{{ $ghUsername }}/suratrahasia" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-accent-400 group-hover/repo:text-accent-300 hover:underline truncate">
                                         suratrahasia
                                     </a>
                                     <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
@@ -1162,29 +1182,41 @@
                     </div>
                 </div>
 
-                <!-- Right: Activity Radar & Focus (matching screenshot) -->
+                <!-- Right: Activity Radar & Focus (matching screenshot with animated scanning sonar beam) -->
                 <div class="lg:col-span-5 space-y-3">
                     <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">
                         Overview Aktivitas &amp; Rasio Kode
                     </span>
 
-                    <div class="p-4 sm:p-5 rounded-xl bg-[#161B22] border border-[#30363D] h-[calc(100%-1.75rem)] flex flex-col justify-between space-y-4">
-                        <!-- Cross / Radar Visual -->
-                        <div class="relative w-full aspect-[2/1] min-h-[120px] flex items-center justify-center">
+                    <div class="p-4 sm:p-5 rounded-xl bg-[#161B22] border border-[#30363D] h-[calc(100%-1.75rem)] flex flex-col justify-between space-y-4 reveal-on-scroll delay-200">
+                        <!-- Cross / Radar Visual with Rotating Scan Beam & Sonar Beacon -->
+                        <div class="relative w-full aspect-[2/1] min-h-[140px] flex items-center justify-center overflow-hidden rounded-xl bg-[#0B0F17]">
+                            <!-- Concentric Radar Range Rings -->
+                            <div class="absolute w-24 h-24 rounded-full border border-slate-800/80 pointer-events-none"></div>
+                            <div class="absolute w-44 h-44 rounded-full border border-slate-800/40 pointer-events-none"></div>
+
+                            <!-- Rotating Radar Scanner Sweep Beam -->
+                            <div class="absolute w-44 h-44 rounded-full pointer-events-none animate-radar-sweep opacity-70"
+                                 style="background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(255, 77, 45, 0.22) 360deg);"></div>
+
                             <!-- Horizontal Axis -->
-                            <div class="absolute inset-x-8 top-1/2 h-[1px] bg-slate-700"></div>
+                            <div class="absolute inset-x-8 top-1/2 h-[1px] bg-slate-700/80"></div>
                             <!-- Vertical Axis -->
-                            <div class="absolute inset-y-4 left-1/2 w-[1px] bg-slate-700"></div>
+                            <div class="absolute inset-y-4 left-1/2 w-[1px] bg-slate-700/80"></div>
 
                             <!-- Labels -->
-                            <span class="absolute top-1 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-400 uppercase">Code Review</span>
-                            <span class="absolute bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-400 uppercase">Pull Requests</span>
-                            <span class="absolute left-1 top-1/2 -translate-y-1/2 text-[9px] font-bold text-accent-400 uppercase text-right leading-none">100%<br>Commits</span>
-                            <span class="absolute right-1 top-1/2 -translate-y-1/2 text-[9px] font-bold text-slate-400 uppercase">Issues</span>
+                            <span class="absolute top-1.5 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Code Review</span>
+                            <span class="absolute bottom-1.5 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Pull Requests</span>
+                            <span class="absolute left-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-accent-400 uppercase text-right leading-tight">100%<br>Commits</span>
+                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Issues</span>
 
-                            <!-- Active Commits Indicator Node -->
-                            <div class="absolute left-1/4 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                                <span class="w-3 h-3 rounded-full bg-accent-500 shadow-[0_0_12px_#FF4D2D] block animate-pulse"></span>
+                            <!-- Active Commits Indicator Node with Sonar Ripples -->
+                            <div class="absolute left-1/4 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                                <!-- Sonar expanding ripple waves -->
+                                <span class="absolute w-8 h-8 rounded-full bg-accent-500/20 animate-sonar pointer-events-none"></span>
+                                <span class="absolute w-4 h-4 rounded-full bg-accent-500/40 animate-ping pointer-events-none"></span>
+                                <!-- Glowing core beacon dot -->
+                                <span class="relative w-3.5 h-3.5 rounded-full bg-accent-500 shadow-[0_0_14px_#FF4D2D] border border-white/60 block"></span>
                             </div>
                         </div>
 
@@ -1238,7 +1270,7 @@
 <section id="testimonials" class="py-24 md:py-32 bg-paper-100 border-t border-paper-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 reveal-on-scroll">
             <div class="space-y-2 max-w-xl">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent-500 block">
                     TESTIMONIALS
@@ -1265,7 +1297,7 @@
 
         @if (isset($testimonials) && $testimonials->count() > 0)
             <!-- Interactive Testimonial Card Component (Only Rendered When Real Testimonials Exist) -->
-            <div class="bg-white rounded-3xl border border-paper-300 p-8 sm:p-12 md:p-16 shadow-[0_10px_30px_rgba(0,0,0,0.03)] relative mb-8">
+            <div class="bg-white rounded-3xl border border-paper-300 p-8 sm:p-12 md:p-16 shadow-[0_10px_30px_rgba(0,0,0,0.03)] relative mb-8 reveal-scale">
                 <!-- Accent Quote Mark Icon -->
                 <div class="text-accent-500 text-6xl font-serif font-black leading-none mb-6 select-none">
                     &ldquo;
@@ -1407,11 +1439,11 @@
 <!-- Call to Action Banner ("Let's Build Something Truly Meaningful Together" with Warm Paper Texture) -->
 <section class="py-20 md:py-28 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative bg-paper-warm rounded-3xl border border-paper-300 shadow-[0_15px_40px_rgba(45,35,25,0.06)] overflow-hidden">
+        <div class="relative bg-paper-warm rounded-3xl border border-paper-300 shadow-[0_15px_40px_rgba(45,35,25,0.06)] overflow-hidden reveal-scale hover:shadow-2xl transition-all duration-500">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-12 md:p-16">
                 
                 <!-- Left Banner Copy -->
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10 min-w-0">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10 min-w-0 reveal-left">
                     <h2 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
                         Let's Build Something Truly<br>
                         <span class="italic font-bold text-accent-500">Meaningful Together</span>
@@ -1432,16 +1464,16 @@
                 </div>
 
                 <!-- Right Banner Cutout Image -->
-                <div class="lg:col-span-5 flex justify-center lg:justify-end z-10">
-                    <div class="relative w-60 h-68 sm:w-72 sm:h-80 md:w-80 md:h-96 max-w-full overflow-hidden rounded-2xl">
+                <div class="lg:col-span-5 flex justify-center lg:justify-end z-10 reveal-right delay-100">
+                    <div class="relative w-60 h-68 sm:w-72 sm:h-80 md:w-80 md:h-96 max-w-full overflow-hidden rounded-2xl group">
                         @if ($user->cta_image_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->cta_image_path))
                             <img src="{{ asset('storage/' . $user->cta_image_path) }}" 
                                  alt="Let's build together" 
-                                 class="w-full h-full object-cover object-top drop-shadow-xl">
+                                 class="w-full h-full object-cover object-top drop-shadow-xl group-hover:scale-105 transition-transform duration-700">
                         @else
                             <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" 
                                  alt="Let's build together" 
-                                 class="w-full h-full object-cover object-top drop-shadow-xl">
+                                 class="w-full h-full object-cover object-top drop-shadow-xl group-hover:scale-105 transition-transform duration-700">
                         @endif
                     </div>
                 </div>

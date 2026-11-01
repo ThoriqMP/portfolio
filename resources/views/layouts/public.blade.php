@@ -100,12 +100,12 @@
             background-color: #FFFFFF;
             border: 1px solid rgba(226, 232, 240, 0.85);
             border-radius: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modern-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
-            border-color: rgba(255, 77, 45, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1), 0 0 25px -5px rgba(255, 77, 45, 0.12);
+            border-color: rgba(255, 77, 45, 0.4);
         }
 
         /* Organic paper card */
@@ -114,12 +114,367 @@
             border: 1px solid #E8E3D8;
             border-radius: 1.5rem;
             box-shadow: 0 4px 18px -2px rgba(45, 35, 25, 0.04);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .paper-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 28px -4px rgba(45, 35, 25, 0.08);
-            border-color: rgba(255, 77, 45, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px -4px rgba(45, 35, 25, 0.09), 0 0 20px -3px rgba(255, 77, 45, 0.1);
+            border-color: rgba(255, 77, 45, 0.4);
+        }
+
+        /* ======================================================== */
+        /* LUXURY ANIMATIONS & MICRO-INTERACTIONS                   */
+        /* ======================================================== */
+
+        /* Floating levitation for Hero Glass Card */
+        @keyframes floatLevitate {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(0.4deg);
+            }
+        }
+        .animate-float-levitate {
+            animation: floatLevitate 5.5s ease-in-out infinite;
+        }
+
+        /* Ambient breathing aura glow */
+        @keyframes auraPulse {
+            0%, 100% {
+                opacity: 0.12;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.22;
+                transform: scale(1.08);
+            }
+        }
+        .animate-aura-pulse {
+            animation: auraPulse 7s ease-in-out infinite;
+        }
+
+        /* GitHub Radar beam sweep */
+        @keyframes radarSweep {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .animate-radar-sweep {
+            animation: radarSweep 5s linear infinite;
+            transform-origin: center center;
+        }
+
+        /* Sonar radar ping beacon */
+        @keyframes sonarPing {
+            0% {
+                transform: scale(0.85);
+                opacity: 0.9;
+            }
+            70% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(3.2);
+                opacity: 0;
+            }
+        }
+        .animate-sonar {
+            animation: sonarPing 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        /* Scroll Reveal Utility Classes (GPU accelerated) */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translate3d(0, 32px, 0);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-on-scroll.revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translate3d(-36px, 0, 0);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-left.revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translate3d(36px, 0, 0);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-right.revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.93);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal-scale.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Stagger Delays for Transitions & Animations */
+        .delay-50 { animation-delay: 50ms; transition-delay: 50ms; }
+        .delay-75 { animation-delay: 75ms; transition-delay: 75ms; }
+        .delay-100 { animation-delay: 100ms; transition-delay: 100ms; }
+        .delay-150 { animation-delay: 150ms; transition-delay: 150ms; }
+        .delay-200 { animation-delay: 200ms; transition-delay: 200ms; }
+        .delay-250 { animation-delay: 250ms; transition-delay: 250ms; }
+        .delay-300 { animation-delay: 300ms; transition-delay: 300ms; }
+        .delay-350 { animation-delay: 350ms; transition-delay: 350ms; }
+        .delay-400 { animation-delay: 400ms; transition-delay: 400ms; }
+        .delay-450 { animation-delay: 450ms; transition-delay: 450ms; }
+        .delay-500 { animation-delay: 500ms; transition-delay: 500ms; }
+        .delay-600 { animation-delay: 600ms; transition-delay: 600ms; }
+        .delay-700 { animation-delay: 700ms; transition-delay: 700ms; }
+
+        /* ======================================================== */
+        /* HERO MORPH-IN ENTRANCE SUITE (PAGE LOAD CHOREOGRAPHY)    */
+        /* ======================================================== */
+
+        /* 1. Left Hero Column: Morphs in with elastic slide, blur fade & scale */
+        @keyframes heroMorphLeft {
+            0% {
+                opacity: 0;
+                transform: translate3d(-48px, 24px, 0) scale(0.92);
+                filter: blur(12px);
+            }
+            55% {
+                filter: blur(0);
+            }
+            85% {
+                transform: translate3d(4px, -2px, 0) scale(1.01);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: blur(0);
+            }
+        }
+        .animate-morph-left {
+            animation: heroMorphLeft 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* 2. Middle Portrait Cutout: Morphs from organic capsule with blur into sharp card */
+        @keyframes heroMorphPortrait {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 50px, 0) scale(0.85);
+                border-radius: 4rem;
+                filter: blur(16px) contrast(1.1);
+            }
+            55% {
+                filter: blur(0) contrast(1.02);
+            }
+            80% {
+                transform: translate3d(0, -6px, 0) scale(1.02);
+                border-radius: 2rem;
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                border-radius: 1.5rem;
+                filter: blur(0) contrast(1);
+            }
+        }
+        .animate-morph-portrait {
+            animation: heroMorphPortrait 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+        }
+
+        /* 3. Glassmorphism Tools Card: Dramatic Morph from frosted capsule with sheen sweep */
+        @keyframes heroMorphGlass {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 55px, 0) scale(0.78);
+                border-radius: 9999px;
+                filter: blur(14px) brightness(1.2);
+                box-shadow: 0 0 0 rgba(255, 77, 45, 0);
+            }
+            50% {
+                filter: blur(0);
+            }
+            75% {
+                transform: translate3d(0, -8px, 0) scale(1.04);
+                border-radius: 2.2rem;
+                box-shadow: 0 20px 45px rgba(255, 77, 45, 0.22);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                border-radius: 1.5rem;
+                filter: blur(0) brightness(1);
+                box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+            }
+        }
+        .animate-morph-glass {
+            animation: heroMorphGlass 1.25s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+
+        /* 4. Individual Tool Icons: Staggered Morph Pop */
+        @keyframes heroMorphTool {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(14px);
+                filter: blur(4px);
+            }
+            70% {
+                transform: scale(1.18) translateY(-2px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+        .animate-morph-tool {
+            animation: heroMorphTool 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        /* 5. Right Hero Column: Morphs in with elastic slide from right */
+        @keyframes heroMorphRight {
+            0% {
+                opacity: 0;
+                transform: translate3d(48px, 24px, 0) scale(0.92);
+                filter: blur(12px);
+            }
+            55% {
+                filter: blur(0);
+            }
+            85% {
+                transform: translate3d(-4px, -2px, 0) scale(1.01);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: blur(0);
+            }
+        }
+        .animate-morph-right {
+            animation: heroMorphRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+        }
+
+        /* 6. Title Pill & Badge Elastic Morph Pop */
+        @keyframes heroMorphPill {
+            0% {
+                opacity: 0;
+                transform: scale(0.65) rotate(-3deg);
+                filter: blur(8px);
+            }
+            65% {
+                transform: scale(1.08) rotate(1deg);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                filter: blur(0);
+            }
+        }
+        .animate-morph-pill {
+            animation: heroMorphPill 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.28s both;
+        }
+
+        /* 7. Social Pills Cascade Morph */
+        @keyframes heroMorphSocial {
+            0% {
+                opacity: 0;
+                transform: scale(0.35) rotate(-15deg);
+            }
+            75% {
+                transform: scale(1.22) rotate(4deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        .animate-morph-social {
+            animation: heroMorphSocial 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        /* 8. Specular Light Ray Sheen Sweep across Card */
+        @keyframes morphShimmerWipe {
+            0% {
+                transform: translateX(-150%) skewX(-25deg);
+                opacity: 0;
+            }
+            35% {
+                opacity: 0.75;
+            }
+            100% {
+                transform: translateX(250%) skewX(-25deg);
+                opacity: 0;
+            }
+        }
+        .morph-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .morph-shimmer::after {
+            content: '';
+            position: absolute;
+            inset: -50% -100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
+            pointer-events-none;
+            animation: morphShimmerWipe 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+        }
+
+        /* 9. Background Aura Bloom */
+        @keyframes heroAuraBloom {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -20%) scale(0.35);
+            }
+            50% {
+                opacity: 0.28;
+                transform: translate(-50%, 0) scale(1.15);
+            }
+            100% {
+                opacity: 0.15;
+                transform: translate(-50%, 0) scale(1);
+            }
+        }
+        .animate-aura-bloom {
+            animation: heroAuraBloom 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* Card interactive lift & glow */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.12);
+        }
+
+        /* Respect Reduced Motion Preferences */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-on-scroll, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            .animate-float-levitate, .animate-radar-sweep, .animate-sonar, .animate-aura-pulse {
+                animation: none !important;
+            }
         }
 
         /* Section scroll offset for fixed pill navbar */
@@ -255,9 +610,10 @@
         </div>
     </footer>
 
-    <!-- Scripts for Navigation, Scrollspy & Mobile Menu -->
+    <!-- Scripts for Navigation, Scrollspy, Animations & Counters -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. Mobile Menu Handling
             const menuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const iconOpen = document.getElementById('menu-icon-open');
@@ -286,16 +642,32 @@
                 });
             }
 
+            // 2. Scrollspy Active Link Highlighting & Navbar Dynamic Style
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-item');
+            const mainHeader = document.getElementById('main-header');
 
-            function highlightNavOnScroll() {
-                const scrollPos = window.scrollY + 200;
+            function handleScroll() {
+                const scrollPos = window.scrollY;
+
+                // Subtle header elevation
+                if (mainHeader) {
+                    if (scrollPos > 30) {
+                        mainHeader.classList.add('top-2', 'sm:top-3');
+                        mainHeader.classList.remove('top-3', 'sm:top-4');
+                    } else {
+                        mainHeader.classList.add('top-3', 'sm:top-4');
+                        mainHeader.classList.remove('top-2', 'sm:top-3');
+                    }
+                }
+
+                // Active section detection
+                const navCheckPos = scrollPos + 220;
                 sections.forEach(section => {
                     const top = section.offsetTop;
                     const height = section.offsetHeight;
                     const id = section.getAttribute('id');
-                    if (scrollPos >= top && scrollPos < top + height) {
+                    if (navCheckPos >= top && navCheckPos < top + height) {
                         navLinks.forEach(link => {
                             if (link.getAttribute('href').endsWith('#' + id)) {
                                 link.classList.add('text-accent-500', 'font-semibold');
@@ -309,8 +681,73 @@
                 });
             }
 
-            window.addEventListener('scroll', highlightNavOnScroll);
-            highlightNavOnScroll();
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            handleScroll();
+
+            // 3. High Performance Scroll Reveal via IntersectionObserver
+            const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-left, .reveal-right, .reveal-scale');
+            if ('IntersectionObserver' in window && revealElements.length > 0) {
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    root: null,
+                    threshold: 0.12,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                revealElements.forEach(el => revealObserver.observe(el));
+            } else {
+                // Fallback for older browsers
+                revealElements.forEach(el => el.classList.add('revealed'));
+            }
+
+            // 4. Animated Number Counter Ticker (CountUp with easeOutExpo)
+            const counterElements = document.querySelectorAll('[data-counter-target]');
+            if ('IntersectionObserver' in window && counterElements.length > 0) {
+                const counterObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const el = entry.target;
+                            const target = parseFloat(el.getAttribute('data-counter-target'));
+                            const suffix = el.getAttribute('data-counter-suffix') || '';
+                            const prefix = el.getAttribute('data-counter-prefix') || '';
+                            const duration = parseInt(el.getAttribute('data-counter-duration') || '1600', 10);
+                            const hasComma = el.getAttribute('data-counter-comma') === 'true';
+
+                            if (!isNaN(target)) {
+                                const startTime = performance.now();
+                                function updateCounter(currentTime) {
+                                    const elapsed = currentTime - startTime;
+                                    const progress = Math.min(elapsed / duration, 1);
+                                    // Smooth easeOutExpo curve
+                                    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                                    const currentVal = Math.floor(ease * target);
+                                    const formatted = hasComma ? currentVal.toLocaleString('id-ID') : currentVal;
+                                    el.textContent = prefix + formatted + suffix;
+
+                                    if (progress < 1) {
+                                        requestAnimationFrame(updateCounter);
+                                    } else {
+                                        const finalFormatted = hasComma ? target.toLocaleString('id-ID') : target;
+                                        el.textContent = prefix + finalFormatted + suffix;
+                                    }
+                                }
+                                requestAnimationFrame(updateCounter);
+                            }
+                            observer.unobserve(el);
+                        }
+                    });
+                }, {
+                    threshold: 0.25
+                });
+
+                counterElements.forEach(el => counterObserver.observe(el));
+            }
         });
     </script>
 </body>
