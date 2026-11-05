@@ -37,38 +37,178 @@
         </div>
 
         <!-- ======================================================== -->
-        <!-- 1. FOTO THUMBNAIL UTAMA PROYEK (BAGIAN ATAS)             -->
+        <!-- FOTO UTAMA & CAROUSEL MINI (SHOWCASE MEDIA PROYEK)      -->
         <!-- ======================================================== -->
+        @php
+            $carouselSlides = $slides ?? $project->carousel_slides;
+            $allGalleryItems = collect();
+
+            // Check if thumbnail_url is already in carouselSlides
+            $hasCoverInSlides = $carouselSlides->contains(function ($slide) use ($project) {
+                return ($slide['url'] ?? '') === $project->thumbnail_url || !empty($slide['is_cover']);
+            });
+
+            if (!$hasCoverInSlides && !empty($project->thumbnail_url)) {
+                $allGalleryItems->push([
+                    'url' => $project->thumbnail_url,
+                    'badge' => 'Cover Proyek',
+                    'title' => 'Cover Utama Proyek',
+                    'is_cover' => true,
+                ]);
+            }
+
+            foreach ($carouselSlides as $idx => $slide) {
+                $isCover = !empty($slide['is_cover']) || ($slide['url'] === $project->thumbnail_url && $allGalleryItems->isEmpty());
+                $allGalleryItems->push([
+                    'url' => $slide['url'],
+                    'badge' => $isCover ? 'Cover Proyek' : 'Dokumentasi ' . ($allGalleryItems->count() + 1),
+                    'title' => $isCover ? 'Cover Proyek' : 'Dokumentasi Proyek #' . ($allGalleryItems->count() + 1),
+                    'is_cover' => $isCover,
+                ]);
+            }
+
+            if ($allGalleryItems->isEmpty()) {
+                $allGalleryItems->push([
+                    'url' => $project->thumbnail_url,
+                    'badge' => 'Cover Proyek',
+                    'title' => 'Cover Utama Proyek',
+                    'is_cover' => true,
+                ]);
+            }
+
+            $firstItem = $allGalleryItems->first();
+        @endphp
+
         <div class="space-y-3">
             <div class="flex items-center justify-between px-1">
                 <span class="text-xs font-extrabold uppercase tracking-widest text-slate-500">
-                    // FOTO THUMBNAIL UTAMA
+                    // FOTO &amp; DOKUMENTASI PROYEK
                 </span>
-                <span class="text-[11px] font-semibold text-accent-600 bg-accent-50 px-3 py-0.5 rounded-full border border-accent-200">
-                    Cover Proyek
-                </span>
+                <div class="flex items-center gap-2">
+                    @if ($allGalleryItems->count() > 1)
+                        <span class="text-[11px] font-semibold text-slate-500 hidden sm:inline-block">
+                            {{ $allGalleryItems->count() }} Foto Galeri
+                        </span>
+                    @endif
+                    <span id="active-badge-indicator" class="text-[11px] font-bold text-accent-600 bg-accent-50 px-3 py-0.5 rounded-full border border-accent-200 transition-all">
+                        {{ $firstItem['badge'] }}
+                    </span>
+                </div>
             </div>
 
-            <div class="paper-card p-3 sm:p-4 bg-white overflow-hidden relative">
-                <div class="relative w-full h-[40vh] sm:h-[55vh] md:h-[65vh] min-h-[300px] bg-slate-950 rounded-2xl overflow-hidden select-none group">
-                    <img src="{{ $project->thumbnail_url }}" 
-                         alt="{{ $project->title }} - Thumbnail Utama" 
-                         class="w-full h-full object-cover md:object-cover cursor-zoom-in transition-transform duration-700 hover:scale-102"
-                         onclick="openZoomModal('{{ $project->thumbnail_url }}')">
+            <!-- Paper Card Container -->
+            <div class="paper-card p-3 sm:p-4 bg-white overflow-hidden relative space-y-3 sm:space-y-4">
+                
+                <!-- Main Large Display Frame -->
+                <div id="project-main-display" class="relative w-full h-[38vh] sm:h-[50vh] md:h-[62vh] min-h-[300px] max-h-[720px] bg-slate-950 rounded-2xl overflow-hidden select-none group flex items-center justify-center">
+                    
+                    <!-- Main Display Image with Smooth Fade Transition -->
+                    <img id="main-display-img"
+                         src="{{ $firstItem['url'] }}" 
+                         alt="{{ $project->title }}" 
+                         class="w-full h-full object-contain md:object-cover transition-opacity duration-300 cursor-zoom-in"
+                         onclick="openActiveZoom()">
                     
                     <!-- Vignette Overlay -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none"></div>
 
+                    <!-- Top Left: Current Slide Pill -->
+                    <div class="absolute top-4 left-4 z-20 flex items-center gap-2">
+                        <span id="main-slide-badge" class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white text-[11px] sm:text-xs font-bold tracking-wide shadow-sm">
+                            {{ $firstItem['badge'] }}
+                        </span>
+                    </div>
+
+                    <!-- Top Right: Slide Counter (if > 1 items) -->
+                    @if ($allGalleryItems->count() > 1)
+                        <div class="absolute top-4 right-4 z-20 bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span id="slide-counter-current">1</span>
+                            <span class="text-white/50">/</span>
+                            <span>{{ $allGalleryItems->count() }}</span>
+                        </div>
+                    @endif
+
                     <!-- Bottom Right: Click to Zoom CTA -->
                     <button type="button" 
-                            onclick="openZoomModal('{{ $project->thumbnail_url }}')"
-                            class="absolute bottom-4 right-4 z-20 bg-black/60 hover:bg-black/85 backdrop-blur-md text-white text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer">
+                            onclick="openActiveZoom()"
+                            class="absolute bottom-4 right-4 z-20 bg-black/60 hover:bg-black/85 backdrop-blur-md text-white text-xs font-semibold px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full flex items-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer border border-white/10">
                         <svg class="w-3.5 h-3.5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
                         </svg>
-                        <span>Perbesar Thumbnail (+)</span>
+                        <span>Perbesar Foto (+)</span>
                     </button>
+
+                    <!-- Navigation Arrows (If > 1 items) -->
+                    @if ($allGalleryItems->count() > 1)
+                        <button type="button" 
+                                id="showcase-prev-btn" 
+                                class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-accent-500 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 shadow-xl opacity-90 sm:opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+                                aria-label="Foto Sebelumnya">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+
+                        <button type="button" 
+                                id="showcase-next-btn" 
+                                class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-accent-500 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 shadow-xl opacity-90 sm:opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+                                aria-label="Foto Selanjutnya">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    @endif
                 </div>
+
+                <!-- Compact Carousel Strip Directly Underneath Main Photo -->
+                @if ($allGalleryItems->count() > 1)
+                    <div class="pt-2 sm:pt-3 border-t border-paper-200">
+                        <div class="flex items-center justify-between mb-2 px-1">
+                            <div class="flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                </svg>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-700">
+                                    Carousel Foto &amp; Dokumentasi
+                                </span>
+                            </div>
+                            <span class="text-[10px] sm:text-[11px] font-medium text-slate-400">
+                                Klik thumbnail untuk menampilkan foto di atas
+                            </span>
+                        </div>
+
+                        <!-- Horizontal scrollable strip of small cards -->
+                        <div class="relative flex items-center">
+                            <div id="carousel-strip" class="flex items-center gap-2.5 overflow-x-auto py-1 px-0.5 scrollbar-thin scrollbar-thumb-slate-300 w-full scroll-smooth">
+                                @foreach ($allGalleryItems as $idx => $item)
+                                    <button type="button"
+                                            class="carousel-thumb relative shrink-0 w-20 h-13 sm:w-24 sm:h-16 md:w-28 md:h-18 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer group/thumb {{ $idx === 0 ? 'border-accent-500 ring-2 ring-accent-500/40 opacity-100 scale-102 shadow-xs' : 'border-paper-300 opacity-60 hover:opacity-100 hover:border-slate-400' }}"
+                                            data-thumb-index="{{ $idx }}"
+                                            title="{{ $item['title'] }}"
+                                            aria-label="{{ $item['title'] }}">
+                                        <img src="{{ $item['url'] }}" 
+                                             alt="{{ $item['title'] }}" 
+                                             class="w-full h-full object-cover">
+                                        
+                                        @if($item['is_cover'])
+                                            <div class="absolute bottom-0 inset-x-0 bg-accent-500/90 text-white text-[9px] font-bold uppercase py-0.5 text-center leading-none tracking-wider">
+                                                Cover
+                                            </div>
+                                        @else
+                                            <div class="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-xs text-white text-[9px] font-bold py-0.5 text-center leading-none">
+                                                #{{ $idx + 1 }}
+                                            </div>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
             </div>
         </div>
 
@@ -123,141 +263,6 @@
             </div>
         </div>
 
-        <!-- ======================================================== -->
-        <!-- 2. FOTO CAROUSEL PROYEK (DETAIL PROJECT SLIDER)         -->
-        <!-- ======================================================== -->
-        @php
-            $carouselSlides = $slides ?? $project->carousel_slides;
-        @endphp
-
-        @if ($carouselSlides->isNotEmpty())
-            <div class="pt-10 border-t border-paper-300 space-y-6">
-                <!-- Carousel Header -->
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                    <div class="space-y-1">
-                        <span class="text-xs font-extrabold uppercase tracking-widest text-accent-500 block">
-                            // 2. GALERI CAROUSEL PROYEK
-                        </span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                            Dokumentasi &amp; Tampilan Fitur
-                        </h2>
-                    </div>
-                    <span class="text-xs font-semibold text-slate-500">
-                        {{ $carouselSlides->count() }} Foto Dokumentasi &bull; Geser atau klik thumbnail
-                    </span>
-                </div>
-
-                <!-- Carousel Main Box -->
-                <div class="paper-card p-3 sm:p-4 bg-white overflow-hidden relative">
-                    <div id="project-carousel" class="relative w-full h-[45vh] sm:h-[60vh] md:h-[68vh] min-h-[320px] bg-slate-950 rounded-2xl overflow-hidden select-none group">
-                        
-                        <!-- Slides Track -->
-                        <div id="carousel-track" class="relative w-full h-full">
-                            @foreach ($carouselSlides as $idx => $slide)
-                                <div class="carousel-slide absolute inset-0 w-full h-full flex items-center justify-center transition-all duration-500 ease-out {{ $idx === 0 ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-98 pointer-events-none' }}"
-                                     data-slide-index="{{ $idx }}"
-                                     data-slide-url="{{ $slide['url'] }}">
-                                    <img src="{{ $slide['url'] }}" 
-                                         alt="{{ $project->title }} - Slide {{ $idx + 1 }}" 
-                                         class="w-full h-full object-contain md:object-cover cursor-zoom-in transition-transform duration-700 hover:scale-101"
-                                         onclick="openZoomModal('{{ $slide['url'] }}')">
-                                    
-                                    <!-- Vignette Overlay -->
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none"></div>
-
-                                    <div class="absolute top-4 left-4 z-20">
-                                        <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm">
-                                            Slide {{ $idx + 1 }}
-                                        </span>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <!-- Top Right: Slide Counter Badge -->
-                        @if ($carouselSlides->count() > 1)
-                            <div class="absolute top-4 right-4 z-20 bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
-                                <svg class="w-3.5 h-3.5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <span id="slide-counter-current">1</span>
-                                <span class="text-white/50">/</span>
-                                <span>{{ $carouselSlides->count() }}</span>
-                            </div>
-                        @endif
-
-                        <!-- Bottom Right: Click to Zoom CTA -->
-                        <button type="button" 
-                                onclick="openCurrentSlideZoom()"
-                                class="absolute bottom-4 right-4 z-20 bg-black/60 hover:bg-black/85 backdrop-blur-md text-white text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 transition-all shadow-sm active:scale-95 cursor-pointer">
-                            <svg class="w-3.5 h-3.5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                            </svg>
-                            <span>Perbesar (+)</span>
-                        </button>
-
-                        <!-- Next & Previous Arrows (If multiple slides) -->
-                        @if ($carouselSlides->count() > 1)
-                            <button type="button" 
-                                    id="carousel-prev-btn" 
-                                    class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-accent-500 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 shadow-xl opacity-90 sm:opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
-                                    aria-label="Foto Sebelumnya">
-                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-
-                            <button type="button" 
-                                    id="carousel-next-btn" 
-                                    class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-accent-500 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 shadow-xl opacity-90 sm:opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
-                                    aria-label="Foto Selanjutnya">
-                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-
-                            <!-- Bottom Center: Indicator Dots -->
-                            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10">
-                                @foreach ($carouselSlides as $idx => $slide)
-                                    <button type="button" 
-                                            class="carousel-dot h-2 rounded-full transition-all duration-300 cursor-pointer {{ $idx === 0 ? 'w-6 bg-accent-500' : 'w-2 bg-white/50 hover:bg-white' }}"
-                                            data-dot-index="{{ $idx }}"
-                                            aria-label="Menuju foto {{ $idx + 1 }}"></button>
-                                @endforeach
-                            </div>
-                        @endif
-
-                    </div>
-
-                    <!-- Underneath Thumbnail Strip (Filmstrip) for Multiple Photos -->
-                    @if ($carouselSlides->count() > 1)
-                        <div class="pt-3 border-t border-paper-300">
-                            <div class="flex items-center justify-between mb-2 px-1">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                                    Galeri Foto Carousel (Klik untuk memilih)
-                                </span>
-                                <span class="text-[11px] font-medium text-slate-400">
-                                    {{ $carouselSlides->count() }} foto tersedia &bull; Geser atau navigasi panah
-                                </span>
-                            </div>
-
-                            <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300">
-                                @foreach ($carouselSlides as $idx => $slide)
-                                    <button type="button"
-                                            class="carousel-thumb relative shrink-0 w-20 h-14 sm:w-24 sm:h-16 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer {{ $idx === 0 ? 'border-accent-500 ring-2 ring-accent-500/40 scale-102' : 'border-paper-300 opacity-60 hover:opacity-100 hover:border-slate-400' }}"
-                                            data-thumb-index="{{ $idx }}">
-                                        <img src="{{ $slide['url'] }}" 
-                                             alt="Thumbnail {{ $idx + 1 }}" 
-                                             class="w-full h-full object-cover">
-                                    </button>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        @endif
-
         <!-- Bottom Return CTA -->
         <div class="pt-12 text-center space-y-3">
             <div>
@@ -282,104 +287,91 @@
 
 <!-- Carousel & Zoom Script -->
 <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.carousel-dot');
-    const thumbs = document.querySelectorAll('.carousel-thumb');
-    const counterCurrent = document.getElementById('slide-counter-current');
-    const totalSlides = slides.length;
+    // Gallery items data
+    const galleryItems = @json($allGalleryItems->values());
+    let currentIndex = 0;
+    const totalItems = galleryItems.length;
 
-    function goToSlide(index) {
-        if (totalSlides <= 1) return;
-        
+    const mainDisplayImg = document.getElementById('main-display-img');
+    const mainSlideBadge = document.getElementById('main-slide-badge');
+    const activeBadgeIndicator = document.getElementById('active-badge-indicator');
+    const counterCurrent = document.getElementById('slide-counter-current');
+    const thumbs = document.querySelectorAll('.carousel-thumb');
+
+    function updateDisplay(index) {
+        if (!totalItems || !galleryItems[index]) return;
+
         // Wrap around
         if (index < 0) {
-            currentSlide = totalSlides - 1;
-        } else if (index >= totalSlides) {
-            currentSlide = 0;
+            currentIndex = totalItems - 1;
+        } else if (index >= totalItems) {
+            currentIndex = 0;
         } else {
-            currentSlide = index;
+            currentIndex = index;
         }
 
-        // Update slides visibility
-        slides.forEach((slide, i) => {
-            if (i === currentSlide) {
-                slide.classList.remove('opacity-0', 'pointer-events-none', 'z-0', 'scale-98');
-                slide.classList.add('opacity-100', 'z-10', 'scale-100');
-            } else {
-                slide.classList.remove('opacity-100', 'z-10', 'scale-100');
-                slide.classList.add('opacity-0', 'pointer-events-none', 'z-0', 'scale-98');
-            }
-        });
+        const item = galleryItems[currentIndex];
+
+        // Smooth image swap with micro-fade
+        if (mainDisplayImg) {
+            mainDisplayImg.style.opacity = '0.35';
+            setTimeout(() => {
+                mainDisplayImg.src = item.url;
+                mainDisplayImg.alt = item.title || 'Foto Proyek';
+                mainDisplayImg.style.opacity = '1';
+            }, 120);
+        }
+
+        // Update badges
+        if (mainSlideBadge) {
+            mainSlideBadge.textContent = item.badge || 'Foto Proyek';
+        }
+        if (activeBadgeIndicator) {
+            activeBadgeIndicator.textContent = item.badge || 'Foto Proyek';
+        }
 
         // Update counter
         if (counterCurrent) {
-            counterCurrent.textContent = currentSlide + 1;
+            counterCurrent.textContent = currentIndex + 1;
         }
 
-        // Update dots
-        dots.forEach((dot, i) => {
-            if (i === currentSlide) {
-                dot.classList.remove('w-2', 'bg-white/50');
-                dot.classList.add('w-6', 'bg-accent-500');
-            } else {
-                dot.classList.remove('w-6', 'bg-accent-500');
-                dot.classList.add('w-2', 'bg-white/50');
-            }
-        });
-
-        // Update thumbnail active ring
+        // Update thumbnails active styling
         thumbs.forEach((thumb, i) => {
-            if (i === currentSlide) {
+            if (i === currentIndex) {
                 thumb.classList.remove('border-paper-300', 'opacity-60');
-                thumb.classList.add('border-accent-500', 'ring-2', 'ring-accent-500/40', 'scale-102', 'opacity-100');
+                thumb.classList.add('border-accent-500', 'ring-2', 'ring-accent-500/40', 'opacity-100', 'scale-102', 'shadow-xs');
                 thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             } else {
-                thumb.classList.remove('border-accent-500', 'ring-2', 'ring-accent-500/40', 'scale-102', 'opacity-100');
+                thumb.classList.remove('border-accent-500', 'ring-2', 'ring-accent-500/40', 'opacity-100', 'scale-102', 'shadow-xs');
                 thumb.classList.add('border-paper-300', 'opacity-60');
             }
         });
     }
 
     function nextSlide() {
-        goToSlide(currentSlide + 1);
+        updateDisplay(currentIndex + 1);
     }
 
     function prevSlide() {
-        goToSlide(currentSlide - 1);
+        updateDisplay(currentIndex - 1);
     }
 
-    function openCurrentSlideZoom() {
-        if (slides.length > 0 && slides[currentSlide]) {
-            const url = slides[currentSlide].getAttribute('data-slide-url');
-            if (url) {
-                openZoomModal(url);
-            }
-        }
-    }
-
-    // Bind Controls
-    const prevBtn = document.getElementById('carousel-prev-btn');
-    const nextBtn = document.getElementById('carousel-next-btn');
+    // Bind prev / next buttons
+    const prevBtn = document.getElementById('showcase-prev-btn');
+    const nextBtn = document.getElementById('showcase-next-btn');
 
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 
-    dots.forEach((dot) => {
-        dot.addEventListener('click', () => {
-            const idx = parseInt(dot.getAttribute('data-dot-index'), 10);
-            goToSlide(idx);
-        });
-    });
-
+    // Bind thumbnail click
     thumbs.forEach((thumb) => {
         thumb.addEventListener('click', () => {
             const idx = parseInt(thumb.getAttribute('data-thumb-index'), 10);
-            goToSlide(idx);
+            updateDisplay(idx);
         });
     });
 
-    // Keyboard Arrow Navigation
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
             prevSlide();
@@ -390,34 +382,36 @@
         }
     });
 
-    // Touch Swipe Support for Mobile
-    const carouselEl = document.getElementById('project-carousel');
-    if (carouselEl) {
+    // Touch swipe on mobile
+    const displayEl = document.getElementById('project-main-display');
+    if (displayEl) {
         let touchStartX = 0;
         let touchEndX = 0;
 
-        carouselEl.addEventListener('touchstart', (e) => {
+        displayEl.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
 
-        carouselEl.addEventListener('touchend', (e) => {
+        displayEl.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
             const diff = touchEndX - touchStartX;
-            if (Math.abs(diff) > 45) {
+            if (Math.abs(diff) > 40) {
                 if (diff < 0) {
-                    nextSlide(); // swiped left
+                    nextSlide();
                 } else {
-                    prevSlide(); // swiped right
+                    prevSlide();
                 }
             }
+        }, { passive: true });
+    }
+
+    // Zoom modal functions
+    function openActiveZoom() {
+        if (galleryItems[currentIndex]) {
+            openZoomModal(galleryItems[currentIndex].url);
         }
     }
 
-    // Zoom Modal
     function openZoomModal(imgSrc) {
         const modal = document.getElementById('zoom-modal');
         const modalImg = document.getElementById('zoom-modal-img');
