@@ -1,39 +1,42 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6 max-w-3xl">
+<div class="space-y-6 max-w-3xl mx-auto">
     <!-- Header -->
-    <div class="pb-6 border-b-4 border-black">
-        <a href="{{ route('admin.educations.index') }}" class="inline-flex items-center text-xs font-black uppercase tracking-wider text-black border-2 border-black bg-white hover:bg-[#ff5722] px-3 py-1.5 shadow-[2px_2px_0px_#000000] transition active:translate-x-0.5 active:translate-y-0.5 active:shadow-none mb-4">
-            &larr; Kembali ke Pendidikan
+    <div class="pb-6 border-b border-slate-200/80">
+        <a href="{{ route('admin.educations.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition mb-3">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Kembali ke Riwayat Pendidikan
         </a>
-        <h1 class="text-4xl font-black uppercase tracking-tighter text-black">Edit Riwayat Pendidikan</h1>
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">// Perbaruilah data riwayat akademik Anda.</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">Edit Riwayat Pendidikan</h1>
+        <p class="text-sm font-medium text-slate-500 mt-1">Perbarui data riwayat akademik, institusi, dan pencapaian Anda.</p>
     </div>
 
-    <!-- Form Card (Brutalist Box) -->
-    <div class="bg-white border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#000000]">
+    <!-- Form Card -->
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
         <form action="{{ route('admin.educations.update', $education->id) }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
 
             <!-- Institution Name -->
             <div>
-                <label for="institution_name" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Nama Institusi</label>
+                <label for="institution_name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Nama Institusi</label>
                 <input type="text" name="institution_name" id="institution_name" value="{{ old('institution_name', $education->institution_name) }}" placeholder="Contoh: Universitas Indonesia" required
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                 @error('institution_name')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Degree / Course -->
             <div>
-                <label for="degree" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Gelar / Bidang Studi</label>
+                <label for="degree" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Gelar / Bidang Studi</label>
                 <input type="text" name="degree" id="degree" value="{{ old('degree', $education->degree) }}" placeholder="Contoh: S1 Teknik Informatika" required
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                 @error('degree')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -41,67 +44,70 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <!-- Start Year -->
                 <div>
-                    <label for="start_year" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Tahun Mulai</label>
+                    <label for="start_year" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Tahun Mulai</label>
                     <input type="number" name="start_year" id="start_year" value="{{ old('start_year', $education->start_year) }}" min="1900" max="2100" required
-                        class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                     @error('start_year')
-                        <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                        <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- End Year -->
                 <div>
-                    <label for="end_year" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Tahun Lulus (Opsional)</label>
+                    <label for="end_year" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Tahun Lulus (Opsional)</label>
                     <input type="number" name="end_year" id="end_year" value="{{ old('end_year', $education->end_year) }}" min="1900" max="2100" placeholder="Kosongkan jika masih aktif belajar"
-                        class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                     @error('end_year')
-                        <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                        <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <!-- Description -->
             <div>
-                <label class="block text-xs font-black uppercase tracking-widest text-black mb-2">Pencapaian / Deskripsi (Opsional)</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Pencapaian / Deskripsi (Opsional)</label>
                 
                 <!-- Input Format Selector -->
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xxs font-black uppercase tracking-wider text-slate-500">// FORMAT INPUT:</span>
-                    <button type="button" id="format-text-btn" class="px-3 py-1.5 border-2 border-black font-extrabold text-xs uppercase transition-all duration-150 active:translate-y-0.5 active:shadow-none shadow-[2px_2px_0px_#000000] bg-white text-black">
+                    <span class="text-xs font-semibold text-slate-500">Format Input:</span>
+                    <button type="button" id="format-text-btn" class="px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-slate-900 text-white shadow-xs">
                         Paragraf
                     </button>
-                    <button type="button" id="format-list-btn" class="px-3 py-1.5 border-2 border-black font-extrabold text-xs uppercase transition-all duration-150 active:translate-y-0.5 active:shadow-none shadow-[2px_2px_0px_#000000] bg-white text-black">
+                    <button type="button" id="format-list-btn" class="px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-slate-100 hover:bg-slate-200 text-slate-700">
                         Daftar Poin
                     </button>
                 </div>
 
                 <!-- Textarea (paragraph format) -->
                 <textarea name="description" id="description" rows="4" placeholder="Tuliskan pencapaian akademik, kepanitiaan, atau IPK Anda..."
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">{{ old('description', $education->description) }}</textarea>
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition leading-relaxed">{{ old('description', $education->description) }}</textarea>
 
                 <!-- Bullet Points Container (list format) -->
                 <div id="bullet-points-wrapper" class="hidden space-y-4">
                     <div id="bullet-points-list" class="space-y-3">
                         <!-- Dynamic inputs will be generated here -->
                     </div>
-                    <button type="button" id="add-point-btn" class="inline-flex items-center gap-1.5 px-3 py-2 border-2 border-black bg-white hover:bg-slate-100 text-black text-xs font-extrabold uppercase shadow-[2px_2px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <button type="button" id="add-point-btn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs transition">
+                        <svg class="w-4 h-4 text-[#FF4D2D]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
-                        Tambah Poin Baru
+                        <span>Tambah Poin Baru</span>
                     </button>
                 </div>
 
                 @error('description')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Submit Buttons -->
-            <div class="pt-6 border-t-2 border-black flex items-center justify-end gap-3">
-                <a href="{{ route('admin.educations.index') }}" class="brutal-btn-secondary px-5 py-2.5 text-sm">Batal</a>
-                <button type="submit" class="brutal-btn-admin px-5 py-2.5 text-sm">
-                    Perbarui Riwayat
+            <div class="pt-6 border-t border-slate-200/80 flex items-center justify-end gap-3">
+                <a href="{{ route('admin.educations.index') }}" class="brutal-btn-secondary text-xs">Batal</a>
+                <button type="submit" class="brutal-btn-admin text-xs">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Simpan Perubahan</span>
                 </button>
             </div>
         </form>
@@ -154,14 +160,14 @@ document.addEventListener('DOMContentLoaded', function () {
     function setFormat(format) {
         currentFormat = format;
         if (format === 'text') {
-            textBtn.className = "px-3 py-1.5 border-2 border-black bg-black text-[#ff5722] shadow-[2px_2px_0px_#ff5722] font-black text-xs uppercase active:translate-y-0.5 active:shadow-none";
-            listBtn.className = "px-3 py-1.5 border-2 border-black bg-white text-black hover:bg-slate-100 font-extrabold text-xs uppercase shadow-[2px_2px_0px_#000000] active:translate-y-0.5 active:shadow-none";
+            textBtn.className = "px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-slate-900 text-white shadow-xs";
+            listBtn.className = "px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-slate-100 hover:bg-slate-200 text-slate-700";
             
             textarea.classList.remove('hidden');
             wrapper.classList.add('hidden');
         } else {
-            listBtn.className = "px-3 py-1.5 border-2 border-black bg-black text-[#ff5722] shadow-[2px_2px_0px_#ff5722] font-black text-xs uppercase active:translate-y-0.5 active:shadow-none";
-            textBtn.className = "px-3 py-1.5 border-2 border-black bg-white text-black hover:bg-slate-100 font-extrabold text-xs uppercase shadow-[2px_2px_0px_#000000] active:translate-y-0.5 active:shadow-none";
+            listBtn.className = "px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-slate-900 text-white shadow-xs";
+            textBtn.className = "px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-slate-100 hover:bg-slate-200 text-slate-700";
             
             textarea.classList.add('hidden');
             wrapper.classList.remove('hidden');
@@ -182,11 +188,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const div = document.createElement('div');
         div.className = 'flex items-center gap-2 bullet-point-row';
         div.innerHTML = `
-            <span class="text-black font-black text-lg select-none">•</span>
+            <span class="text-[#FF4D2D] font-bold text-lg select-none">•</span>
             <input type="text" value="${escapeHtml(value)}" placeholder="Tuliskan pencapaian akademik, kepanitiaan, atau detail..." 
-                class="bullet-input flex-grow bg-white border-3 border-black rounded-none px-4 py-2.5 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[3px_3px_0px_#000000] transition-all duration-150">
-            <button type="button" class="remove-point-btn p-2 border-2 border-black bg-[#ff5722] hover:bg-orange-600 text-black shadow-[2px_2px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                class="bullet-input flex-grow rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
+            <button type="button" class="remove-point-btn p-2 rounded-xl border border-rose-100 bg-rose-50 hover:bg-rose-100 text-rose-600 transition flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>

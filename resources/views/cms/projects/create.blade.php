@@ -1,81 +1,84 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6 max-w-4xl">
+<div class="space-y-6 max-w-4xl mx-auto">
     <!-- Header -->
-    <div class="pb-6 border-b-4 border-black">
-        <a href="{{ route('admin.projects.index') }}" class="inline-flex items-center text-xs font-black uppercase tracking-wider text-black border-2 border-black bg-white hover:bg-[#ff5722] px-3 py-1.5 shadow-[2px_2px_0px_#000000] transition active:translate-x-0.5 active:translate-y-0.5 active:shadow-none mb-4">
-            &larr; Kembali ke Proyek
+    <div class="pb-6 border-b border-slate-200/80">
+        <a href="{{ route('admin.projects.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition mb-3">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Kembali ke Daftar Proyek
         </a>
-        <h1 class="text-4xl font-black uppercase tracking-tighter text-black">Tambah Proyek Baru</h1>
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">// Lengkapilah form berikut untuk menambah portofolio baru.</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">Tambah Proyek Baru</h1>
+        <p class="text-sm font-medium text-slate-500 mt-1">Lengkapi form berikut untuk mempublikasikan proyek portofolio baru Anda.</p>
     </div>
 
-    <!-- Form Card (Brutalist Box) -->
-    <div class="bg-white border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#000000]">
+    <!-- Form Card -->
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
         <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
             @csrf
 
             <!-- Title -->
             <div>
-                <label for="title" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Judul Proyek</label>
-                <input type="text" name="title" id="title" value="{{ old('title') }}" placeholder="Masukkan nama atau judul proyek" required
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                <label for="title" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Judul Proyek</label>
+                <input type="text" name="title" id="title" value="{{ old('title') }}" placeholder="Contoh: Aplikasi Telemedicine Mobile" required
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                 @error('title')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Description -->
             <div>
-                <label for="description" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Deskripsi Proyek</label>
-                <textarea name="description" id="description" rows="5" placeholder="Tuliskan penjelasan detail mengenai latar belakang, fitur, dan teknologi proyek ini..." required
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">{{ old('description') }}</textarea>
+                <label for="description" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Deskripsi Proyek</label>
+                <textarea name="description" id="description" rows="5" placeholder="Jelaskan mengenai latar belakang proyek, masalah yang dipecahkan, fitur unggulan, dan teknologi..." required
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition leading-relaxed">{{ old('description') }}</textarea>
                 @error('description')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- ======================================================== -->
             <!-- SECTION 1: FOTO THUMBNAIL PROYEK                         -->
             <!-- ======================================================== -->
-            <div class="border-3 border-black p-5 sm:p-6 bg-slate-50 space-y-4 shadow-[4px_4px_0px_#000000]">
-                <div class="border-b-2 border-black pb-2 flex items-center justify-between">
+            <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5 sm:p-6 space-y-4">
+                <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
                     <div>
-                        <span class="block text-xs font-black uppercase tracking-widest text-black">// 1. FOTO THUMBNAIL PROYEK</span>
-                        <p class="text-xxs font-bold uppercase text-slate-500">Digunakan pada kartu portofolio halaman utama &amp; bagian atas halaman detail proyek.</p>
+                        <span class="block text-xs font-bold uppercase tracking-wider text-slate-900">1. Foto Thumbnail Utama (Wajib)</span>
+                        <p class="text-xs text-slate-500 font-medium">Digunakan pada kartu portofolio beranda utama &amp; cover detail proyek.</p>
                     </div>
-                    <span class="text-[10px] font-black uppercase bg-[#ff5722] text-black px-2 py-0.5 border border-black shadow-[1px_1px_0px_#000000]">
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-50 text-[#FF4D2D] border border-orange-200/60">
                         Cover Utama
                     </span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-start">
                     <!-- Live Thumbnail Preview -->
-                    <div class="sm:col-span-5 space-y-1.5">
-                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-700 block">Preview Thumbnail:</span>
-                        <div class="aspect-video w-full bg-slate-200 border-2 border-black overflow-hidden relative shadow-[2px_2px_0px_#000000] flex items-center justify-center">
+                    <div class="sm:col-span-5 space-y-2">
+                        <span class="text-xs font-semibold text-slate-600 block">Pratinjau Thumbnail:</span>
+                        <div class="aspect-video w-full bg-slate-200 rounded-xl border border-slate-200/90 overflow-hidden relative shadow-xs flex items-center justify-center">
                             <img id="create-thumbnail-preview" src="" alt="Thumbnail Preview" class="object-cover w-full h-full hidden">
-                            <span id="create-empty-text" class="text-xs font-bold text-slate-400 uppercase italic p-3 text-center">
-                                // Pilih foto di samping
+                            <span id="create-empty-text" class="text-xs font-medium text-slate-400 p-4 text-center">
+                                Pilih foto di samping untuk melihat pratinjau
                             </span>
                         </div>
                     </div>
 
                     <!-- Input to Select Thumbnail -->
                     <div class="sm:col-span-7 space-y-2">
-                        <label for="create_thumbnail_input" class="block text-xs font-black uppercase tracking-wider text-black">
-                            Pilih Foto Thumbnail (Wajib)
+                        <label for="create_thumbnail_input" class="block text-xs font-semibold text-slate-700">
+                            Pilih Foto Cover Utama
                         </label>
-                        <div class="w-full bg-white border-2 border-black px-4 py-3 focus-within:-translate-y-0.5 focus-within:shadow-[3px_3px_0px_#000000] transition-all">
+                        <div class="w-full bg-white rounded-xl border border-slate-200 p-3 hover:border-slate-300 transition">
                             <input type="file" name="image" id="create_thumbnail_input" accept="image/*" required
-                                class="text-xs text-black file:mr-3 file:py-1.5 file:px-3 file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:bg-[#ff5722] file:text-black hover:file:bg-orange-600 file:cursor-pointer cursor-pointer w-full">
+                                class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-[#FF4D2D] hover:file:bg-orange-100 file:cursor-pointer cursor-pointer w-full">
                         </div>
-                        <p class="text-slate-500 text-[10px] font-bold uppercase leading-relaxed">
-                            // Format: JPG, PNG, WEBP (Maks 10MB). Otomatis dikompresi di bawah 1MB.
+                        <p class="text-slate-500 text-xs font-medium leading-relaxed">
+                            Format: JPG, PNG, WEBP (Maks 10MB). Otomatis dikompresi di bawah 1MB.
                         </p>
                         @error('image')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                            <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -84,112 +87,116 @@
             <!-- ======================================================== -->
             <!-- SECTION 2: FOTO CAROUSEL PROYEK (DETAIL PROJECT SLIDER) -->
             <!-- ======================================================== -->
-            <div class="border-3 border-black p-5 sm:p-6 bg-white space-y-4 shadow-[4px_4px_0px_#000000]">
-                <div class="border-b-2 border-black pb-2 flex items-center justify-between">
+            <div class="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 space-y-4 shadow-xs">
+                <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
                     <div>
-                        <span class="block text-xs font-black uppercase tracking-widest text-[#ff5722]">// 2. FOTO CAROUSEL PROYEK</span>
-                        <p class="text-xxs font-bold uppercase text-slate-500">Foto-foto ini akan tampil sebagai slideshow carousel di halaman detail proyek.</p>
+                        <span class="block text-xs font-bold uppercase tracking-wider text-[#FF4D2D]">2. Foto Galeri Carousel (Opsional)</span>
+                        <p class="text-xs text-slate-500 font-medium">Foto-foto ini akan tampil sebagai slideshow carousel di halaman detail proyek.</p>
                     </div>
-                    <span class="text-[10px] font-black uppercase bg-slate-100 text-black px-2 py-0.5 border border-black shadow-[1px_1px_0px_#000000]">
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                         Opsional
                     </span>
                 </div>
 
                 <div>
-                    <label for="create_additional_images" class="block text-xs font-black uppercase tracking-wider text-black mb-2">
+                    <label for="create_additional_images" class="block text-xs font-semibold text-slate-700 mb-2">
                         Pilih Foto-Foto Carousel (Bisa Pilih Banyak Sekaligus)
                     </label>
-                    <div class="w-full bg-white border-2 border-black px-4 py-4 focus-within:-translate-y-0.5 focus-within:shadow-[3px_3px_0px_#000000] transition-all">
+                    <div class="w-full bg-slate-50/50 rounded-xl border border-slate-200 p-3 hover:border-slate-300 transition">
                         <input type="file" name="additional_images[]" id="create_additional_images" multiple accept="image/*"
-                            class="text-xs text-black file:mr-3 file:py-2 file:px-4 file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:bg-black file:text-white hover:file:bg-[#ff5722] hover:file:text-black file:cursor-pointer cursor-pointer w-full">
+                            class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-900 file:text-white hover:file:bg-[#FF4D2D] file:cursor-pointer cursor-pointer w-full">
                     </div>
-                    <p class="text-slate-500 text-[10px] font-bold uppercase mt-1.5">
-                        // Pilih beberapa foto mockup atau screenshot aplikasi untuk slider detail. Setelah proyek dibuat, Anda juga dapat mengunggah foto carousel langsung kapan saja di halaman edit.
+                    <p class="text-slate-500 text-xs font-medium mt-1.5 leading-relaxed">
+                        Pilih beberapa foto mockup atau screenshot aplikasi untuk slider detail. Setelah proyek dibuat, Anda juga dapat mengunggah foto carousel langsung kapan saja di halaman edit.
                     </p>
-                    <div id="selected-files-summary" class="hidden mt-2 p-2.5 bg-orange-50 border-2 border-black text-xxs font-black uppercase text-black">
+                    <div id="selected-files-summary" class="hidden mt-3 p-3 bg-orange-50 border border-orange-200/80 rounded-xl text-xs font-semibold text-slate-800 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#FF4D2D]"></span>
                         <span id="selected-files-count">0 foto terpilih</span>
                     </div>
                     @error('additional_images')
-                        <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                        <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                     @enderror
                     @error('additional_images.*')
-                        <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                        <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <!-- Project Badges (Technology Tags) -->
-            <div class="border-3 border-black p-5 bg-slate-50">
-                <span class="block text-xs font-black uppercase tracking-widest text-black mb-3">// TEKNOLOGI / SOFTWARE YANG DIGUNAKAN</span>
+            <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5 sm:p-6 space-y-4">
+                <span class="block text-xs font-bold uppercase tracking-wider text-slate-800">Teknologi &amp; Tools yang Digunakan</span>
                 
                 <!-- Checkbox List of Existing Badges -->
-                <div class="mb-4">
-                    <label class="block text-xxs font-black uppercase tracking-wider text-slate-500 mb-2">Pilih Teknologi/Software yang Sudah Ada:</label>
-                    <div class="flex flex-wrap gap-2.5">
+                <div class="space-y-2">
+                    <label class="block text-xs font-medium text-slate-500">Pilih dari lencana yang tersedia:</label>
+                    <div class="flex flex-wrap gap-2">
                         @forelse ($badges as $badge)
-                            <label class="inline-flex items-center gap-2 cursor-pointer bg-white border-2 border-black px-2.5 py-1.5 shadow-[2px_2px_0px_#000000] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all">
+                            <label class="inline-flex items-center gap-2 cursor-pointer bg-white border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-xl shadow-xs transition">
                                 <input type="checkbox" name="badges[]" value="{{ $badge->id }}"
                                     {{ is_array(old('badges')) && in_array($badge->id, old('badges')) ? 'checked' : '' }}
-                                    class="w-4 h-4 border-2 border-black rounded-none accent-[#ff5722] cursor-pointer">
-                                <span class="px-2 py-0.5 font-sans font-bold text-xs uppercase shadow-[1px_1px_0px_#000000]"
+                                    class="w-4 h-4 rounded text-[#FF4D2D] focus:ring-[#FF4D2D]/30 border-slate-300">
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold"
                                        style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
                                     {{ $badge->name }}
                                 </span>
                             </label>
                         @empty
-                            <p class="text-xs font-bold text-slate-500 uppercase italic">// Belum ada teknologi/software. Silakan input langsung di bawah.</p>
+                            <p class="text-xs text-slate-400">Belum ada lencana teknologi. Masukkan langsung di bawah.</p>
                         @endforelse
                     </div>
                 </div>
 
                 <!-- Instant input for new badges -->
                 <div>
-                    <label for="new_badges" class="block text-xxs font-black uppercase tracking-wider text-slate-500 mb-1">Ketik Teknologi/Software Baru Instan (Pisahkan dengan koma jika lebih dari satu):</label>
+                    <label for="new_badges" class="block text-xs font-medium text-slate-600 mb-1.5">Tambah Lencana Baru Secara Instan (Pisahkan koma):</label>
                     <input type="text" name="new_badges" id="new_badges" value="{{ old('new_badges') }}" placeholder="Contoh: Laravel 11, Tailwind CSS, Docker"
-                        class="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[3px_3px_0px_#000000] transition-all duration-150">
-                    <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Teknologi/software baru akan dibuat otomatis dan bisa dikustomisasi di menu Lencana Keahlian.</p>
+                        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
+                    <p class="text-slate-400 text-xs font-medium mt-1">Lencana baru akan otomatis dibuat dan tersimpan ke koleksi.</p>
                 </div>
             </div>
 
             <!-- Grid Composition Span -->
             <div>
-                <label for="grid_span" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Ukuran Kartu di Halaman Utama (Grid Span)</label>
+                <label for="grid_span" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Ukuran Kartu di Halaman Utama (Grid Span)</label>
                 <div class="relative w-full">
                     <select name="grid_span" id="grid_span" required
-                        class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold appearance-none focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150 cursor-pointer">
-                        <option value="1" {{ old('grid_span', '1') == 1 ? 'selected' : '' }}>Standar (1 Blok Kolom)</option>
-                        <option value="2" {{ old('grid_span') == 2 ? 'selected' : '' }}>Lebar (2 Blok Kolom)</option>
-                        <option value="3" {{ old('grid_span') == 3 ? 'selected' : '' }}>Penuh (3 Blok Kolom / Full Width)</option>
+                        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium appearance-none focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition cursor-pointer">
+                        <option value="1" {{ old('grid_span', '1') == 1 ? 'selected' : '' }}>Standar (1 Kolom)</option>
+                        <option value="2" {{ old('grid_span') == 2 ? 'selected' : '' }}>Lebar (2 Kolom)</option>
+                        <option value="3" {{ old('grid_span') == 3 ? 'selected' : '' }}>Penuh (3 Kolom / Full Width)</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 border-l-3 border-black bg-[#ff5722] text-black">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
                     </div>
                 </div>
-                <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Mengatur seberapa lebar kartu proyek ini muncul di grid halaman portofolio utama.</p>
+                <p class="text-slate-400 text-xs font-medium mt-1">Mengatur lebar kartu proyek ini pada tata letak grid halaman portofolio utama.</p>
                 @error('grid_span')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Project Link -->
             <div>
-                <label for="project_link" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Link Proyek / Aplikasi Live (Opsional)</label>
+                <label for="project_link" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Tautan Proyek / Demo Live (Opsional)</label>
                 <input type="url" name="project_link" id="project_link" value="{{ old('project_link') }}" placeholder="https://github.com/username/project-name atau https://domain.com"
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                 @error('project_link')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Submit Buttons -->
-            <div class="pt-6 border-t-4 border-black flex items-center justify-between">
-                <a href="{{ route('admin.projects.index') }}" class="brutal-btn-secondary px-5 py-2.5 text-xs font-black uppercase tracking-wider">
+            <div class="pt-6 border-t border-slate-200/80 flex items-center justify-between">
+                <a href="{{ route('admin.projects.index') }}" class="brutal-btn-secondary text-xs">
                     Batal
                 </a>
-                <button type="submit" class="brutal-btn-admin px-6 py-3 text-xs font-black uppercase tracking-wider shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000]">
-                    Simpan Proyek Baru &rarr;
+                <button type="submit" class="brutal-btn-admin text-xs">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <span>Simpan &amp; Publikasikan Proyek</span>
                 </button>
             </div>
         </form>
@@ -223,7 +230,7 @@
             addImagesInput.addEventListener('change', function () {
                 const count = this.files ? this.files.length : 0;
                 if (count > 0) {
-                    countText.textContent = `// ${count} foto carousel terpilih dan siap diunggah`;
+                    countText.textContent = `${count} foto carousel terpilih dan siap diunggah`;
                     summaryBox.classList.remove('hidden');
                 } else {
                     summaryBox.classList.add('hidden');

@@ -1,77 +1,79 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6 max-w-4xl">
+<div class="space-y-6 max-w-4xl mx-auto">
     <!-- Header -->
-    <div class="pb-6 border-b-4 border-black">
-        <a href="{{ route('admin.projects.index') }}" class="inline-flex items-center text-xs font-black uppercase tracking-wider text-black border-2 border-black bg-white hover:bg-[#ff5722] px-3 py-1.5 shadow-[2px_2px_0px_#000000] transition active:translate-x-0.5 active:translate-y-0.5 active:shadow-none mb-4">
-            &larr; Kembali ke Proyek
+    <div class="pb-6 border-b border-slate-200/80">
+        <a href="{{ route('admin.projects.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition mb-3">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Kembali ke Daftar Proyek
         </a>
-        <h1 class="text-4xl font-black uppercase tracking-tighter text-black">Edit Proyek</h1>
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">// Perbaruilah data proyek portofolio Anda.</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">Edit Proyek Portofolio</h1>
+        <p class="text-sm font-medium text-slate-500 mt-1">Perbarui rincian proyek, foto thumbnail cover, dan galeri carousel interaktif.</p>
     </div>
 
-    @if(session('success'))
-        <div class="bg-emerald-400 text-black border-4 border-black p-4 font-black text-xs uppercase tracking-wide shadow-[4px_4px_0px_#000000] mb-4">
-            // {{ session('success') }}
+    <!-- Toast Notification for AJAX Actions -->
+    <div id="ajax-toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-slate-700/80 rounded-2xl px-5 py-3.5 shadow-2xl flex items-center gap-3 transition-all duration-300">
+        <div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
         </div>
-    @endif
-
-    <!-- Toast Notification Container for Instant AJAX Actions -->
-    <div id="ajax-toast" class="hidden fixed top-6 right-6 z-50 bg-[#ff5722] text-black border-3 border-black px-4 py-3 font-black text-xs uppercase tracking-wider shadow-[4px_4px_0px_#000000] transition-all">
-        <span id="ajax-toast-msg">// Pesan Notifikasi</span>
+        <span id="ajax-toast-msg" class="text-xs font-semibold tracking-wide">Pesan Notifikasi</span>
     </div>
 
-    <!-- Form Card (Brutalist Box) -->
-    <div class="bg-white border-4 border-black p-6 sm:p-8 shadow-[6px_6px_0px_#000000]">
+    <!-- Main Form Card -->
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
         <form id="project-edit-form" action="{{ route('admin.projects.update', $project->id) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
             @csrf
             @method('PUT')
 
             <!-- Title -->
             <div>
-                <label for="title" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Judul Proyek</label>
-                <input type="text" name="title" id="title" value="{{ old('title', $project->title) }}" placeholder="Masukkan nama atau judul proyek" required
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                <label for="title" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Judul Proyek</label>
+                <input type="text" name="title" id="title" value="{{ old('title', $project->title) }}" placeholder="Contoh: Aplikasi Telemedicine Mobile" required
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                 @error('title')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Description -->
             <div>
-                <label for="description" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Deskripsi Proyek</label>
-                <textarea name="description" id="description" rows="5" placeholder="Tuliskan penjelasan detail mengenai latar belakang, fitur, dan teknologi proyek ini..." required
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">{{ old('description', $project->description) }}</textarea>
+                <label for="description" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Deskripsi Proyek</label>
+                <textarea name="description" id="description" rows="5" placeholder="Jelaskan mengenai latar belakang proyek, masalah yang dipecahkan, fitur unggulan, dan teknologi..." required
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition leading-relaxed">{{ old('description', $project->description) }}</textarea>
                 @error('description')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- ======================================================== -->
             <!-- SECTION 1: FOTO THUMBNAIL PROYEK                         -->
             <!-- ======================================================== -->
-            <div class="border-3 border-black p-5 sm:p-6 bg-slate-50 space-y-4 shadow-[4px_4px_0px_#000000]">
-                <div class="border-b-2 border-black pb-2 flex items-center justify-between">
+            <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5 sm:p-6 space-y-4">
+                <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between">
                     <div>
-                        <span class="block text-xs font-black uppercase tracking-widest text-black">// 1. FOTO THUMBNAIL PROYEK</span>
-                        <p class="text-xxs font-bold uppercase text-slate-500">Digunakan pada kartu portofolio halaman utama &amp; bagian atas halaman detail proyek.</p>
+                        <span class="block text-xs font-bold uppercase tracking-wider text-slate-900">1. Foto Thumbnail Utama</span>
+                        <p class="text-xs text-slate-500 font-medium">Tampil di kartu halaman depan &amp; header halaman detail proyek.</p>
                     </div>
-                    <span class="text-[10px] font-black uppercase bg-[#ff5722] text-black px-2 py-0.5 border border-black shadow-[1px_1px_0px_#000000]">
-                        Cover Utama
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-50 text-[#FF4D2D] border border-orange-200/60">
+                        Cover Portofolio
                     </span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-start">
                     <!-- Current Thumbnail Display -->
-                    <div class="sm:col-span-5 space-y-1.5">
-                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-700 block">Thumbnail Saat Ini:</span>
-                        <div class="aspect-video w-full bg-slate-200 border-2 border-black overflow-hidden relative shadow-[2px_2px_0px_#000000]">
+                    <div class="sm:col-span-5 space-y-2">
+                        <span class="text-xs font-semibold text-slate-600 block">Thumbnail Saat Ini:</span>
+                        <div class="aspect-video w-full bg-slate-200 rounded-xl border border-slate-200/90 overflow-hidden relative shadow-xs">
                             <img id="current-thumbnail-preview" 
                                  src="{{ $project->thumbnail_url }}" 
                                  alt="{{ $project->title }}" 
                                  class="object-cover w-full h-full">
-                            <span id="new-thumb-tag" class="hidden absolute top-1.5 left-1.5 bg-emerald-400 text-black text-[9px] font-black uppercase px-2 py-0.5 border border-black shadow-[1px_1px_0px_#000000]">
+                            <span id="new-thumb-tag" class="hidden absolute top-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">
                                 File Baru Terpilih
                             </span>
                         </div>
@@ -79,18 +81,18 @@
 
                     <!-- Input to Change Thumbnail -->
                     <div class="sm:col-span-7 space-y-2">
-                        <label for="thumbnail_file_input" class="block text-xs font-black uppercase tracking-wider text-black">
+                        <label for="thumbnail_file_input" class="block text-xs font-semibold text-slate-700">
                             Ganti Foto Thumbnail
                         </label>
-                        <div class="w-full bg-white border-2 border-black px-4 py-3 focus-within:-translate-y-0.5 focus-within:shadow-[3px_3px_0px_#000000] transition-all">
+                        <div class="w-full bg-white rounded-xl border border-slate-200 p-3 hover:border-slate-300 transition">
                             <input type="file" name="image" id="thumbnail_file_input" accept="image/*"
-                                class="text-xs text-black file:mr-3 file:py-1.5 file:px-3 file:border-2 file:border-black file:text-xs file:font-black file:uppercase file:bg-[#ff5722] file:text-black hover:file:bg-orange-600 file:cursor-pointer cursor-pointer w-full">
+                                class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-[#FF4D2D] hover:file:bg-orange-100 file:cursor-pointer cursor-pointer w-full">
                         </div>
-                        <p class="text-slate-500 text-[10px] font-bold uppercase leading-relaxed">
-                            // Pilih gambar baru untuk mengganti thumbnail. Maksimal 10MB (otomatis dikompresi).
+                        <p class="text-slate-500 text-xs font-medium leading-relaxed">
+                            Pilih file baru untuk mengganti foto cover. Maks 10MB (otomatis dikompresi).
                         </p>
                         @error('image')
-                            <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                            <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -99,73 +101,75 @@
             <!-- ======================================================== -->
             <!-- SECTION 2: FOTO CAROUSEL PROYEK (DETAIL PROJECT SLIDER) -->
             <!-- ======================================================== -->
-            <div class="border-3 border-black p-5 sm:p-6 bg-white space-y-5 shadow-[4px_4px_0px_#000000]">
-                <div class="border-b-2 border-black pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div class="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 space-y-5 shadow-xs">
+                <div class="border-b border-slate-200/80 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
-                        <span class="block text-xs font-black uppercase tracking-widest text-[#ff5722]">// 2. FOTO CAROUSEL PROYEK</span>
-                        <p class="text-xxs font-bold uppercase text-slate-500">Foto-foto ini akan tampil sebagai galeri carousel interaktif di halaman detail proyek.</p>
+                        <span class="block text-xs font-bold uppercase tracking-wider text-[#FF4D2D]">2. Foto Galeri Carousel</span>
+                        <p class="text-xs text-slate-500 font-medium">Foto-foto ini akan tampil sebagai slideshow carousel interaktif di halaman detail proyek.</p>
                     </div>
-                    <span id="carousel-count-badge" class="text-xxs font-black uppercase text-black border-2 border-black bg-slate-100 px-3 py-1 shadow-[2px_2px_0px_#000000] self-start sm:self-auto">
+                    <span id="carousel-count-badge" class="text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-full self-start sm:self-auto border border-slate-200">
                         {{ $project->images->count() }} FOTO TERSIMPAN
                     </span>
                 </div>
 
-                <!-- Live Upload Progress Bar (Shows during instant upload) -->
-                <div id="carousel-upload-progress" class="hidden border-2 border-black bg-orange-50 p-3.5 space-y-2">
-                    <div class="flex items-center justify-between text-xxs font-black uppercase tracking-wider">
-                        <span id="progress-status-text">// Mengunggah foto carousel...</span>
-                        <span id="progress-percent-text">0%</span>
+                <!-- Live Upload Progress Bar -->
+                <div id="carousel-upload-progress" class="hidden rounded-xl bg-orange-50/80 border border-orange-200/80 p-4 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-800">
+                        <span id="progress-status-text">Mengunggah &amp; mengompresi foto carousel...</span>
+                        <span id="progress-percent-text" class="text-[#FF4D2D]">0%</span>
                     </div>
-                    <div class="w-full bg-white border-2 border-black h-3 overflow-hidden">
-                        <div id="progress-fill-bar" class="h-full bg-[#ff5722] w-0 transition-all duration-150"></div>
+                    <div class="w-full bg-slate-200/80 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-fill-bar" class="h-full bg-gradient-to-r from-[#FF4D2D] to-[#E63D1F] w-0 transition-all duration-150 rounded-full"></div>
                     </div>
                 </div>
 
-                <!-- Instant Upload Dropzone & Button -->
+                <!-- Instant Upload Dropzone -->
                 <div id="carousel-dropzone" 
-                     class="border-3 border-dashed border-black bg-slate-50 p-6 sm:p-8 flex flex-col items-center justify-center text-center hover:bg-orange-50/40 hover:border-[#ff5722] transition-all cursor-pointer relative select-none group">
-                    <svg class="w-10 h-10 text-slate-400 group-hover:text-[#ff5722] mb-2 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2.5 2.5 0 013.536 0L17 16m-2-2l1.586-1.586a2.5 2.5 0 013.536 0L21 14m-9-4h.01M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <span class="text-xs font-black uppercase tracking-wide text-black mb-1">
+                     class="rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50/50 hover:bg-orange-50/20 hover:border-[#FF4D2D]/60 p-6 sm:p-8 flex flex-col items-center justify-center text-center transition-all cursor-pointer relative select-none group">
+                    <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 text-slate-400 group-hover:text-[#FF4D2D] group-hover:border-[#FF4D2D]/30 flex items-center justify-center mb-3 transition shadow-xs">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                    </div>
+                    <span class="text-sm font-bold text-slate-800 group-hover:text-[#FF4D2D] transition mb-1">
                         + Tambah Foto Carousel (Bisa Pilih Banyak Sekaligus)
                     </span>
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                        Seret &amp; lepas foto ke sini atau klik untuk memilih file. Foto otomatis tersimpan langsung ke server!
+                    <span class="text-xs text-slate-500 font-medium max-w-sm">
+                        Seret &amp; lepas file ke sini atau klik untuk memilih. Foto otomatis terunggah &amp; tersimpan langsung ke server!
                     </span>
                     <input type="file" id="ajax_carousel_file_input" multiple accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
                 </div>
 
                 <!-- Carousel Photos Grid List -->
-                <div class="space-y-2">
+                <div class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-700">Daftar Foto Carousel:</span>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase">// Klik "Hapus" untuk menghapus foto secara langsung tanpa reload</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Daftar Foto Carousel:</span>
+                        <span class="text-xs text-slate-400 font-medium">Klik "Hapus" untuk menghapus instan</span>
                     </div>
 
                     <div id="carousel-items-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5">
                         @forelse ($project->images as $img)
-                            <div class="carousel-item-card relative group border-2 border-black bg-slate-100 aspect-video overflow-hidden shadow-[2px_2px_0px_#000000] flex flex-col justify-between"
+                            <div class="carousel-item-card relative group rounded-xl border border-slate-200 overflow-hidden bg-slate-100 aspect-video shadow-xs flex flex-col justify-between"
                                  id="carousel-img-card-{{ $img->id }}">
                                 <img src="{{ asset('storage/' . $img->image_path) }}" alt="Carousel Slide" class="w-full h-full object-cover">
                                 
                                 <!-- Hover Actions Overlay -->
-                                <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1.5 p-2 transition-opacity">
+                                <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1.5 p-2 transition-opacity duration-200">
                                     <button type="button" 
                                             onclick="deleteCarouselImage({{ $img->id }}, '{{ route('admin.projects.deleteMedia', [$project->id, $img->id]) }}')"
-                                            class="w-full py-1 bg-rose-600 text-white font-black text-[9px] uppercase border border-black shadow-[1px_1px_0px_#000000] hover:bg-rose-700 transition cursor-pointer">
+                                            class="w-full py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-[10px] rounded-lg shadow-xs transition cursor-pointer">
                                         Hapus Foto
                                     </button>
                                     <button type="button" 
                                             onclick="setAsThumbnail({{ $img->id }}, '{{ route('admin.projects.setThumbnail', [$project->id, $img->id]) }}')"
-                                            class="w-full py-1 bg-[#ff5722] text-black font-black text-[9px] uppercase border border-black shadow-[1px_1px_0px_#000000] hover:bg-orange-500 transition cursor-pointer">
+                                            class="w-full py-1.5 bg-[#FF4D2D] hover:bg-[#E63D1F] text-white font-semibold text-[10px] rounded-lg shadow-xs transition cursor-pointer">
                                         Jadikan Thumbnail
                                     </button>
                                 </div>
                             </div>
                         @empty
-                            <div id="empty-carousel-notice" class="col-span-full py-8 text-center bg-slate-50 border-2 border-dashed border-slate-300">
-                                <p class="text-xs font-bold text-slate-400 uppercase italic">// Belum ada foto di galeri carousel. Unggah foto di atas.</p>
+                            <div id="empty-carousel-notice" class="col-span-full py-8 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                                <p class="text-xs font-medium text-slate-400">Belum ada foto di galeri carousel. Unggah foto di atas.</p>
                             </div>
                         @endforelse
                     </div>
@@ -173,77 +177,80 @@
             </div>
 
             <!-- Project Badges (Technology Tags) -->
-            <div class="border-3 border-black p-5 bg-slate-50">
-                <span class="block text-xs font-black uppercase tracking-widest text-black mb-3">// TEKNOLOGI / SOFTWARE YANG DIGUNAKAN</span>
+            <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5 sm:p-6 space-y-4">
+                <span class="block text-xs font-bold uppercase tracking-wider text-slate-800">Teknologi &amp; Tools yang Digunakan</span>
                 
                 <!-- Checkbox List of Existing Badges -->
-                <div class="mb-4">
-                    <label class="block text-xxs font-black uppercase tracking-wider text-slate-500 mb-2">Pilih Teknologi/Software yang Sudah Ada:</label>
-                    <div class="flex flex-wrap gap-2.5">
+                <div class="space-y-2">
+                    <label class="block text-xs font-medium text-slate-500">Pilih dari lencana yang tersedia:</label>
+                    <div class="flex flex-wrap gap-2">
                         @forelse ($badges as $badge)
-                            <label class="inline-flex items-center gap-2 cursor-pointer bg-white border-2 border-black px-2.5 py-1.5 shadow-[2px_2px_0px_#000000] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all">
+                            <label class="inline-flex items-center gap-2 cursor-pointer bg-white border border-slate-200 hover:border-slate-300 px-3 py-1.5 rounded-xl shadow-xs transition">
                                 <input type="checkbox" name="badges[]" value="{{ $badge->id }}"
                                     {{ (is_array(old('badges')) && in_array($badge->id, old('badges'))) || (!is_array(old('badges')) && $project->badges->contains($badge->id)) ? 'checked' : '' }}
-                                    class="w-4 h-4 border-2 border-black rounded-none accent-[#ff5722] cursor-pointer">
-                                <span class="px-2 py-0.5 font-sans font-bold text-xs uppercase shadow-[1px_1px_0px_#000000]"
+                                    class="w-4 h-4 rounded text-[#FF4D2D] focus:ring-[#FF4D2D]/30 border-slate-300">
+                                <span class="px-2 py-0.5 rounded-md text-xs font-semibold"
                                        style="background-color: {{ $badge->bg_color }}; color: {{ $badge->text_color }};">
                                     {{ $badge->name }}
                                 </span>
                             </label>
                         @empty
-                            <p class="text-xs font-bold text-slate-500 uppercase italic">// Belum ada teknologi/software. Silakan input langsung di bawah.</p>
+                            <p class="text-xs text-slate-400">Belum ada lencana teknologi. Masukkan langsung di bawah.</p>
                         @endforelse
                     </div>
                 </div>
 
                 <!-- Instant input for new badges -->
                 <div>
-                    <label for="new_badges" class="block text-xxs font-black uppercase tracking-wider text-slate-500 mb-1">Ketik Teknologi/Software Baru Instan (Pisahkan dengan koma jika lebih dari satu):</label>
-                    <input type="text" name="new_badges" id="new_badges" value="{{ old('new_badges') }}" placeholder="Contoh: Laravel 11, Tailwind CSS, Docker"
-                        class="w-full bg-white border-2 border-black rounded-none px-3 py-2 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[3px_3px_0px_#000000] transition-all duration-150">
-                    <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Teknologi/software baru akan dibuat otomatis dan bisa dikustomisasi di menu Lencana Keahlian.</p>
+                    <label for="new_badges" class="block text-xs font-medium text-slate-600 mb-1.5">Tambah Lencana Baru Secara Instan (Pisahkan koma):</label>
+                    <input type="text" name="new_badges" id="new_badges" value="{{ old('new_badges') }}" placeholder="Contoh: Next.js, TypeScript, PostgreSQL"
+                        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
+                    <p class="text-slate-400 text-xs font-medium mt-1">Lencana baru akan otomatis dibuat dan tersimpan ke koleksi.</p>
                 </div>
             </div>
 
             <!-- Grid Composition Span -->
             <div>
-                <label for="grid_span" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Ukuran Kartu di Halaman Utama (Grid Span)</label>
+                <label for="grid_span" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Ukuran Kartu di Halaman Utama (Grid Span)</label>
                 <div class="relative w-full">
                     <select name="grid_span" id="grid_span" required
-                        class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold appearance-none focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150 cursor-pointer">
-                        <option value="1" {{ old('grid_span', $project->grid_span) == 1 ? 'selected' : '' }}>Standar (1 Blok Kolom)</option>
-                        <option value="2" {{ old('grid_span', $project->grid_span) == 2 ? 'selected' : '' }}>Lebar (2 Blok Kolom)</option>
-                        <option value="3" {{ old('grid_span', $project->grid_span) == 3 ? 'selected' : '' }}>Penuh (3 Blok Kolom / Full Width)</option>
+                        class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium appearance-none focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition cursor-pointer">
+                        <option value="1" {{ old('grid_span', $project->grid_span) == 1 ? 'selected' : '' }}>Standar (1 Kolom)</option>
+                        <option value="2" {{ old('grid_span', $project->grid_span) == 2 ? 'selected' : '' }}>Lebar (2 Kolom)</option>
+                        <option value="3" {{ old('grid_span', $project->grid_span) == 3 ? 'selected' : '' }}>Penuh (3 Kolom / Full Width)</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 border-l-3 border-black bg-[#ff5722] text-black">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
                     </div>
                 </div>
-                <p class="text-slate-500 text-xxs font-bold uppercase mt-1.5">// Mengatur seberapa lebar kartu proyek ini muncul di grid halaman portofolio utama.</p>
+                <p class="text-slate-400 text-xs font-medium mt-1">Mengatur lebar kartu portofolio pada tata letak grid halaman depan.</p>
                 @error('grid_span')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Project Link -->
             <div>
-                <label for="project_link" class="block text-xs font-black uppercase tracking-widest text-black mb-2">Link Proyek / Aplikasi Live (Opsional)</label>
-                <input type="url" name="project_link" id="project_link" value="{{ old('project_link', $project->project_link) }}" placeholder="https://github.com/username/project-name atau https://domain.com"
-                    class="w-full bg-white border-3 border-black rounded-none px-4 py-3 text-black font-sans font-bold placeholder-slate-400 focus:outline-none focus:bg-orange-50/70 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#000000] transition-all duration-150">
+                <label for="project_link" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Tautan Proyek / Demo Live (Opsional)</label>
+                <input type="url" name="project_link" id="project_link" value="{{ old('project_link', $project->project_link) }}" placeholder="https://example.com atau https://github.com/username/project"
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
                 @error('project_link')
-                    <p class="text-rose-600 text-xs font-bold uppercase tracking-wide mt-1.5">// {{ $message }}</p>
+                    <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Submit Buttons -->
-            <div class="pt-6 border-t-4 border-black flex items-center justify-between">
-                <a href="{{ route('admin.projects.index') }}" class="brutal-btn-secondary px-5 py-2.5 text-xs font-black uppercase tracking-wider">
+            <div class="pt-6 border-t border-slate-200/80 flex items-center justify-between">
+                <a href="{{ route('admin.projects.index') }}" class="brutal-btn-secondary text-xs">
                     Batal
                 </a>
-                <button type="submit" class="brutal-btn-admin px-6 py-3 text-xs font-black uppercase tracking-wider shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000]">
-                    Simpan Perubahan Proyek &rarr;
+                <button type="submit" class="brutal-btn-admin text-xs">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    <span>Simpan Perubahan Proyek</span>
                 </button>
             </div>
         </form>
@@ -271,7 +278,7 @@
                     const objectUrl = URL.createObjectURL(file);
                     thumbPreview.src = objectUrl;
                     if (thumbTag) thumbTag.classList.remove('hidden');
-                    showToast('Preview thumbnail diperbarui! Klik "Simpan Perubahan Proyek" untuk menyimpan.');
+                    showToast('Pratinjau thumbnail diperbarui. Klik Simpan untuk mempermanenkan.');
                 }
             });
         }
@@ -304,7 +311,7 @@
                 dropzone.addEventListener(eventName, (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    dropzone.classList.add('bg-orange-100/50', 'border-[#ff5722]');
+                    dropzone.classList.add('bg-orange-100/50', 'border-[#FF4D2D]');
                 }, false);
             });
 
@@ -312,7 +319,7 @@
                 dropzone.addEventListener(eventName, (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    dropzone.classList.remove('bg-orange-100/50', 'border-[#ff5722]');
+                    dropzone.classList.remove('bg-orange-100/50', 'border-[#FF4D2D]');
                 }, false);
             });
 
@@ -335,7 +342,7 @@
 
             for (let i = 0; i < total; i++) {
                 const file = files[i];
-                progressStatus.textContent = `// Mengunggah & mengompresi foto ${i + 1} dari ${total}...`;
+                progressStatus.textContent = `Mengunggah & mengompresi foto ${i + 1} dari ${total}...`;
                 const percent = Math.round((i / total) * 100);
                 progressFill.style.width = percent + '%';
                 progressPercent.textContent = percent + '%';
@@ -370,8 +377,8 @@
             // Finish progress
             progressFill.style.width = '100%';
             progressPercent.textContent = '100%';
-            progressStatus.textContent = `// Berhasil mengunggah ${completed} foto carousel!`;
-            showToast(`${completed} foto baru berhasil tersimpan ke galeri carousel!`);
+            progressStatus.textContent = `Berhasil mengunggah ${completed} foto carousel!`;
+            showToast(`${completed} foto baru berhasil ditambahkan ke galeri carousel!`);
 
             setTimeout(() => {
                 uploadProgress.classList.add('hidden');
@@ -386,18 +393,18 @@
 
             const card = document.createElement('div');
             card.id = `carousel-img-card-${image.id}`;
-            card.className = 'carousel-item-card relative group border-2 border-black bg-slate-100 aspect-video overflow-hidden shadow-[2px_2px_0px_#000000] flex flex-col justify-between animate-fade-in';
+            card.className = 'carousel-item-card relative group rounded-xl border border-slate-200 overflow-hidden bg-slate-100 aspect-video shadow-xs flex flex-col justify-between animate-fade-in';
             card.innerHTML = `
                 <img src="${image.url}" alt="Carousel Slide" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1.5 p-2 transition-opacity">
+                <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1.5 p-2 transition-opacity duration-200">
                     <button type="button" 
                             onclick="deleteCarouselImage(${image.id}, '${image.delete_url}')"
-                            class="w-full py-1 bg-rose-600 text-white font-black text-[9px] uppercase border border-black shadow-[1px_1px_0px_#000000] hover:bg-rose-700 transition cursor-pointer">
+                            class="w-full py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-[10px] rounded-lg shadow-xs transition cursor-pointer">
                         Hapus Foto
                     </button>
                     <button type="button" 
                             onclick="setAsThumbnail(${image.id}, '${image.set_thumbnail_url}')"
-                            class="w-full py-1 bg-[#ff5722] text-black font-black text-[9px] uppercase border border-black shadow-[1px_1px_0px_#000000] hover:bg-orange-500 transition cursor-pointer">
+                            class="w-full py-1.5 bg-[#FF4D2D] hover:bg-[#E63D1F] text-white font-semibold text-[10px] rounded-lg shadow-xs transition cursor-pointer">
                         Jadikan Thumbnail
                     </button>
                 </div>
@@ -440,14 +447,14 @@
                             const remaining = document.querySelectorAll('.carousel-item-card').length;
                             if (remaining === 0 && itemsGrid) {
                                 itemsGrid.innerHTML = `
-                                    <div id="empty-carousel-notice" class="col-span-full py-8 text-center bg-slate-50 border-2 border-dashed border-slate-300">
-                                        <p class="text-xs font-bold text-slate-400 uppercase italic">// Belum ada foto di galeri carousel. Unggah foto di atas.</p>
+                                    <div id="empty-carousel-notice" class="col-span-full py-8 text-center bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+                                        <p class="text-xs font-medium text-slate-400">Belum ada foto di galeri carousel. Unggah foto di atas.</p>
                                     </div>
                                 `;
                             }
                         }, 200);
                     }
-                    showToast('Foto carousel berhasil dihapus!');
+                    showToast('Foto carousel berhasil dihapus.');
                 } else {
                     showToast('Gagal menghapus foto.');
                 }
@@ -473,7 +480,7 @@
                     if (thumbPreview && data.thumbnail_url) {
                         thumbPreview.src = data.thumbnail_url;
                     }
-                    showToast('Foto carousel ini telah dijadikan Foto Thumbnail utama proyek!');
+                    showToast('Foto carousel ini berhasil dijadikan Thumbnail utama!');
                 } else {
                     showToast('Gagal mengubah thumbnail.');
                 }
@@ -487,7 +494,7 @@
             const toast = document.getElementById('ajax-toast');
             const toastMsg = document.getElementById('ajax-toast-msg');
             if (toast && toastMsg) {
-                toastMsg.textContent = '// ' + msg;
+                toastMsg.textContent = msg;
                 toast.classList.remove('hidden');
                 clearTimeout(window.toastTimer);
                 window.toastTimer = setTimeout(() => {
