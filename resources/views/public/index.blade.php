@@ -1415,7 +1415,7 @@
 
                         <div>
                             <label for="t-message-input" class="block text-xs font-semibold text-slate-700 mb-1">Pesan Ulasan *</label>
-                            <textarea id="t-message-input" name="message" rows="3" required placeholder="Tuliskan pengalaman atau penilaian Anda selama bekerja sama..."
+                            <textarea id="t-message-input" name="content" rows="3" required placeholder="Tuliskan pengalaman atau penilaian Anda selama bekerja sama..."
                                       class="w-full text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-paper-300 focus:outline-none focus:border-accent-500 bg-paper-50/50"></textarea>
                         </div>
 
@@ -1615,19 +1615,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const formData = new FormData(tForm);
 
+            // Ensure content field is explicitly filled
+            const msgVal = document.getElementById('t-message-input')?.value || '';
+            if (!formData.get('content')) formData.set('content', msgVal);
+            if (!formData.get('message')) formData.set('message', msgVal);
+
+            // Fetch CSRF token
+            const csrfToken = document.querySelector('input[name="_token"]')?.value || '';
+
             try {
                 const response = await fetch('{{ route("testimonials.store") }}', {
                     method: 'POST',
                     body: formData,
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 });
 
-                const data = await response.json();
+                let data = null;
+                try {
+                    data = await response.json();
+                } catch (parseErr) {
+                    data = null;
+                }
 
-                if (response.ok && data.success) {
+                if (response.ok && data && data.success) {
                     localStorage.setItem('portfolio_testimonial_submitted', 'true');
                     tForm.classList.add('hidden');
                     tAlready.classList.remove('hidden');
@@ -1637,14 +1651,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     tMessage.classList.remove('hidden');
                     tMessage.className = 'text-xs font-semibold p-2.5 rounded-xl text-center bg-rose-50 text-rose-700 border border-rose-200';
-                    tMessage.innerText = data.message || 'Terjadi kesalahan dalam mengirimkan testimoni.';
+                    
+                    if (data && data.message) {
+                        tMessage.innerText = data.message;
+                    } else if (response.status === 419) {
+                        tMessage.innerText = 'Sesi Anda telah kedaluwarsa. Silakan muat ulang (refresh) halaman lalu kirim kembali.';
+                    } else if (response.status === 429) {
+                        tMessage.innerText = (data && data.message) ? data.message : 'Anda sudah pernah mengirimkan testimoni dari perangkat ini.';
+                    } else {
+                        tMessage.innerText = 'Terjadi kesalahan pada server (Kode: ' + response.status + '). Silakan refresh dan coba lagi.';
+                    }
+
                     tSubmitBtn.disabled = false;
                     tSubmitBtn.innerText = 'Kirim Ulasan';
                 }
             } catch (err) {
                 tMessage.classList.remove('hidden');
                 tMessage.className = 'text-xs font-semibold p-2.5 rounded-xl text-center bg-rose-50 text-rose-700 border border-rose-200';
-                tMessage.innerText = 'Gagal terhubung ke server. Silakan coba lagi.';
+                tMessage.innerText = 'Gagal terhubung ke server. Pastikan koneksi internet stabil dan coba muat ulang halaman.';
                 tSubmitBtn.disabled = false;
                 tSubmitBtn.innerText = 'Kirim Ulasan';
             }

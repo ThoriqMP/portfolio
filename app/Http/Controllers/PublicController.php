@@ -54,7 +54,11 @@ class PublicController extends Controller
      */
     public function storeTestimonial(Request $request)
     {
-        $validated = $request->validate([
+        // Support both 'content' and 'message' field names from the form
+        $content = $request->input('content') ?: $request->input('message');
+        $request->merge(['content' => $content]);
+
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:100'],
             'role' => ['nullable', 'string', 'max:100'],
             'company' => ['nullable', 'string', 'max:100'],
@@ -66,6 +70,20 @@ class PublicController extends Controller
             'content.required' => 'Pesan testimoni tidak boleh kosong.',
             'content.min' => 'Pesan testimoni minimal 5 karakter.',
         ]);
+
+        if ($validator->fails()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first(),
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
 
         $deviceFingerprint = $request->input('device_fingerprint');
         $ip = $request->ip();
@@ -95,8 +113,8 @@ class PublicController extends Controller
 
             $testimonial = Testimonial::create([
                 'name' => $validated['name'],
-                'role' => $validated['role'] ?: 'Pengunjung Portofolio',
-                'company' => $validated['company'] ?: null,
+                'role' => ($validated['role'] ?? null) ?: 'Pengunjung Portofolio',
+                'company' => $validated['company'] ?? null,
                 'content' => $validated['content'],
                 'rating' => $validated['rating'] ?? 5,
                 'device_fingerprint' => $deviceFingerprint,
