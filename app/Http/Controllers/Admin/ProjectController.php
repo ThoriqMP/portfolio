@@ -135,6 +135,9 @@ class ProjectController extends Controller
             $validated['image_path'] = $path;
         }
 
+        // Set default thumbnail composition if not provided
+        $validated['thumbnail_composition'] = $request->input('thumbnail_composition', $project->thumbnail_composition ?? 'single');
+
         $project->update($validated);
 
         // Sync badges
@@ -266,7 +269,7 @@ class ProjectController extends Controller
     public function uploadMedia(\Illuminate\Http\Request $request, Project $project)
     {
         $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg|max:15360', // Max 15MB upload, we compress below 1MB
+            'file' => 'required|image|mimes:jpeg,png,jpg,webp|max:15360', // Max 15MB upload, compressed below 1MB
         ]);
 
         if ($request->hasFile('file')) {
@@ -277,17 +280,17 @@ class ProjectController extends Controller
             // Find current mockup count
             $currentCount = $project->images()->count();
 
-            // Store image record
+            // Store carousel image record
             $image = $project->images()->create([
                 'image_path' => $path,
-                'is_thumbnail' => $currentCount === 0, // set first image as cover by default
+                'is_thumbnail' => false,
                 'col_span' => 1,
                 'row_position' => 1,
-                'sort_order' => $currentCount,
+                'sort_order' => $currentCount + 1,
             ]);
 
-            // If it is the first image, update the project primary image path
-            if ($currentCount === 0 || empty($project->image_path)) {
+            // If project has no thumbnail yet, initialize it
+            if (empty($project->image_path)) {
                 $project->update(['image_path' => $path]);
             }
 
@@ -295,16 +298,36 @@ class ProjectController extends Controller
                 'success' => true,
                 'image' => [
                     'id' => $image->id,
-                    'image_path' => asset('storage/' . $image->image_path),
-                    'is_thumbnail' => $image->is_thumbnail,
-                    'col_span' => $image->col_span,
-                    'row_position' => $image->row_position,
+                    'image_path' => $image->image_path,
+                    'url' => asset('storage/' . $image->image_path),
+                    'is_thumbnail' => (bool)$image->is_thumbnail,
                     'sort_order' => $image->sort_order,
-                ]
+                    'delete_url' => route('admin.projects.deleteMedia', [$project->id, $image->id]),
+                    'set_thumbnail_url' => route('admin.projects.setThumbnail', [$project->id, $image->id]),
+                ],
+                'message' => 'Foto berhasil ditambahkan ke carousel!',
             ]);
         }
 
         return response()->json(['error' => 'Gagal mengunggah gambar.'], 400);
+    }
+
+    /**
+     * Set a carousel photo as the primary project thumbnail.
+     */
+    public function setThumbnail(Project $project, ProjectImage $image)
+    {
+        $project->update(['image_path' => $image->image_path]);
+
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto thumbnail utama berhasil diperbarui!',
+                'thumbnail_url' => asset('storage/' . $project->image_path),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Foto thumbnail utama berhasil diperbarui!');
     }
 
     /**
@@ -369,22 +392,14 @@ class ProjectController extends Controller
             Storage::disk('public')->delete($image->image_path);
         }
 
-        $wasThumbnail = $image->is_thumbnail;
         $image->delete();
 
-        // If thumbnail was deleted, promote another image to cover
-        if ($wasThumbnail) {
-            $nextImage = $project->images()->first();
-            if ($nextImage) {
-                $nextImage->update(['is_thumbnail' => true]);
-                $project->update(['image_path' => $nextImage->image_path]);
-            } else {
-                $project->update(['image_path' => '']); // empty string if no images left
-            }
-        }
-
-        if (request()->ajax()) {
-            return response()->json(['success' => true]);
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto carousel berhasil dihapus.',
+                'remaining_count' => $project->images()->count(),
+            ]);
         }
 
         return redirect()->back()->with('success', 'Gambar berhasil dihapus dari galeri.');

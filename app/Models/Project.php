@@ -45,21 +45,35 @@ class Project extends Model
     }
 
     /**
-     * Get all consolidated carousel photos (primary thumbnail + all gallery mockups).
+     * Get the resolved URL for the primary project thumbnail.
+     */
+    public function getThumbnailUrlAttribute(): string
+    {
+        if (!empty($this->image_path)) {
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->image_path)) {
+                return asset('storage/' . $this->image_path);
+            }
+            if (file_exists(public_path($this->image_path))) {
+                return asset($this->image_path);
+            }
+            return asset('storage/' . $this->image_path);
+        }
+
+        return 'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=1200&q=80';
+    }
+
+    /**
+     * Get all dedicated carousel photos for the project.
      *
-     * @return \Illuminate\Support\Collection<int, array{id: int|null, path: string, url: string, is_cover: bool}>
+     * @return \Illuminate\Support\Collection<int, array{id: int, path: string, url: string, is_cover: bool}>
      */
     public function getCarouselSlidesAttribute(): \Illuminate\Support\Collection
     {
         $slides = collect();
-
-        // 1. If images relation has records, collect them
         $galleryImages = $this->relationLoaded('images') ? $this->images : $this->images()->get();
-        $seenPaths = [];
 
         foreach ($galleryImages as $img) {
             if (!empty($img->image_path)) {
-                $seenPaths[] = $img->image_path;
                 $url = \Illuminate\Support\Facades\Storage::disk('public')->exists($img->image_path)
                     ? asset('storage/' . $img->image_path)
                     : (file_exists(public_path($img->image_path)) ? asset($img->image_path) : asset('storage/' . $img->image_path));
@@ -71,20 +85,6 @@ class Project extends Model
                     'is_cover' => (bool)$img->is_thumbnail,
                 ]);
             }
-        }
-
-        // 2. If primary image_path is set and not already in gallery images, prepend it as cover
-        if (!empty($this->image_path) && !in_array($this->image_path, $seenPaths)) {
-            $url = \Illuminate\Support\Facades\Storage::disk('public')->exists($this->image_path)
-                ? asset('storage/' . $this->image_path)
-                : (file_exists(public_path($this->image_path)) ? asset($this->image_path) : asset('storage/' . $this->image_path));
-
-            $slides->prepend([
-                'id' => null,
-                'path' => $this->image_path,
-                'url' => $url,
-                'is_cover' => true,
-            ]);
         }
 
         return $slides;

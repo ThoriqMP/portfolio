@@ -34,7 +34,7 @@ class ProjectRequest extends FormRequest
             ],
             'project_link' => ['nullable', 'url'],
             'grid_span' => ['required', 'integer', 'between:1,3'],
-            'thumbnail_composition' => ['required', 'string', 'in:single,split,mosaic,carousel'],
+            'thumbnail_composition' => ['nullable', 'string', 'in:single,split,mosaic,carousel'],
             'additional_images' => ['nullable', 'array'],
             'additional_images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
             'badges' => ['nullable', 'array'],

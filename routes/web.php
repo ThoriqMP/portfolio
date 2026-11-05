@@ -26,13 +26,18 @@ Route::middleware('auth')->prefix('cms')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('projects', ProjectController::class);
     
-    // Dedicated Media Uploader & Draft Caching Routes
+    // Project Carousel Media & Thumbnail Routes
+    Route::post('projects/{project}/upload-media', [ProjectController::class, 'uploadMedia'])->name('projects.uploadMedia');
+    Route::delete('projects/{project}/media/{image}', [ProjectController::class, 'deleteMedia'])->name('projects.deleteMedia');
+    Route::post('projects/{project}/set-thumbnail/{image}', [ProjectController::class, 'setThumbnail'])->name('projects.setThumbnail');
+
+    // Legacy Media Uploader Routes (compatibility)
     Route::match(['post', 'put'], 'projects/{project}/save-draft', [ProjectController::class, 'saveDraftAndRedirect'])->name('projects.saveDraft');
     Route::post('projects/store-draft-new', [ProjectController::class, 'storeDraftNew'])->name('projects.storeDraftNew');
     Route::get('projects/{project}/media-uploader', [ProjectController::class, 'mediaUploader'])->name('projects.mediaUploader');
-    Route::post('projects/{project}/media-uploader/upload', [ProjectController::class, 'uploadMedia'])->name('projects.uploadMedia');
+    Route::post('projects/{project}/media-uploader/upload', [ProjectController::class, 'uploadMedia']);
     Route::post('projects/{project}/media-uploader/save-layout', [ProjectController::class, 'saveLayout'])->name('projects.saveLayout');
-    Route::delete('projects/{project}/media-uploader/{image}', [ProjectController::class, 'deleteMedia'])->name('projects.deleteMedia');
+    Route::delete('projects/{project}/media-uploader/{image}', [ProjectController::class, 'deleteMedia']);
     Route::resource('educations', EducationController::class);
     Route::resource('experiences', ExperienceController::class);
     Route::resource('badges', BadgeController::class)->except(['create', 'show', 'edit']);
