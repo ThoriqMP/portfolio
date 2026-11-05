@@ -1314,7 +1314,7 @@
                                 <!-- Avatar -->
                                 <div class="md:col-span-3 flex justify-center md:justify-start">
                                     <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-paper-300 bg-paper-200 flex items-center justify-center shadow-xs">
-                                        @if ($testi->avatar_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($testi->avatar_path))
+                                        @if (!empty($testi->avatar_path) && \Illuminate\Support\Facades\Storage::disk('public')->exists($testi->avatar_path))
                                             <img src="{{ asset('storage/' . $testi->avatar_path) }}" alt="{{ $testi->name }}" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full bg-paper-200 text-accent-600 font-extrabold text-3xl flex items-center justify-center">
@@ -1326,8 +1326,16 @@
 
                                 <!-- Quote & Author -->
                                 <div class="md:col-span-9 space-y-4 text-center md:text-left">
+                                    @if ($testi->rating)
+                                        <div class="flex items-center justify-center md:justify-start gap-1 text-amber-400 text-sm">
+                                            @for ($s = 1; $s <= 5; $s++)
+                                                <span>{{ $s <= $testi->rating ? '★' : '☆' }}</span>
+                                            @endfor
+                                            <span class="text-xs font-semibold text-slate-500 ml-1.5">{{ $testi->rating }}.0 / 5.0</span>
+                                        </div>
+                                    @endif
                                     <p class="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 leading-relaxed">
-                                        &ldquo;{{ $testi->message }}&rdquo;
+                                        &ldquo;{{ $testi->content ?? $testi->message }}&rdquo;
                                     </p>
                                     <div>
                                         <span class="block text-base font-extrabold text-slate-950">{{ $testi->name }}</span>

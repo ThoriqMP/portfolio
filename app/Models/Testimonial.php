@@ -24,5 +24,13 @@ class Testimonial extends Model
         'rating' => 'integer',
         'is_approved' => 'boolean',
     ];
+
+    /**
+     * Alias for content attribute.
+     */
+    public function getMessageAttribute(): ?string
+    {
+        return $this->content;
+    }
 }
 
