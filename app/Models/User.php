@@ -21,6 +21,8 @@ class User extends Authenticatable
         'username',
         'title',
         'bio',
+        'birth_date',
+        'domicile',
         'avatar_path',
         'about_image_path',
         'bento_image_1',
@@ -59,6 +61,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'birth_date' => 'date',
         ];
     }
 

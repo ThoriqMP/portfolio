@@ -232,6 +232,15 @@
 
                         $contacts = [];
 
+                        if (!empty($user->domicile)) {
+                            $contacts[] = '<span>' . e($user->domicile) . '</span>';
+                        }
+
+                        if (!empty($user->birth_date)) {
+                            $birthFormatted = \Carbon\Carbon::parse($user->birth_date)->locale('id')->isoFormat('D MMMM Y');
+                            $contacts[] = '<span>Lahir: ' . $birthFormatted . '</span>';
+                        }
+
                         if ($whatsappLink) {
                             $rawPhone = str_replace('https://wa.me/', '', $whatsappLink->link);
                             $phone    = '+' . ltrim($rawPhone, '+');

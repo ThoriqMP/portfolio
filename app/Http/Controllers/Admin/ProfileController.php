@@ -42,6 +42,8 @@ class ProfileController extends Controller
             ],
             'title' => ['nullable', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
+            'birth_date' => ['nullable', 'date'],
+            'domicile' => ['nullable', 'string', 'max:150'],
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:10240'],
             'avatar_transparent' => ['nullable', 'string'], // base64 transparent PNG
             'about_image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:10240'],
@@ -71,6 +73,8 @@ class ProfileController extends Controller
             'username' => $validated['username'],
             'title' => $validated['title'] ?? null,
             'bio' => $validated['bio'] ?? null,
+            'birth_date' => $request->filled('birth_date') ? $request->input('birth_date') : null,
+            'domicile' => $request->filled('domicile') ? $request->input('domicile') : null,
         ];
 
         // Custom section settings

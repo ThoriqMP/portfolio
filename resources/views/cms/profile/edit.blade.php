@@ -78,6 +78,32 @@
                     </div>
                 </div>
 
+                <!-- CV Only Fields: Tanggal Lahir & Domisili -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/90">
+                    <!-- Birth Date -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="birth_date" class="block text-xs font-bold uppercase tracking-wider text-slate-700">Tanggal Lahir</label>
+                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-300/60">Khusus Lembar CV</span>
+                        </div>
+                        <input type="date" name="birth_date" id="birth_date" 
+                            value="{{ old('birth_date', $user->birth_date ? ($user->birth_date instanceof \DateTimeInterface ? $user->birth_date->format('Y-m-d') : substr($user->birth_date, 0, 10)) : '') }}"
+                            class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 text-sm font-medium focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
+                        <span class="block text-[11px] text-slate-400 mt-1">Hanya dicantumkan pada unduhan CV, tidak tampil di web publik.</span>
+                    </div>
+
+                    <!-- Domicile -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="domicile" class="block text-xs font-bold uppercase tracking-wider text-slate-700">Kota Domisili</label>
+                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-300/60">Khusus Lembar CV</span>
+                        </div>
+                        <input type="text" name="domicile" id="domicile" value="{{ old('domicile', $user->domicile) }}" placeholder="Contoh: Bogor, Jawa Barat"
+                            class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 text-sm font-medium focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition">
+                        <span class="block text-[11px] text-slate-400 mt-1">Hanya dicantumkan pada unduhan CV, tidak tampil di web publik.</span>
+                    </div>
+                </div>
+
                 <!-- Bio -->
                 <div>
                     <label for="bio" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Bio Ringkas (Hero Section)</label>
