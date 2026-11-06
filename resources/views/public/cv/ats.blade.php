@@ -43,11 +43,8 @@
             border-radius: 4px;
             border: 1px solid #CBD5E1;
             text-align: center;
+            line-height: 0;
             background-color: #F8FAFC;
-        }
-        .photo-img {
-            width: 2.6cm;
-            height: 3.3cm;
         }
         .header-info-cell {
             vertical-align: top;
@@ -180,12 +177,29 @@
     @php
         // Base64 encoding for the avatar to guarantee loading in DOMPDF
         $avatarBase64 = null;
+        $avatarImgStyle = 'height: 3.3cm; width: auto;'; // fallback
         if (($includePhoto ?? true) && $user->avatar_path && file_exists(storage_path('app/public/' . $user->avatar_path))) {
             try {
                 $path = storage_path('app/public/' . $user->avatar_path);
                 $type = pathinfo($path, PATHINFO_EXTENSION);
                 $data = file_get_contents($path);
                 $avatarBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+                $imgInfo = @getimagesize($path);
+                if ($imgInfo && $imgInfo[0] > 0 && $imgInfo[1] > 0) {
+                    $w = $imgInfo[0];
+                    $h = $imgInfo[1];
+                    $targetRatio = 2.6 / 3.3; // Box ratio (~0.788)
+                    $imgRatio = $w / $h;
+
+                    if ($imgRatio > $targetRatio) {
+                        // Image is wider than box: scale height to 3.3cm, width auto (excess cropped horizontally)
+                        $avatarImgStyle = 'height: 3.3cm; width: auto; max-width: none;';
+                    } else {
+                        // Image is taller than box: scale width to 2.6cm, height auto (excess cropped vertically)
+                        $avatarImgStyle = 'width: 2.6cm; height: auto; max-height: none;';
+                    }
+                }
             } catch (\Exception $e) {
                 // Fail silently
             }
@@ -198,7 +212,7 @@
             @if($avatarBase64)
                 <td class="header-photo-cell">
                     <div class="photo-box">
-                        <img class="photo-img" src="{{ $avatarBase64 }}" alt="{{ $user->name }}">
+                        <img style="{{ $avatarImgStyle }}" src="{{ $avatarBase64 }}" alt="{{ $user->name }}">
                     </div>
                 </td>
             @endif
@@ -355,7 +369,7 @@
                     </table>
                     @if($proj->description)
                         <div class="item-desc">
-                            <p>{{ \Illuminate\Support\Str::limit($proj->description, 140) }}</p>
+                            <p>{!! nl2br(e($proj->description)) !!}</p>
                         </div>
                     @endif
                 </div>
