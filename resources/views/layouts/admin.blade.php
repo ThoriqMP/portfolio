@@ -299,13 +299,13 @@
 
                 <!-- Header Actions -->
                 <div class="flex items-center gap-2.5">
-                    <a href="{{ route('admin.cv.download') }}" target="_blank" 
-                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition shadow-xs">
+                    <button type="button" onclick="openCvModal()" 
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition shadow-xs cursor-pointer">
                         <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                         </svg>
                         <span>Unduh CV</span>
-                    </a>
+                    </button>
                     
                     <a href="/" target="_blank" 
                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-[#FF4D2D] text-xs font-semibold text-white transition shadow-xs">
@@ -697,6 +697,149 @@
                 }
             }
         }
+
+        // CV Customization Modal Controls
+        function openCvModal() {
+            const modal = document.getElementById('cv-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                updateCvCounter();
+            }
+        }
+
+        function closeCvModal() {
+            const modal = document.getElementById('cv-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function toggleAllCvExp(checked) {
+            document.querySelectorAll('.cv-exp-checkbox').forEach(cb => cb.checked = checked);
+            updateCvCounter();
+        }
+
+        function updateCvCounter() {
+            const total = document.querySelectorAll('.cv-exp-checkbox').length;
+            const checked = document.querySelectorAll('.cv-exp-checkbox:checked').length;
+            const counter = document.getElementById('cv-exp-counter');
+            if (counter) {
+                counter.textContent = `${checked} dari ${total} dipilih`;
+            }
+        }
     </script>
+
+    <!-- CV Customization & Download Modal -->
+    @php
+        $cvExperiences = \App\Models\Experience::orderBy('start_date', 'desc')->get();
+    @endphp
+    <div id="cv-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4" onclick="closeCvModal()">
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200" onclick="event.stopPropagation()">
+            
+            <!-- Modal Header -->
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 text-[#FF4D2D] flex items-center justify-center shadow-2xs">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-extrabold text-slate-900 tracking-tight">Kustomisasi Unduh CV (PDF)</h3>
+                        <p class="text-xs text-slate-500 font-medium">Pilih riwayat pengalaman kerja yang ingin dimasukkan.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeCvModal()" class="w-8 h-8 rounded-full bg-slate-200/60 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="cv-download-form" action="{{ route('admin.cv.download') }}" method="GET" target="_blank" class="p-6 space-y-5">
+                
+                <!-- Experiences Selection -->
+                <div>
+                    <div class="flex items-center justify-between mb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Daftar Pengalaman Kerja</span>
+                            <span id="cv-exp-counter" class="text-[11px] font-semibold text-[#FF4D2D] bg-orange-50 border border-orange-200 px-2.5 py-0.5 rounded-full">
+                                {{ $cvExperiences->count() }} dipilih
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs">
+                            <button type="button" onclick="toggleAllCvExp(true)" class="text-[#FF4D2D] hover:underline font-semibold cursor-pointer">Pilih Semua</button>
+                            <span class="text-slate-300">&bull;</span>
+                            <button type="button" onclick="toggleAllCvExp(false)" class="text-slate-500 hover:underline font-semibold cursor-pointer">Batal Semua</button>
+                        </div>
+                    </div>
+
+                    <div class="max-h-56 overflow-y-auto space-y-2 pr-1 scrollbar-thin scrollbar-thumb-slate-200">
+                        @forelse($cvExperiences as $exp)
+                            <label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/20 cursor-pointer transition select-none">
+                                <input type="checkbox" name="experiences[]" value="{{ $exp->id }}" checked onchange="updateCvCounter()"
+                                       class="cv-exp-checkbox mt-1 w-4 h-4 rounded text-[#FF4D2D] focus:ring-[#FF4D2D] border-slate-300">
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-xs font-bold text-slate-900 truncate">{{ $exp->company_name }}</span>
+                                        <span class="text-[10px] text-slate-400 font-medium whitespace-nowrap">
+                                            {{ $exp->start_date ? \Carbon\Carbon::parse($exp->start_date)->translatedFormat('M Y') : '' }} &ndash;
+                                            {{ $exp->end_date ? \Carbon\Carbon::parse($exp->end_date)->translatedFormat('M Y') : 'Sekarang' }}
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] text-slate-600 font-medium mt-0.5">{{ $exp->position }}</div>
+                                </div>
+                            </label>
+                        @empty
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center text-xs text-slate-500 font-medium">
+                                Belum ada data pengalaman kerja yang tersimpan.
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
+                <!-- Extra Sections Toggle -->
+                <div class="pt-3 border-t border-slate-100">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-700 block mb-2.5">Opsi Bagian Lainnya</span>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-white cursor-pointer transition select-none">
+                            <input type="checkbox" name="include_photo" value="1" checked class="w-3.5 h-3.5 rounded text-[#FF4D2D] focus:ring-[#FF4D2D] border-slate-300">
+                            <span class="font-medium text-slate-700">Foto Profil</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-white cursor-pointer transition select-none">
+                            <input type="checkbox" name="include_education" value="1" checked class="w-3.5 h-3.5 rounded text-[#FF4D2D] focus:ring-[#FF4D2D] border-slate-300">
+                            <span class="font-medium text-slate-700">Riwayat Pendidikan</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-white cursor-pointer transition select-none">
+                            <input type="checkbox" name="include_projects" value="1" checked class="w-3.5 h-3.5 rounded text-[#FF4D2D] focus:ring-[#FF4D2D] border-slate-300">
+                            <span class="font-medium text-slate-700">Proyek Unggulan</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-white cursor-pointer transition select-none">
+                            <input type="checkbox" name="include_skills" value="1" checked class="w-3.5 h-3.5 rounded text-[#FF4D2D] focus:ring-[#FF4D2D] border-slate-300">
+                            <span class="font-medium text-slate-700">Keahlian &amp; Skills</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                    <button type="button" onclick="closeCvModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-600 transition cursor-pointer">
+                        Batal
+                    </button>
+                    <button type="submit" onclick="setTimeout(closeCvModal, 500)" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-[#FF4D2D] text-white text-xs font-bold transition shadow-sm cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        <span>Unduh Lembar CV (PDF)</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

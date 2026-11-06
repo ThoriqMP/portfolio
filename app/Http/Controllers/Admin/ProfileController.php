@@ -278,9 +278,9 @@ class ProfileController extends Controller
     }
 
     /**
-     * Download the admin's ATS CV as PDF.
+     * Download the admin's ATS CV as PDF with customizable experiences.
      */
-    public function downloadCv()
+    public function downloadCv(Request $request)
     {
         $user = \App\Models\User::with([
             'projects',
@@ -298,7 +298,26 @@ class ProfileController extends Controller
             abort(404, 'Portfolio owner not found.');
         }
 
-        $html = view('public.cv.ats', compact('user'))->render();
+        // Filter experiences if specific items are chosen
+        if ($request->has('experiences')) {
+            $selectedExpIds = (array)$request->input('experiences', []);
+            $filteredExperiences = $user->experiences->whereIn('id', $selectedExpIds)->values();
+            $user->setRelation('experiences', $filteredExperiences);
+        }
+
+        // Section inclusion toggles
+        $includePhoto     = $request->has('include_photo') ? $request->boolean('include_photo') : true;
+        $includeProjects  = $request->has('include_projects') ? $request->boolean('include_projects') : true;
+        $includeEducation = $request->has('include_education') ? $request->boolean('include_education') : true;
+        $includeSkills    = $request->has('include_skills') ? $request->boolean('include_skills') : true;
+
+        $html = view('public.cv.ats', compact(
+            'user',
+            'includePhoto',
+            'includeProjects',
+            'includeEducation',
+            'includeSkills'
+        ))->render();
 
         $options = new \Dompdf\Options();
         $options->set('defaultFont', 'Helvetica');
@@ -308,8 +327,11 @@ class ProfileController extends Controller
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
+        $disposition = $request->get('mode') === 'download' ? 'attachment' : 'inline';
+        $filename = 'CV_' . preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name) . '.pdf';
+
         return response($dompdf->output(), 200)
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="CV_' . preg_replace('/[^a-zA-Z0-9]+/', '_', $user->name) . '.pdf"');
+            ->header('Content-Disposition', $disposition . '; filename="' . $filename . '"');
     }
 }

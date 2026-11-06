@@ -1101,7 +1101,7 @@
                                     <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
                                 </div>
                                 <p class="text-xs text-slate-400 mt-1 line-clamp-2">
-                                    Aplikasi diet &amp; real-time video streaming communication platform.
+                                    LMS Sayyidah School: video online conference, tugas, ujian, modul belajar, dan invoicing.
                                 </p>
                             </div>
                             <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
@@ -1147,7 +1147,7 @@
                                     <span class="text-[10px] font-semibold text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">Public</span>
                                 </div>
                                 <p class="text-xs text-slate-400 mt-1 line-clamp-2">
-                                    Data analytics and intelligence reporting portal with MySQL backend.
+                                    Aplikasi asesmen kesehatan mental menggunakan metode Weighted Normalized Scoring.
                                 </p>
                             </div>
                             <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
