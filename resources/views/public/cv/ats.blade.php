@@ -378,7 +378,7 @@
                     </table>
                     @if($proj->description)
                         <div class="item-desc">
-                            <p>{!! nl2br(e($proj->description)) !!}</p>
+                            <p>{!! nl2br(e(strip_tags($proj->description))) !!}</p>
                         </div>
                     @endif
                 </div>

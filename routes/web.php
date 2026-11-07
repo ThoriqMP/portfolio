@@ -24,6 +24,7 @@ Route::post('/cms/logout', [AuthController::class, 'logout'])->name('logout');
 // CMS Protected Admin Panel
 Route::middleware('auth')->prefix('cms')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('projects/upload-content-image', [ProjectController::class, 'uploadContentImage'])->name('projects.uploadContentImage');
     Route::resource('projects', ProjectController::class);
     
     // Project Carousel Media & Thumbnail Routes

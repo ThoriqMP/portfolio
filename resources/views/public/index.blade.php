@@ -838,7 +838,7 @@
                                         {{ $project->title }}
                                     </a>
                                     <span class="text-xs sm:text-sm text-slate-300 block">
-                                        {{ Str::limit($project->description, 50) }}
+                                        {{ Str::limit(strip_tags($project->description), 65) }}
                                     </span>
                                 </div>
                                 <span class="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full shrink-0">

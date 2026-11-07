@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
     <!-- Cropper.js JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    @stack('styles')
     <script>
         tailwind.config = {
             theme: {
@@ -841,5 +842,6 @@
             </form>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>

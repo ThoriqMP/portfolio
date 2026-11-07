@@ -404,4 +404,23 @@ class ProjectController extends Controller
 
         return redirect()->back()->with('success', 'Gambar berhasil dihapus dari galeri.');
     }
+
+    /**
+     * Upload an inline article photo for project description.
+     */
+    public function uploadContentImage(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:12288'],
+        ]);
+
+        $file = $request->file('image');
+        $storedPath = $this->compressAndStoreImage($file, 'projects/content', 1600, 82);
+
+        return response()->json([
+            'success' => true,
+            'url' => asset('storage/' . $storedPath),
+            'path' => $storedPath,
+        ]);
+    }
 }

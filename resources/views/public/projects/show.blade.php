@@ -216,13 +216,21 @@
         <!-- DESKRIPSI & SPESIFIKASI PROYEK                           -->
         <!-- ======================================================== -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-2">
-            <!-- Left: Description / Story -->
+            <!-- Left: Description / Story (Article Format) -->
             <div class="lg:col-span-8 space-y-4">
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                     Deskripsi &amp; Ruang Lingkup Proyek
                 </h2>
-                <div class="prose prose-slate max-w-none text-base text-slate-700 leading-relaxed font-normal whitespace-pre-line">
-                    {{ $project->description }}
+                <div class="article-body text-base text-slate-700 leading-relaxed font-normal">
+                    @if (strip_tags($project->description) !== $project->description)
+                        <div class="article-content space-y-4">
+                            {!! $project->description !!}
+                        </div>
+                    @else
+                        <div class="whitespace-pre-line leading-relaxed text-slate-700">
+                            {!! nl2br(e($project->description)) !!}
+                        </div>
+                    @endif
                 </div>
             </div>
             
@@ -431,5 +439,99 @@
             document.body.style.overflow = '';
         }
     }
+
+    // Attach click-to-zoom to any inline article images
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.article-content img').forEach(img => {
+            img.addEventListener('click', function () {
+                openZoomModal(this.src);
+            });
+        });
+    });
 </script>
+
+<style>
+    .article-content {
+        color: #334155;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+    .article-content p {
+        margin-bottom: 1.25rem;
+    }
+    .article-content h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+    }
+    .article-content h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1e293b;
+        letter-spacing: -0.01em;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .article-content ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+    .article-content ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+    .article-content li {
+        margin-bottom: 0.35rem;
+    }
+    .article-content blockquote {
+        border-left: 4px solid #FF4D2D;
+        padding: 0.85rem 1.25rem;
+        margin: 1.5rem 0;
+        background-color: #fff8f5;
+        border-radius: 0 14px 14px 0;
+        color: #475569;
+        font-style: italic;
+    }
+    .article-content pre {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 0.875rem;
+        margin: 1.25rem 0;
+    }
+    .article-content a {
+        color: #FF4D2D;
+        text-decoration: underline;
+        font-weight: 600;
+        transition: color 0.15s;
+    }
+    .article-content a:hover {
+        color: #e63d1f;
+    }
+    .article-content img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: 580px;
+        object-fit: cover;
+        border-radius: 1rem;
+        margin: 1.75rem 0;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(226, 232, 240, 0.85);
+        cursor: zoom-in;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .article-content img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
+    }
+</style>
 @endsection

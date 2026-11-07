@@ -58,7 +58,7 @@
                             {{ $project->title }}
                         </h3>
                         <p class="text-xs text-slate-500 leading-relaxed line-clamp-3">
-                            {{ $project->description }}
+                            {{ Str::limit(strip_tags($project->description), 140) }}
                         </p>
 
                         <!-- External Link if exists -->

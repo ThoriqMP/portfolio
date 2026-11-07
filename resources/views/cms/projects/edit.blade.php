@@ -1,5 +1,77 @@
 @extends('layouts.admin')
 
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+<style>
+    .ql-toolbar.ql-snow {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        background: #f8fafc;
+        padding: 10px 14px;
+        font-family: inherit;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+    }
+    .ql-container.ql-snow {
+        border: none;
+        font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+        font-size: 0.95rem;
+        border-bottom-left-radius: 0.75rem;
+        border-bottom-right-radius: 0.75rem;
+    }
+    .ql-editor {
+        min-height: 280px;
+        padding: 18px;
+        line-height: 1.75;
+        color: #1e293b;
+    }
+    .ql-editor.ql-blank::before {
+        font-style: normal;
+        color: #94a3b8;
+        font-weight: 400;
+        left: 18px;
+        right: 18px;
+    }
+    .ql-editor img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border-radius: 14px;
+        margin: 16px 0;
+        box-shadow: 0 4px 14px -2px rgba(0,0,0,0.08);
+        border: 1px solid #e2e8f0;
+    }
+    .ql-editor h2 {
+        font-size: 1.45rem;
+        font-weight: 800;
+        margin-top: 1.5rem;
+        margin-bottom: 0.6rem;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+    }
+    .ql-editor h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: #1e293b;
+        letter-spacing: -0.01em;
+    }
+    .ql-editor blockquote {
+        border-left: 4px solid #FF4D2D;
+        padding-left: 16px;
+        color: #475569;
+        font-style: italic;
+        background: #fff8f5;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 0 8px 8px 0;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="space-y-6 max-w-4xl mx-auto">
     <!-- Header -->
@@ -40,11 +112,52 @@
                 @enderror
             </div>
 
-            <!-- Description -->
+            <!-- Description (Article Editor with Inline Image Support) -->
             <div>
-                <label for="description" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Deskripsi Proyek</label>
-                <textarea name="description" id="description" rows="5" placeholder="Jelaskan mengenai latar belakang proyek, masalah yang dipecahkan, fitur unggulan, dan teknologi..." required
-                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition leading-relaxed">{{ old('description', $project->description) }}</textarea>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Deskripsi &amp; Narasi Proyek (Format Artikel)</label>
+                        <p class="text-[11px] text-slate-500 font-medium">Tulis layaknya artikel: buat sub-heading, daftar poin, dan sisipkan foto dokumentasi di antara paragraf.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" id="btn-insert-inline-img" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-accent-500 text-slate-700 hover:text-accent-600 text-xs font-semibold shadow-xs transition cursor-pointer">
+                            <svg class="w-3.5 h-3.5 text-accent-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                            <span>+ Sisipkan Foto di Paragraf</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hidden file input for inline image upload -->
+                <input type="file" id="quill-image-file-input" accept="image/jpeg,image/png,image/jpg,image/webp,image/gif" class="hidden">
+
+                <!-- Upload status indicator -->
+                <div id="inline-upload-indicator" class="hidden items-center gap-2 px-3 py-2 mb-2 rounded-xl bg-orange-50 border border-orange-200 text-accent-700 text-xs font-medium animate-pulse">
+                    <svg class="w-4 h-4 animate-spin text-accent-600" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>Sedang mengunggah dan mengompres foto ke server...</span>
+                </div>
+
+                <!-- Quill Editor Container -->
+                <div class="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-xs focus-within:border-accent-500 focus-within:ring-4 focus-within:ring-accent-500/10 transition">
+                    <div id="quill-editor" class="min-h-[280px]">
+                        @php
+                            $initContent = old('description', $project->description);
+                        @endphp
+                        @if (strip_tags($initContent) !== $initContent)
+                            {!! $initContent !!}
+                        @else
+                            {!! nl2br(e($initContent)) !!}
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Hidden input to submit with the form -->
+                <input type="hidden" name="description" id="description_input" value="{{ old('description', $project->description) }}">
+
                 @error('description')
                     <p class="text-rose-600 text-xs font-semibold mt-1.5">{{ $message }}</p>
                 @enderror
@@ -260,11 +373,164 @@
 <!-- ======================================================== -->
 <!-- CLIENT-SIDE SCRIPT FOR SEAMLESS INSTANT PHOTO HANDLING   -->
 <!-- ======================================================== -->
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const csrfToken = document.querySelector('meta[name="csrf-token"]') 
             ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
             : '{{ csrf_token() }}';
+
+        // --- Quill Article Editor Setup ---
+        const quillEditorEl = document.getElementById('quill-editor');
+        const descriptionInput = document.getElementById('description_input');
+        const fileInput = document.getElementById('quill-image-file-input');
+        const btnInsertImg = document.getElementById('btn-insert-inline-img');
+        const uploadIndicator = document.getElementById('inline-upload-indicator');
+        const form = document.getElementById('project-edit-form');
+
+        let quill = null;
+        if (quillEditorEl) {
+            quill = new Quill('#quill-editor', {
+                theme: 'snow',
+                placeholder: 'Tulis deskripsi proyek seperti menulis artikel... Gunakan sub-judul, daftar poin, dan sisipkan foto di antara paragraf.',
+                modules: {
+                    toolbar: {
+                        container: [
+                            [{ 'header': [2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            ['blockquote', 'code-block'],
+                            ['link', 'image'],
+                            ['clean']
+                        ],
+                        handlers: {
+                            image: function () {
+                                triggerImageUpload();
+                            }
+                        }
+                    }
+                }
+            });
+
+            function triggerImageUpload() {
+                if (fileInput) {
+                    fileInput.value = '';
+                    fileInput.click();
+                }
+            }
+
+            if (btnInsertImg) {
+                btnInsertImg.addEventListener('click', triggerImageUpload);
+            }
+
+            if (fileInput) {
+                fileInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (!file) return;
+                    uploadFileToQuill(file);
+                });
+            }
+
+            function uploadFileToQuill(file) {
+                if (!file.type.match(/^image\//)) {
+                    alert('File yang dipilih harus berupa gambar (JPG, PNG, WebP, GIF).');
+                    return;
+                }
+
+                if (file.size > 12 * 1024 * 1024) {
+                    alert('Ukuran file foto maksimal 12MB.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('image', file);
+
+                if (uploadIndicator) {
+                    uploadIndicator.classList.remove('hidden');
+                    uploadIndicator.classList.add('flex');
+                }
+
+                fetch("{{ route('admin.projects.uploadContentImage') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        return res.json().then(err => { throw err; });
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.success && data.url) {
+                        const range = quill.getSelection(true) || { index: quill.getLength() };
+                        quill.insertEmbed(range.index, 'image', data.url);
+                        quill.setSelection(range.index + 1);
+                        syncDescription();
+                        showToast('Foto berhasil disisipkan ke paragraf!');
+                    } else {
+                        alert('Gagal mengunggah foto. Silakan coba lagi.');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error uploading inline image:', err);
+                    const msg = (err && err.message) ? err.message : 'Terjadi kesalahan saat mengunggah foto.';
+                    alert(msg);
+                })
+                .finally(() => {
+                    if (uploadIndicator) {
+                        uploadIndicator.classList.add('hidden');
+                        uploadIndicator.classList.remove('flex');
+                    }
+                });
+            }
+
+            // Intercept paste of image files to auto-upload to server instead of inserting raw base64
+            quill.root.addEventListener('paste', function (e) {
+                const clipboardData = e.clipboardData || window.clipboardData;
+                if (!clipboardData || !clipboardData.items) return;
+
+                for (let i = 0; i < clipboardData.items.length; i++) {
+                    const item = clipboardData.items[i];
+                    if (item.type.indexOf('image') !== -1) {
+                        const file = item.getAsFile();
+                        if (file) {
+                            e.preventDefault();
+                            uploadFileToQuill(file);
+                            return;
+                        }
+                    }
+                }
+            });
+
+            function syncDescription() {
+                if (!descriptionInput) return;
+                const text = quill.getText().trim();
+                const hasImages = quill.root.querySelector('img') !== null;
+                if (!text && !hasImages) {
+                    descriptionInput.value = '';
+                } else {
+                    descriptionInput.value = quill.root.innerHTML;
+                }
+            }
+
+            quill.on('text-change', syncDescription);
+
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    syncDescription();
+                    if (!descriptionInput.value.trim()) {
+                        e.preventDefault();
+                        alert('Deskripsi proyek wajib diisi.');
+                        quill.focus();
+                    }
+                });
+            }
+        }
 
         // 1. Live Instant Preview for Thumbnail
         const thumbInput = document.getElementById('thumbnail_file_input');
@@ -504,4 +770,5 @@
         }
     });
 </script>
+@endpush
 @endsection
