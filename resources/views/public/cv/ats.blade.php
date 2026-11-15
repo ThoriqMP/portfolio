@@ -152,6 +152,58 @@
             margin-bottom: 2px;
         }
 
+        /* 2-Column Project Layout */
+        .project-item {
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        .project-layout-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .project-col-left {
+            width: 38%;
+            vertical-align: top;
+            padding-right: 14px;
+        }
+        .project-col-right {
+            width: 62%;
+            vertical-align: top;
+        }
+        .project-title {
+            font-size: 9.5pt;
+            font-weight: bold;
+            color: #0F172A;
+            line-height: 1.25;
+            margin-bottom: 2px;
+        }
+        .project-link {
+            font-size: 8pt;
+            color: #FF4D2D;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        .project-link a {
+            color: #FF4D2D;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .project-photo-wrapper {
+            width: 5.6cm;
+            height: 3.2cm;
+            overflow: hidden;
+            border-radius: 4px;
+            border: 1px solid #CBD5E1;
+            background-color: #F8FAFC;
+            text-align: center;
+            line-height: 0;
+            margin-top: 4px;
+        }
+        .project-desc {
+            padding-top: 1px;
+        }
+
         /* Skills Pill Layout */
         .skills-list {
             font-size: 8.5pt;
@@ -363,29 +415,92 @@
         <div class="section">
             <div class="section-header">Proyek Unggulan</div>
             @foreach($user->projects as $proj)
-                <div class="item">
-                    <table class="item-table">
+                @php
+                    $projImgBase64 = null;
+                    $projImgStyle = 'width: 5.6cm; height: auto;'; // fallback
+
+                    $foundPath = null;
+                    if (!empty($proj->image_path)) {
+                        $candidates = [
+                            storage_path('app/public/' . $proj->image_path),
+                            public_path($proj->image_path),
+                            public_path('storage/' . $proj->image_path),
+                        ];
+                        foreach ($candidates as $c) {
+                            if (file_exists($c) && is_file($c)) {
+                                $foundPath = $c;
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($foundPath) {
+                        try {
+                            $ext = strtolower(pathinfo($foundPath, PATHINFO_EXTENSION));
+                            $data = @file_get_contents($foundPath);
+                            if ($data) {
+                                $mime = ($ext === 'jpg' || $ext === 'jpeg') ? 'image/jpeg' : (($ext === 'png') ? 'image/png' : 'image/' . $ext);
+                                $projImgBase64 = 'data:' . $mime . ';base64,' . base64_encode($data);
+
+                                $imgInfo = @getimagesize($foundPath);
+                                if ($imgInfo && $imgInfo[0] > 0 && $imgInfo[1] > 0) {
+                                    $w = $imgInfo[0];
+                                    $h = $imgInfo[1];
+                                    $targetRatio = 5.6 / 3.2; // ~1.75
+                                    $imgRatio = $w / $h;
+
+                                    if ($imgRatio > $targetRatio) {
+                                        $projImgStyle = 'height: 3.2cm; width: auto; max-width: none;';
+                                    } else {
+                                        $projImgStyle = 'width: 5.6cm; height: auto; max-height: none;';
+                                    }
+                                }
+                            }
+                        } catch (\Throwable $e) {
+                            // Silently ignore formatting errors
+                        }
+                    }
+
+                    if (!$projImgBase64 && !empty($proj->thumbnail_url) && preg_match('#^https?://#', $proj->thumbnail_url)) {
+                        $projImgBase64 = $proj->thumbnail_url;
+                        $projImgStyle = 'width: 5.6cm; height: auto; max-height: 3.2cm;';
+                    }
+
+                    $descText = !empty($proj->cv_description) 
+                        ? trim($proj->cv_description) 
+                        : \Illuminate\Support\Str::limit(strip_tags($proj->description), 280);
+                @endphp
+
+                <div class="item project-item">
+                    <table class="project-layout-table">
                         <tr>
-                            <td class="item-title">
-                                {{ $proj->title }}
+                            <!-- Kolom 1: Title, Link, dan Foto Proyek -->
+                            <td class="project-col-left">
+                                <div class="project-title">{{ $proj->title }}</div>
+                                @if($proj->project_link)
+                                    <div class="project-link">
+                                        <a href="{{ $proj->project_link }}" target="_blank">
+                                            {{ preg_replace('#^https?://#', '', $proj->project_link) }}
+                                        </a>
+                                    </div>
+                                @endif
+                                @if($projImgBase64)
+                                    <div class="project-photo-wrapper">
+                                        <img src="{{ $projImgBase64 }}" alt="{{ $proj->title }}" style="{{ $projImgStyle }}">
+                                    </div>
+                                @endif
                             </td>
-                            @if($proj->project_link)
-                                <td class="item-date">
-                                    <span style="color:#FF4D2D;">{{ preg_replace('#^https?://#', '', $proj->project_link) }}</span>
-                                </td>
-                            @endif
+
+                            <!-- Kolom 2: Deskripsi Proyek -->
+                            <td class="project-col-right">
+                                @if($descText)
+                                    <div class="item-desc project-desc">
+                                        <p>{!! nl2br(e($descText)) !!}</p>
+                                    </div>
+                                @endif
+                            </td>
                         </tr>
                     </table>
-                    @php
-                        $descText = !empty($proj->cv_description) 
-                            ? trim($proj->cv_description) 
-                            : \Illuminate\Support\Str::limit(strip_tags($proj->description), 280);
-                    @endphp
-                    @if($descText)
-                        <div class="item-desc">
-                            <p>{!! nl2br(e($descText)) !!}</p>
-                        </div>
-                    @endif
                 </div>
             @endforeach
         </div>
