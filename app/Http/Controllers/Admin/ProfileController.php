@@ -287,7 +287,9 @@ class ProfileController extends Controller
     public function downloadCv(Request $request)
     {
         $user = \App\Models\User::with([
-            'projects',
+            'projects' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            },
             'badges',
             'socialLinks',
             'educations' => function ($query) {
@@ -302,11 +304,27 @@ class ProfileController extends Controller
             abort(404, 'Portfolio owner not found.');
         }
 
-        // Filter experiences if specific items are chosen
-        if ($request->has('experiences')) {
+        // Filter experiences & projects if customization modal filters are submitted
+        if ($request->has('has_cv_filters')) {
             $selectedExpIds = (array)$request->input('experiences', []);
             $filteredExperiences = $user->experiences->whereIn('id', $selectedExpIds)->values();
             $user->setRelation('experiences', $filteredExperiences);
+
+            $selectedProjIds = (array)$request->input('projects', []);
+            $filteredProjects = $user->projects->whereIn('id', $selectedProjIds)->values();
+            $user->setRelation('projects', $filteredProjects);
+        } else {
+            if ($request->has('experiences')) {
+                $selectedExpIds = (array)$request->input('experiences', []);
+                $filteredExperiences = $user->experiences->whereIn('id', $selectedExpIds)->values();
+                $user->setRelation('experiences', $filteredExperiences);
+            }
+
+            if ($request->has('projects')) {
+                $selectedProjIds = (array)$request->input('projects', []);
+                $filteredProjects = $user->projects->whereIn('id', $selectedProjIds)->values();
+                $user->setRelation('projects', $filteredProjects);
+            }
         }
 
         // Section inclusion toggles

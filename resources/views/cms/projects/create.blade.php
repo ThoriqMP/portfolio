@@ -145,6 +145,26 @@
                 @enderror
             </div>
 
+            <!-- Short Description specifically for ATS CV Download -->
+            <div class="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-2">
+                <div class="flex items-center justify-between">
+                    <label for="cv_description" class="block text-xs font-bold uppercase tracking-wider text-slate-800">
+                        Deskripsi Ringkas untuk Lembar CV (Opsional)
+                    </label>
+                    <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">
+                        Tampil di CV PDF
+                    </span>
+                </div>
+                <p class="text-[11px] text-slate-500 font-medium leading-relaxed">
+                    Tuliskan 1&ndash;3 kalimat ringkas atau poin pencapaian proyek ini khusus untuk lembar unduhan CV (ATS Resume). Jika dikosongkan, CV akan otomatis mengambil cuplikan ringkas dari narasi utama agar lembar CV tidak terlalu panjang.
+                </p>
+                <textarea name="cv_description" id="cv_description" rows="3" placeholder="Contoh: Platform streaming olahraga berbasis WebRTC dan HLS. Mengembangkan arsitektur headless rendering di Linux VPS dan aplikasi desktop Tauri dengan latensi ultra-rendah."
+                    class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none focus:border-[#FF4D2D] focus:ring-4 focus:ring-[#FF4D2D]/10 transition leading-relaxed">{{ old('cv_description') }}</textarea>
+                @error('cv_description')
+                    <p class="text-rose-600 text-xs font-semibold mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- ======================================================== -->
             <!-- SECTION 1: FOTO THUMBNAIL PROYEK                         -->
             <!-- ======================================================== -->

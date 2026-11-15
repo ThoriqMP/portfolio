@@ -14,6 +14,7 @@ class Project extends Model
         'user_id',
         'title',
         'description',
+        'cv_description',
         'image_path',
         'project_link',
         'grid_span',

@@ -243,6 +243,7 @@ class ProjectController extends Controller
         $project = new Project();
         $project->title = $request->input('title');
         $project->description = $request->input('description');
+        $project->cv_description = $request->input('cv_description');
         $project->project_link = $request->input('project_link');
         $project->grid_span = $request->input('grid_span');
         $project->thumbnail_composition = $request->input('thumbnail_composition');

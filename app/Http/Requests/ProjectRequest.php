@@ -26,6 +26,7 @@ class ProjectRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'cv_description' => ['nullable', 'string', 'max:1500'],
             'image' => [
                 $isCreate ? 'required' : 'nullable',
                 'image',

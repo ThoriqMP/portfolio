@@ -376,9 +376,14 @@
                             @endif
                         </tr>
                     </table>
-                    @if($proj->description)
+                    @php
+                        $descText = !empty($proj->cv_description) 
+                            ? trim($proj->cv_description) 
+                            : \Illuminate\Support\Str::limit(strip_tags($proj->description), 280);
+                    @endphp
+                    @if($descText)
                         <div class="item-desc">
-                            <p>{!! nl2br(e(strip_tags($proj->description))) !!}</p>
+                            <p>{!! nl2br(e($descText)) !!}</p>
                         </div>
                     @endif
                 </div>
