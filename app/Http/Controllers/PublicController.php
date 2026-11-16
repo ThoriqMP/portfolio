@@ -149,4 +149,18 @@ class PublicController extends Controller
         
         return view('public.projects.show', compact('project', 'user', 'slides'));
     }
+
+    /**
+     * Generate dynamic clean XML sitemap for search engines.
+     */
+    public function sitemap()
+    {
+        $projects = Project::orderBy('updated_at', 'desc')->get();
+        $user = User::first();
+
+        $content = view('public.sitemap', compact('projects', 'user'))->render();
+
+        return response($content, 200)
+            ->header('Content-Type', 'text/xml');
+    }
 }

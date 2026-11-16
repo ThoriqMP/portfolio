@@ -1,5 +1,11 @@
 @extends('layouts.public')
 
+@section('title', $project->title . ' — ' . ($user->name ?? 'Thoriq'))
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($project->cv_description ?: $project->description), 160))
+@section('og_title', $project->title . ' — Studi Kasus Portofolio')
+@section('og_description', \Illuminate\Support\Str::limit(strip_tags($project->cv_description ?: $project->description), 160))
+@section('og_image', $project->thumbnail_url)
+
 @section('content')
 <!-- Project Detail Section (Paper Aesthetic) -->
 <section class="py-24 md:py-36 min-h-screen">

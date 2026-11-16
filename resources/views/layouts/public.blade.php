@@ -3,12 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $user->name }} &mdash; {{ $user->title ?? 'Digital Product Designer' }}</title>
+    <title>@yield('title', ($user->name ?? 'Thoriq') . ' — ' . ($user->title ?? 'Fullstack Web Developer & UI/UX Designer'))</title>
     
-    <!-- Meta Tags for SEO -->
-    <meta name="description" content="Portofolio resmi {{ $user->name }}. Berfokus pada perancangan produk digital, UI/UX, dan pengembangan aplikasi web.">
-    <meta name="keywords" content="Portfolio, Fullstack Web Developer, UI/UX Designer, Laravel, Tailwind CSS, Web Design">
-    <meta name="author" content="{{ $user->name }}">
+    <!-- Primary Meta Tags for SEO -->
+    <meta name="description" content="@yield('meta_description', 'Portofolio resmi ' . ($user->name ?? 'Thoriq') . ' - ' . ($user->title ?? 'Fullstack Web Developer & UI/UX Designer') . '. Menampilkan karya rekayasa perangkat lunak, aplikasi web, dan studi kasus desain.')">
+    <meta name="keywords" content="Portfolio, Fullstack Web Developer, Software Engineer, UI/UX Designer, Laravel, Tailwind CSS, Web Design, {{ $user->name ?? 'Thoriq' }}">
+    <meta name="author" content="{{ $user->name ?? 'Thoriq' }}">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="{{ $user->name ?? 'Thoriq' }} Portfolio">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('og_title', ($user->name ?? 'Thoriq') . ' — ' . ($user->title ?? 'Fullstack Web Developer & UI/UX Designer'))">
+    <meta property="og:description" content="@yield('og_description', 'Portofolio resmi ' . ($user->name ?? 'Thoriq') . '. Rekayasa perangkat lunak modern, arsitektur aplikasi web, dan desain antarmuka.')">
+    <meta property="og:image" content="@yield('og_image', asset('favicon.svg'))">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('og_title', ($user->name ?? 'Thoriq') . ' — ' . ($user->title ?? 'Fullstack Web Developer & UI/UX Designer'))">
+    <meta name="twitter:description" content="@yield('og_description', 'Portofolio resmi ' . ($user->name ?? 'Thoriq') . ' - Fullstack Web Developer & UI/UX Designer.')">
+    <meta name="twitter:image" content="@yield('og_image', asset('favicon.svg'))">
+
+    <!-- JSON-LD Structured Data Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "{{ $user->name ?? 'Thoriq' }}",
+        "jobTitle": "{{ $user->title ?? 'Fullstack Web Developer' }}",
+        "url": "{{ url('/') }}",
+        "description": "Portofolio profesional resmi {{ $user->name ?? 'Thoriq' }} di bidang Fullstack Web Development dan UI/UX Design.",
+        "sameAs": [
+            @if(isset($user->socialLinks))
+                @foreach($user->socialLinks as $sl)
+                    "{{ $sl->url }}"{{ !$loop->last ? ',' : '' }}
+                @endforeach
+            @endif
+        ]
+    }
+    </script>
 
     <!-- App Favicon & Brand Icons -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">

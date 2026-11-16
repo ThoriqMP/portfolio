@@ -1,0 +1,22 @@
+# ========================================================
+# STORAGE SECURITY: PREVENT SCRIPT EXECUTION
+# ========================================================
+# Disable execution of all scripts in uploads/storage directories
+<FilesMatch "(?i)\.(php|php[0-9]|phtml|phar|pl|py|jsp|asp|sh|cgi|shtml|html|htm)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Turn off PHP engine if loaded as Apache module
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# Prevent directory listing and CGI execution
+Options -ExecCGI -Indexes

@@ -11,8 +11,9 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\BadgeController;
 use App\Http\Controllers\Admin\SocialLinkController;
 
-// Public Home
+// Public Home & SEO
 Route::get('/', [PublicController::class, 'index'])->name('home');
+Route::get('/sitemap.xml', [PublicController::class, 'sitemap'])->name('sitemap');
 Route::get('/projects/{project}', [PublicController::class, 'showProject'])->name('projects.show');
 Route::post('/testimonials', [PublicController::class, 'storeTestimonial'])->name('testimonials.store');
 

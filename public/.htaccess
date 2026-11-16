@@ -1,9 +1,43 @@
+# ========================================================
+# SECURITY & PROTECTION HEADERS
+# ========================================================
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# Prevent directory indexing
+Options -Indexes
+
+# Block sensitive and configuration files from being read directly
+<FilesMatch "(^\.env|^\.git|\.(env|lock|json|sql|sqlite|yml|yaml|md|log|sh|bak|swp|config))$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Block access to artisan command script
+<Files "artisan">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
+
+    # Block malicious query strings & common SQLi / PHP injection vectors
+    RewriteCond %{QUERY_STRING} (eval\(|base64_|GLOBALS|_REQUEST|mosConfig|proc/self/environ|<script) [NC,OR]
+    RewriteCond %{QUERY_STRING} (boot\.ini|etc/passwd|winnt|system32) [NC]
+    RewriteRule .* - [F,L]
+
+    # Block direct access to hidden dotfiles (e.g., .env, .git)
+    RewriteRule (^|/)\.(?!well-known) - [F]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
