@@ -78,12 +78,13 @@ class SecurityCleanCommand extends Command
 
                 if (!in_array($file, $allowedPublicFiles)) {
                     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                    if (in_array($ext, ['php', 'phtml', 'html', 'sh', 'py', 'pl', 'cgi'])) {
+                    if (in_array($ext, ['php', 'phtml', 'html', 'sh', 'py', 'pl', 'cgi', 'quarantine']) || str_starts_with($file, 'google') || str_ends_with($file, '.quarantine')) {
                         $this->error("  [!] DITEMUKAN FILE MENCURIGAKAN: public/{$file}");
                         $threatsFound++;
                         if ($this->option('fix')) {
-                            @rename($publicPath . '/' . $file, $publicPath . '/' . $file . '.quarantine');
-                            $this->warn("      -> File telah dikarantina menjadi .quarantine");
+                            @unlink($publicPath . '/' . $file);
+                            $this->info("      -> File {$file} BERHASIL DIHAPUS PERMANEN.");
+                            $threatsFound--;
                         }
                     }
                 }
@@ -92,17 +93,55 @@ class SecurityCleanCommand extends Command
 
         // 2. Check public/index.php integrity
         $indexPhpPath = public_path('index.php');
+        $indexInfected = false;
         if (file_exists($indexPhpPath)) {
             $indexContent = file_get_contents($indexPhpPath);
             foreach ($this->maliciousSignatures as $sig) {
                 if (stripos($indexContent, $sig) !== false) {
                     $this->error("  [!] INJEKSI TERDETEKSI DI public/index.php (Signature: {$sig})");
                     $threatsFound++;
+                    $indexInfected = true;
+                    break;
                 }
             }
-            if (stripos($indexContent, 'googlebot') !== false || stripos($indexContent, 'zona66') !== false) {
+            if (!$indexInfected && (stripos($indexContent, 'googlebot') !== false || stripos($indexContent, 'zona66') !== false)) {
                 $this->error("  [!] BOT CLOAKING INJECTION TERDETEKSI DI public/index.php!");
                 $threatsFound++;
+                $indexInfected = true;
+            }
+
+            if ($indexInfected && $this->option('fix')) {
+                // Backup infected file
+                $backupPath = public_path('index.php.infected_' . date('Ymd_His'));
+                @copy($indexPhpPath, $backupPath);
+
+                // Write pristine clean Laravel 11 index.php
+                $cleanIndexContent = <<<'PHP'
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+
+define('LARAVEL_START', microtime(true));
+
+// Determine if the application is in maintenance mode...
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
+
+// Register the Composer autoloader...
+require __DIR__.'/../vendor/autoload.php';
+
+// Bootstrap Laravel and handle the request...
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$app->handleRequest(Request::capture());
+PHP;
+                @file_put_contents($indexPhpPath, $cleanIndexContent);
+                $this->info("      -> public/index.php BERHASIL DIBERSIHKAN & DIPULIHKAN ke kondisi original!");
+                $this->line("      -> Backup file terinfeksi disimpan di: {$backupPath}");
+                $threatsFound--;
             }
         }
 
