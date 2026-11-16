@@ -11,6 +11,9 @@
     <meta name="author" content="{{ $user->name ?? 'Thoriq' }}">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="{{ url()->current() }}">
+    @if(env('GOOGLE_SITE_VERIFICATION'))
+    <meta name="google-site-verification" content="{{ env('GOOGLE_SITE_VERIFICATION') }}">
+    @endif
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website">
