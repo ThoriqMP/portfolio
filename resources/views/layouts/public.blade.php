@@ -33,21 +33,15 @@
 
     <!-- JSON-LD Structured Data Schema -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "{{ $user->name ?? 'Thoriq' }}",
-        "jobTitle": "{{ $user->title ?? 'Fullstack Web Developer' }}",
-        "url": "{{ url('/') }}",
-        "description": "Portofolio profesional resmi {{ $user->name ?? 'Thoriq' }} di bidang Fullstack Web Development dan UI/UX Design.",
-        "sameAs": [
-            @if(isset($user->socialLinks))
-                @foreach($user->socialLinks as $sl)
-                    "{{ $sl->url }}"{{ !$loop->last ? ',' : '' }}
-                @endforeach
-            @endif
-        ]
-    }
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Person',
+        'name' => $user->name ?? 'Thoriq',
+        'jobTitle' => $user->title ?? 'Fullstack Web Developer',
+        'url' => url('/'),
+        'description' => 'Portofolio profesional resmi ' . ($user->name ?? 'Thoriq') . ' di bidang Fullstack Web Development dan UI/UX Design.',
+        'sameAs' => isset($user->socialLinks) ? $user->socialLinks->pluck('url')->filter()->values()->all() : []
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
 
     <!-- App Favicon & Brand Icons -->
