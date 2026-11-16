@@ -69,7 +69,10 @@ class SecurityCleanCommand extends Command
         // 1. Inspect public directory
         $this->line("\n[1/5] Memeriksa direktori public/ ...");
         $publicPath = public_path();
-        $allowedPublicFiles = ['index.php', '.htaccess', 'robots.txt', 'favicon.ico', 'favicon.svg', 'logo-thoriq.svg', 'storage'];
+        $allowedPublicFiles = [
+            'index.php', '.htaccess', 'robots.txt', 'favicon.ico', 'favicon.svg', 'logo-thoriq.svg', 'storage',
+            'google498e429807d5a9fb.html'
+        ];
 
         if (is_dir($publicPath)) {
             $files = scandir($publicPath);
